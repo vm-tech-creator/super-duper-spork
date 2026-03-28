@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
+  const [videoMode, setVideoMode] = useState<'classic' | 'fancy' | 'neon' | 'minimal'>('classic');
+  const [activeCategory, setActiveCategory] = useState('All');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -97,9 +99,21 @@ export default function Home() {
           <li><a href="#about" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">About</a></li>
           <li><a href="#" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">Sign In</a></li>
         </ul>
-        <button className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2.5 rounded transition-all hover:bg-[#ffcf3a] hover:translate-y-[-1px] hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] text-[.95rem] cursor-pointer">
-          Explore Now
-        </button>
+        <div className="flex items-center gap-4">
+          <select 
+            value={videoMode} 
+            onChange={(e) => setVideoMode(e.target.value as any)}
+            className="bg-[#101e34] border border-[rgba(73,122,182,.3)] text-[#e8edf5] px-4 py-2 rounded font-['Barlow_Condensed'] text-[.85rem] uppercase tracking-[.05em] cursor-pointer transition-all hover:border-[#ffc105]"
+          >
+            <option value="classic">Classic Mode</option>
+            <option value="fancy">✨ Fancy Mode</option>
+            <option value="neon">⚡ Neon Mode</option>
+            <option value="minimal">— Minimal Mode</option>
+          </select>
+          <button className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2.5 rounded transition-all hover:bg-[#ffcf3a] hover:translate-y-[-1px] hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] text-[.95rem] cursor-pointer">
+            Explore Now
+          </button>
+        </div>
       </nav>
 
       {/* Hero */}
@@ -234,248 +248,256 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trending Videos */}
-      <section className="py-[120px] px-[5%] bg-[#080f1c]" id="videos">
+      {/* Trending Videos - Mode-based Rendering */}
+      <section className={`py-[120px] px-[5%] ${videoMode === 'fancy' ? 'bg-gradient-to-br from-[#080f1c] via-[#1a1f3a] to-[#0d1a2e]' : videoMode === 'neon' ? 'bg-[#000000]' : 'bg-[#080f1c]'}`} id="videos">
         <div className="max-w-[1400px] mx-auto">
           <div className="mb-20 reveal">
             <div className="flex items-center gap-2.5 text-[#ffc105] font-bold text-[.78rem] uppercase tracking-[.2em] mb-3">
-              <div className="w-8 h-0.5 bg-[#ffc105]"></div>
+              <div className={`w-8 h-0.5 ${videoMode === 'neon' ? 'bg-[#00ff88] shadow-[0_0_10px_#00ff88]' : 'bg-[#ffc105]'}`}></div>
               Trending Now
             </div>
-            <h2 className="font-['Bebas_Neue'] text-[clamp(2.4rem,5vw,3.8rem)] leading-none tracking-[.03em] text-[#e8edf5]">
-              SHORT-FORM<br/><span className="text-[#ffc105]">VIDEOS FOR YOU</span>
+            <h2 className={`font-['Bebas_Neue'] text-[clamp(2.4rem,5vw,3.8rem)] leading-none tracking-[.03em] ${videoMode === 'fancy' ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#ffc105] to-[#497ab6]' : videoMode === 'neon' ? 'text-[#00ff88] drop-shadow-[0_0_20px_#00ff88]' : 'text-[#e8edf5]'}`}>
+              SHORT-FORM<br/><span className={videoMode === 'fancy' ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#497ab6] to-[#ffc105]' : videoMode === 'neon' ? 'text-[#ff00ff] drop-shadow-[0_0_20px_#ff00ff]' : 'text-[#ffc105]'}>VIDEOS FOR YOU</span>
             </h2>
-            <p className="text-[#7a93b4] max-w-[420px] text-[.95rem] leading-[1.7] mt-4">
-              Discover viral-worthy short videos. Perfect for quick entertainment and inspiration — all under 90 seconds.
-            </p>
           </div>
 
           {/* Filter Tags */}
           <div className="flex gap-3 mb-12 reveal flex-wrap">
-            <button className="px-4 py-2 rounded-full text-[.85rem] font-semibold uppercase tracking-[.08em] bg-[#ffc105] text-[#080f1c] transition-all hover:shadow-[0_0_20px_rgba(255,193,5,.4)]">
-              All
-            </button>
-            <button className="px-4 py-2 rounded-full text-[.85rem] font-semibold uppercase tracking-[.08em] border border-[rgba(73,122,182,.3)] text-[#7a93b4] transition-all hover:border-[#ffc105] hover:text-[#ffc105]">
-              Entertaining
-            </button>
-            <button className="px-4 py-2 rounded-full text-[.85rem] font-semibold uppercase tracking-[.08em] border border-[rgba(73,122,182,.3)] text-[#7a93b4] transition-all hover:border-[#ffc105] hover:text-[#ffc105]">
-              Educational
-            </button>
-            <button className="px-4 py-2 rounded-full text-[.85rem] font-semibold uppercase tracking-[.08em] border border-[rgba(73,122,182,.3)] text-[#7a93b4] transition-all hover:border-[#ffc105] hover:text-[#ffc105]">
-              Creative
-            </button>
-            <button className="px-4 py-2 rounded-full text-[.85rem] font-semibold uppercase tracking-[.08em] border border-[rgba(73,122,182,.3)] text-[#7a93b4] transition-all hover:border-[#ffc105] hover:text-[#ffc105]">
-              Lifestyle
-            </button>
+            {['All', 'Entertaining', 'Educational', 'Creative', 'Lifestyle'].map((category) => (
+              <button 
+                key={category}
+                onClick={() => setActiveCategory(category)}
+                className={`px-4 py-2 rounded-full text-[.85rem] font-semibold uppercase tracking-[.08em] transition-all ${
+                  activeCategory === category
+                    ? videoMode === 'neon'
+                      ? 'bg-[#00ff88] text-[#000000] shadow-[0_0_20px_#00ff88]'
+                      : videoMode === 'fancy'
+                      ? 'bg-gradient-to-r from-[#ffc105] to-[#497ab6] text-[#080f1c] shadow-[0_8px_24px_rgba(255,193,5,.3)]'
+                      : 'bg-[#ffc105] text-[#080f1c]'
+                    : videoMode === 'neon'
+                    ? 'border border-[#00ff88] text-[#00ff88] hover:shadow-[0_0_15px_#00ff88]'
+                    : videoMode === 'minimal'
+                    ? 'border-b-2 border-[#7a93b4] text-[#7a93b4] hover:border-[#ffc105] hover:text-[#ffc105]'
+                    : 'border border-[rgba(73,122,182,.3)] text-[#7a93b4] hover:border-[#ffc105] hover:text-[#ffc105]'
+                }`}
+              >
+                {category}
+              </button>
+            ))}
           </div>
 
           {/* Videos Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {/* Video Card 1 */}
-            <div className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
-              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
-                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
-                  <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
-                    45 sec
+          <div className={`grid gap-5 ${videoMode === 'minimal' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'}`}>
+            {[
+              { title: 'Minimalist Architecture in the Desert', creator: 'Khan Studios', views: '48.2K', duration: '45', color: 'blue', tags: ['Architecture', 'Design'] },
+              { title: 'Quick Kitchen Tips for Busy Professionals', creator: 'Chef\'s Corner', views: '156.3K', duration: '32', color: 'emerald', tags: ['Lifestyle', 'Tutorial'] },
+              { title: 'AI Trends You Need to Know About', creator: 'Tech Insights Daily', views: '324.1K', duration: '58', color: 'purple', tags: ['Tech', 'News'] },
+              { title: 'Fitness Motivation: High-Intensity Challenge', creator: 'Fitness Elite', views: '89.7K', duration: '67', color: 'orange', tags: ['Health', 'Wellness'] },
+              { title: 'Travel Guide: Hidden Gems in Barcelona', creator: 'Wanderlust Chronicles', views: '215.8K', duration: '40', color: 'cyan', tags: ['Travel', 'Vlog'] },
+              { title: 'Sustainable Living: Small Changes, Big Impact', creator: 'Green Living Hub', views: '127.4K', duration: '53', color: 'rose', tags: ['Lifestyle', 'Eco'] },
+              { title: 'Comedy Sketch: Corporate Life Unplugged', creator: 'The Comedy Lab', views: '412.6K', duration: '75', color: 'indigo', tags: ['Comedy', 'Humor'] },
+              { title: 'Photography Masterclass: Golden Hour Secrets', creator: 'Lens Academy', views: '203.2K', duration: '61', color: 'amber', tags: ['Creative', 'Tutorial'] },
+            ].map((video, idx) => {
+              const colorMap: any = {
+                blue: '#1e40af', emerald: '#047857', purple: '#7c3aed', orange: '#ea580c',
+                cyan: '#0891b2', rose: '#be185d', indigo: '#4f46e5', amber: '#b45309'
+              };
+              
+              if (videoMode === 'fancy') {
+                return (
+                  <div key={idx} className="group reveal cursor-pointer">
+                    <div className="relative overflow-hidden rounded-2xl transition-all duration-500 hover:scale-[1.05] hover:-rotate-1">
+                      <div className="absolute inset-0 bg-gradient-to-br from-[#ffc105] via-[#497ab6] to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-500 rounded-2xl"></div>
+                      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
+                        <div className="absolute inset-0 animate-pulse opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ background: `radial-gradient(circle, ${colorMap[video.color]}, transparent)` }}></div>
+                        <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
+                          <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.7)] px-3 py-1.5 rounded-full backdrop-blur-md border border-[#ffc105]">
+                            {video.duration} sec
+                          </div>
+                          <div className="text-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-150">▶️</div>
+                        </div>
+                        <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${colorMap[video.color]}40, transparent)` }} />
+                      </div>
+                      <div className="bg-gradient-to-b from-[#101e34] to-[#0d1a2e] border-2 border-[#ffc105] border-t-0 p-5 rounded-b-2xl">
+                        <h3 className="text-[#ffc105] font-black text-[1rem] mb-3 line-clamp-2">{video.title}</h3>
+                        <div className="flex items-center justify-between mb-3">
+                          <p className="text-[#7a93b4] text-[.8rem] font-semibold">{video.creator}</p>
+                          <span className="text-[#ffc105] text-[.75rem] font-black drop-shadow-[0_0_8px_rgba(255,193,5,.5)]">⭐ {video.views}</span>
+                        </div>
+                        <div className="flex gap-2 flex-wrap">
+                          {video.tags.map((tag: string) => (
+                            <span key={tag} className="text-[.65rem] text-[#ffc105] bg-[#ffc10520] px-3 py-1 rounded-full border border-[#ffc105] font-bold">{tag}</span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
-                </div>
-                <div className="absolute inset-0 bg-blue-600 opacity-40" />
-              </div>
-              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
-                <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">Minimalist Architecture in the Desert</h3>
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-[#7a93b4] text-[.8rem]">Khan Studios</p>
-                  <span className="text-[#ffc105] text-[.75rem] font-bold">48.2K ▲</span>
-                </div>
-                <div className="flex gap-1.5 flex-wrap">
-                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Architecture</span>
-                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Design</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Video Card 2 */}
-            <div className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
-              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
-                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
-                  <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
-                    32 sec
+                );
+              } else if (videoMode === 'neon') {
+                return (
+                  <div key={idx} className="group reveal cursor-pointer">
+                    <div className="relative overflow-hidden rounded-lg transition-all duration-300 hover:scale-[1.08] hover:shadow-[0_0_30px_#00ff88]">
+                      <div className="relative overflow-hidden rounded-lg bg-[#0a0a0a] aspect-video border-2 border-[#00ff88]">
+                        <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
+                          <div className="text-[.7rem] font-bold text-[#000] bg-[#00ff88] px-2 py-1 rounded font-mono">
+                            {video.duration}s
+                          </div>
+                          <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity text-[#00ff88] drop-shadow-[0_0_10px_#00ff88]">▶️</div>
+                        </div>
+                        <div className="absolute inset-0 opacity-30" style={{ background: `linear-gradient(135deg, ${colorMap[video.color]}, transparent)` }} />
+                      </div>
+                      <div className="bg-[#0a0a0a] border-l-4 border-r-4 border-b-4 border-[#ff00ff] p-4 rounded-b-lg">
+                        <h3 className="text-[#00ff88] font-mono text-[.9rem] mb-2 line-clamp-2 drop-shadow-[0_0_10px_#00ff88]">{video.title}</h3>
+                        <div className="flex items-center justify-between text-[.75rem]">
+                          <p className="text-[#00ff88] font-mono">{video.creator}</p>
+                          <span className="text-[#ff00ff] font-mono drop-shadow-[0_0_10px_#ff00ff]">{video.views}</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
-                </div>
-                <div className="absolute inset-0 bg-emerald-600 opacity-35" />
-              </div>
-              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
-                <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">Quick Kitchen Tips for Busy Professionals</h3>
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-[#7a93b4] text-[.8rem]">Chef's Corner</p>
-                  <span className="text-[#ffc105] text-[.75rem] font-bold">156.3K ▲</span>
-                </div>
-                <div className="flex gap-1.5 flex-wrap">
-                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Lifestyle</span>
-                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Tutorial</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Video Card 3 */}
-            <div className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
-              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
-                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
-                  <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
-                    58 sec
+                );
+              } else if (videoMode === 'minimal') {
+                return (
+                  <article key={idx} className="group reveal cursor-pointer">
+                    <div className="aspect-video bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] rounded overflow-hidden mb-4 transition-all hover:shadow-lg">
+                      <div className="w-full h-full flex items-center justify-center text-4xl opacity-60 group-hover:opacity-100 transition-opacity">
+                        ▶️
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-[#e8edf5] text-[.95rem] mb-2 line-clamp-2">{video.title}</h3>
+                      <div className="flex items-center gap-2 text-[.8rem]">
+                        <span className="text-[#7a93b4]">{video.creator}</span>
+                        <span className="text-[#ffc105] font-semibold">{video.views}</span>
+                      </div>
+                    </div>
+                  </article>
+                );
+              } else {
+                return (
+                  <div key={idx} className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
+                    <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
+                      <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
+                        <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
+                          {video.duration} sec
+                        </div>
+                        <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
+                      </div>
+                      <div className="absolute inset-0" style={{ background: `linear-gradient(135deg, ${colorMap[video.color]}35, transparent)` }} />
+                    </div>
+                    <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
+                      <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">{video.title}</h3>
+                      <div className="flex items-center justify-between mb-3">
+                        <p className="text-[#7a93b4] text-[.8rem]">{video.creator}</p>
+                        <span className="text-[#ffc105] text-[.75rem] font-bold">⬆️ {video.views}</span>
+                      </div>
+                      <div className="flex gap-1.5 flex-wrap">
+                        {video.tags.map((tag: string) => (
+                          <span key={tag} className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">{tag}</span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
-                </div>
-                <div className="absolute inset-0 bg-purple-600 opacity-35" />
-              </div>
-              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
-                <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">AI Trends You Need to Know About</h3>
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-[#7a93b4] text-[.8rem]">Tech Insights Daily</p>
-                  <span className="text-[#ffc105] text-[.75rem] font-bold">324.1K ▲</span>
-                </div>
-                <div className="flex gap-1.5 flex-wrap">
-                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Tech</span>
-                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">News</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Video Card 4 */}
-            <div className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
-              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
-                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
-                  <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
-                    67 sec
-                  </div>
-                  <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
-                </div>
-                <div className="absolute inset-0 bg-orange-500 opacity-35" />
-              </div>
-              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
-                <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">Fitness Motivation: High-Intensity Challenge</h3>
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-[#7a93b4] text-[.8rem]">Fitness Elite</p>
-                  <span className="text-[#ffc105] text-[.75rem] font-bold">89.7K ▲</span>
-                </div>
-                <div className="flex gap-1.5 flex-wrap">
-                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Health</span>
-                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Wellness</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Video Card 5 */}
-            <div className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
-              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
-                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
-                  <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
-                    40 sec
-                  </div>
-                  <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
-                </div>
-                <div className="absolute inset-0 bg-cyan-600 opacity-35" />
-              </div>
-              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
-                <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">Travel Guide: Hidden Gems in Barcelona</h3>
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-[#7a93b4] text-[.8rem]">Wanderlust Chronicles</p>
-                  <span className="text-[#ffc105] text-[.75rem] font-bold">215.8K ▲</span>
-                </div>
-                <div className="flex gap-1.5 flex-wrap">
-                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Travel</span>
-                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Vlog</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Video Card 6 */}
-            <div className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
-              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
-                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
-                  <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
-                    53 sec
-                  </div>
-                  <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
-                </div>
-                <div className="absolute inset-0 bg-rose-600 opacity-35" />
-              </div>
-              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
-                <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">Sustainable Living: Small Changes, Big Impact</h3>
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-[#7a93b4] text-[.8rem]">Green Living Hub</p>
-                  <span className="text-[#ffc105] text-[.75rem] font-bold">127.4K ▲</span>
-                </div>
-                <div className="flex gap-1.5 flex-wrap">
-                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Lifestyle</span>
-                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Eco</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Video Card 7 */}
-            <div className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
-              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
-                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
-                  <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
-                    75 sec
-                  </div>
-                  <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
-                </div>
-                <div className="absolute inset-0 bg-indigo-600 opacity-35" />
-              </div>
-              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
-                <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">Comedy Sketch: Corporate Life Unplugged</h3>
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-[#7a93b4] text-[.8rem]">The Comedy Lab</p>
-                  <span className="text-[#ffc105] text-[.75rem] font-bold">412.6K ▲</span>
-                </div>
-                <div className="flex gap-1.5 flex-wrap">
-                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Comedy</span>
-                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Humor</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Video Card 8 */}
-            <div className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
-              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
-                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
-                  <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
-                    61 sec
-                  </div>
-                  <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
-                </div>
-                <div className="absolute inset-0 bg-amber-600 opacity-35" />
-              </div>
-              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
-                <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">Photography Masterclass: Golden Hour Secrets</h3>
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-[#7a93b4] text-[.8rem]">Lens Academy</p>
-                  <span className="text-[#ffc105] text-[.75rem] font-bold">203.2K ▲</span>
-                </div>
-                <div className="flex gap-1.5 flex-wrap">
-                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Creative</span>
-                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Tutorial</span>
-                </div>
-              </div>
-            </div>
+                );
+              }
+            })}
           </div>
 
           {/* Call to Action */}
           <div className="mt-16 text-center reveal">
-            <button className="bg-gradient-to-br from-[#ffc105] to-[#e0a800] text-[#080f1c] border-none px-12 py-4 rounded transition-all hover:translate-y-[-2px] hover:shadow-[0_8px_32px_rgba(255,193,5,.35)] font-['Barlow_Condensed'] font-black uppercase tracking-[.1em] text-[1.05rem] cursor-pointer">
+            <button className={`px-12 py-4 rounded font-['Barlow_Condensed'] font-black uppercase tracking-[.1em] text-[1.05rem] cursor-pointer transition-all ${
+              videoMode === 'neon'
+                ? 'bg-[#00ff88] text-[#000000] hover:shadow-[0_0_30px_#00ff88]'
+                : videoMode === 'fancy'
+                ? 'bg-gradient-to-br from-[#ffc105] to-[#497ab6] text-[#080f1c] hover:translate-y-[-2px] hover:shadow-[0_8px_32px_rgba(255,193,5,.35)]'
+                : videoMode === 'minimal'
+                ? 'border-2 border-[#ffc105] text-[#ffc105] hover:bg-[#ffc105] hover:text-[#080f1c]'
+                : 'bg-gradient-to-br from-[#ffc105] to-[#e0a800] text-[#080f1c] hover:translate-y-[-2px] hover:shadow-[0_8px_32px_rgba(255,193,5,.35)]'
+            }`}>
               Explore All Videos ›
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Animations Showcase Section */}
+      <section className="py-[120px] px-[5%] bg-gradient-to-b from-[#0d1a2e] to-[#080f1c]" id="animations">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="mb-20 text-center reveal">
+            <div className="flex items-center justify-center gap-2.5 text-[#ffc105] font-bold text-[.78rem] uppercase tracking-[.2em] mb-3">
+              <div className="w-8 h-0.5 bg-[#ffc105]"></div>
+              Interactive Features
+              <div className="w-8 h-0.5 bg-[#ffc105]"></div>
+            </div>
+            <h2 className="font-['Bebas_Neue'] text-[clamp(2.4rem,5vw,3.8rem)] leading-none tracking-[.03em] text-[#e8edf5] mb-4">
+              EXPERIENCE<br/><span className="text-[#ffc105]">SMOOTH ANIMATIONS</span>
+            </h2>
+            <p className="text-[#7a93b4] max-w-[520px] mx-auto text-[.95rem] leading-[1.7]">
+              Click, hover, and interact with the elements below to see our smooth animations and transitions in action.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Floating Animation Card */}
+            <div className="reveal">
+              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] rounded-2xl p-8 h-full flex flex-col items-center justify-center text-center group hover:border-[#ffc105] transition-all duration-300">
+                <div className="text-6xl mb-4 animate-bounce">🎈</div>
+                <h3 className="text-[#e8edf5] font-semibold text-[1.2rem] mb-2">Floating Animation</h3>
+                <p className="text-[#7a93b4] text-[.9rem]">Elements that smoothly float and bounce as you interact with them</p>
+              </div>
+            </div>
+
+            {/* Pulse Animation Card */}
+            <div className="reveal">
+              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] rounded-2xl p-8 h-full flex flex-col items-center justify-center text-center group hover:border-[#ffc105] transition-all duration-300">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#ffc105] to-[#497ab6] animate-pulse mb-4 shadow-[0_0_20px_rgba(255,193,5,.4)]"></div>
+                <h3 className="text-[#e8edf5] font-semibold text-[1.2rem] mb-2">Pulsing Glow</h3>
+                <p className="text-[#7a93b4] text-[.9rem]">Gentle glowing effects that draw attention without overwhelming</p>
+              </div>
+            </div>
+
+            {/* Spin Animation Card */}
+            <div className="reveal">
+              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] rounded-2xl p-8 h-full flex flex-col items-center justify-center text-center group hover:border-[#ffc105] transition-all duration-300 cursor-pointer" onClick={() => alert('Clicked! Try dragging on other elements.')}>
+                <div className="text-6xl mb-4 group-hover:animate-spin">⚙️</div>
+                <h3 className="text-[#e8edf5] font-semibold text-[1.2rem] mb-2">Spin on Hover</h3>
+                <p className="text-[#7a93b4] text-[.9rem]">Elements that rotate smoothly when you interact with them</p>
+              </div>
+            </div>
+
+            {/* Scale Animation Card */}
+            <div className="reveal cursor-pointer group">
+              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] rounded-2xl p-8 h-full flex flex-col items-center justify-center text-center hover:scale-110 hover:border-[#ffc105] transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,193,5,.3)]">
+                <div className="text-6xl mb-4 group-hover:scale-150 transition-transform duration-300">📦</div>
+                <h3 className="text-[#e8edf5] font-semibold text-[1.2rem] mb-2">Scale Transform</h3>
+                <p className="text-[#7a93b4] text-[.9rem]">Cards that smoothly grow larger when you hover over them</p>
+              </div>
+            </div>
+
+            {/* Gradient Animation Card */}
+            <div className="reveal">
+              <div className="bg-gradient-to-br from-[#101e34] to-[#0d1a2e] border border-[rgba(73,122,182,.2)] rounded-2xl p-8 h-full flex flex-col items-center justify-center text-center group hover:from-[#1a2e4a] hover:to-[#101e34] transition-all duration-300 hover:border-[#ffc105]">
+                <div className="text-6xl mb-4">🎨</div>
+                <h3 className="text-[#e8edf5] font-semibold text-[1.2rem] mb-2">Gradient Shift</h3>
+                <p className="text-[#7a93b4] text-[.9rem]">Backgrounds that smoothly transition between different gradients</p>
+              </div>
+            </div>
+
+            {/* Slide Animation Card */}
+            <div className="reveal">
+              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] rounded-2xl p-8 h-full flex flex-col items-center justify-center text-center overflow-hidden group hover:border-[#ffc105] transition-all duration-300">
+                <div className="text-6xl mb-4 group-hover:translate-x-2 group-hover:animate-pulse transition-all duration-300">→</div>
+                <h3 className="text-[#e8edf5] font-semibold text-[1.2rem] mb-2">Slide Effect</h3>
+                <p className="text-[#7a93b4] text-[.9rem]">Content that smoothly slides and transitions into view</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Interactive Button */}
+          <div className="mt-20 text-center reveal">
+            <button className="bg-gradient-to-br from-[#ffc105] to-[#e0a800] text-[#080f1c] border-none px-12 py-4 rounded font-['Barlow_Condensed'] font-black uppercase tracking-[.1em] text-[1.05rem] cursor-pointer transition-all hover:translate-y-[-4px] hover:shadow-[0_12px_40px_rgba(255,193,5,.4)] active:translate-y-[-2px]">
+              Try Clicking Me! ✨
             </button>
           </div>
         </div>
