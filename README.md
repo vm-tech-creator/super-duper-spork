@@ -1,2 +1,2 @@
-# super-duper-spork
+# super-duper-supersite
 A supersite for learning
