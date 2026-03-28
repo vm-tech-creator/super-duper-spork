@@ -2,8 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   // Turbopack configuration
-  experimental: {
-    // turbopack: true, // Enable if needed
+  turbopack: {
+    root: process.cwd(),
   },
 };
 
