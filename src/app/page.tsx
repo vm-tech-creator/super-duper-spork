@@ -234,6 +234,253 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Trending Videos */}
+      <section className="py-[120px] px-[5%] bg-[#080f1c]" id="videos">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="mb-20 reveal">
+            <div className="flex items-center gap-2.5 text-[#ffc105] font-bold text-[.78rem] uppercase tracking-[.2em] mb-3">
+              <div className="w-8 h-0.5 bg-[#ffc105]"></div>
+              Trending Now
+            </div>
+            <h2 className="font-['Bebas_Neue'] text-[clamp(2.4rem,5vw,3.8rem)] leading-none tracking-[.03em] text-[#e8edf5]">
+              SHORT-FORM<br/><span className="text-[#ffc105]">VIDEOS FOR YOU</span>
+            </h2>
+            <p className="text-[#7a93b4] max-w-[420px] text-[.95rem] leading-[1.7] mt-4">
+              Discover viral-worthy short videos. Perfect for quick entertainment and inspiration — all under 90 seconds.
+            </p>
+          </div>
+
+          {/* Filter Tags */}
+          <div className="flex gap-3 mb-12 reveal flex-wrap">
+            <button className="px-4 py-2 rounded-full text-[.85rem] font-semibold uppercase tracking-[.08em] bg-[#ffc105] text-[#080f1c] transition-all hover:shadow-[0_0_20px_rgba(255,193,5,.4)]">
+              All
+            </button>
+            <button className="px-4 py-2 rounded-full text-[.85rem] font-semibold uppercase tracking-[.08em] border border-[rgba(73,122,182,.3)] text-[#7a93b4] transition-all hover:border-[#ffc105] hover:text-[#ffc105]">
+              Entertaining
+            </button>
+            <button className="px-4 py-2 rounded-full text-[.85rem] font-semibold uppercase tracking-[.08em] border border-[rgba(73,122,182,.3)] text-[#7a93b4] transition-all hover:border-[#ffc105] hover:text-[#ffc105]">
+              Educational
+            </button>
+            <button className="px-4 py-2 rounded-full text-[.85rem] font-semibold uppercase tracking-[.08em] border border-[rgba(73,122,182,.3)] text-[#7a93b4] transition-all hover:border-[#ffc105] hover:text-[#ffc105]">
+              Creative
+            </button>
+            <button className="px-4 py-2 rounded-full text-[.85rem] font-semibold uppercase tracking-[.08em] border border-[rgba(73,122,182,.3)] text-[#7a93b4] transition-all hover:border-[#ffc105] hover:text-[#ffc105]">
+              Lifestyle
+            </button>
+          </div>
+
+          {/* Videos Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {/* Video Card 1 */}
+            <div className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
+              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
+                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
+                  <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
+                    45 sec
+                  </div>
+                  <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
+                </div>
+                <div className="absolute inset-0 bg-blue-600 opacity-40" />
+              </div>
+              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
+                <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">Minimalist Architecture in the Desert</h3>
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-[#7a93b4] text-[.8rem]">Khan Studios</p>
+                  <span className="text-[#ffc105] text-[.75rem] font-bold">48.2K ▲</span>
+                </div>
+                <div className="flex gap-1.5 flex-wrap">
+                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Architecture</span>
+                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Design</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Video Card 2 */}
+            <div className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
+              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
+                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
+                  <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
+                    32 sec
+                  </div>
+                  <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
+                </div>
+                <div className="absolute inset-0 bg-emerald-600 opacity-35" />
+              </div>
+              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
+                <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">Quick Kitchen Tips for Busy Professionals</h3>
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-[#7a93b4] text-[.8rem]">Chef's Corner</p>
+                  <span className="text-[#ffc105] text-[.75rem] font-bold">156.3K ▲</span>
+                </div>
+                <div className="flex gap-1.5 flex-wrap">
+                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Lifestyle</span>
+                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Tutorial</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Video Card 3 */}
+            <div className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
+              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
+                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
+                  <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
+                    58 sec
+                  </div>
+                  <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
+                </div>
+                <div className="absolute inset-0 bg-purple-600 opacity-35" />
+              </div>
+              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
+                <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">AI Trends You Need to Know About</h3>
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-[#7a93b4] text-[.8rem]">Tech Insights Daily</p>
+                  <span className="text-[#ffc105] text-[.75rem] font-bold">324.1K ▲</span>
+                </div>
+                <div className="flex gap-1.5 flex-wrap">
+                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Tech</span>
+                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">News</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Video Card 4 */}
+            <div className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
+              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
+                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
+                  <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
+                    67 sec
+                  </div>
+                  <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
+                </div>
+                <div className="absolute inset-0 bg-orange-500 opacity-35" />
+              </div>
+              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
+                <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">Fitness Motivation: High-Intensity Challenge</h3>
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-[#7a93b4] text-[.8rem]">Fitness Elite</p>
+                  <span className="text-[#ffc105] text-[.75rem] font-bold">89.7K ▲</span>
+                </div>
+                <div className="flex gap-1.5 flex-wrap">
+                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Health</span>
+                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Wellness</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Video Card 5 */}
+            <div className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
+              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
+                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
+                  <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
+                    40 sec
+                  </div>
+                  <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
+                </div>
+                <div className="absolute inset-0 bg-cyan-600 opacity-35" />
+              </div>
+              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
+                <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">Travel Guide: Hidden Gems in Barcelona</h3>
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-[#7a93b4] text-[.8rem]">Wanderlust Chronicles</p>
+                  <span className="text-[#ffc105] text-[.75rem] font-bold">215.8K ▲</span>
+                </div>
+                <div className="flex gap-1.5 flex-wrap">
+                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Travel</span>
+                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Vlog</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Video Card 6 */}
+            <div className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
+              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
+                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
+                  <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
+                    53 sec
+                  </div>
+                  <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
+                </div>
+                <div className="absolute inset-0 bg-rose-600 opacity-35" />
+              </div>
+              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
+                <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">Sustainable Living: Small Changes, Big Impact</h3>
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-[#7a93b4] text-[.8rem]">Green Living Hub</p>
+                  <span className="text-[#ffc105] text-[.75rem] font-bold">127.4K ▲</span>
+                </div>
+                <div className="flex gap-1.5 flex-wrap">
+                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Lifestyle</span>
+                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Eco</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Video Card 7 */}
+            <div className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
+              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
+                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
+                  <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
+                    75 sec
+                  </div>
+                  <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
+                </div>
+                <div className="absolute inset-0 bg-indigo-600 opacity-35" />
+              </div>
+              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
+                <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">Comedy Sketch: Corporate Life Unplugged</h3>
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-[#7a93b4] text-[.8rem]">The Comedy Lab</p>
+                  <span className="text-[#ffc105] text-[.75rem] font-bold">412.6K ▲</span>
+                </div>
+                <div className="flex gap-1.5 flex-wrap">
+                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Comedy</span>
+                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Humor</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Video Card 8 */}
+            <div className="group reveal cursor-pointer overflow-hidden rounded-xl transition-all duration-300 hover:scale-[1.02]">
+              <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-[#1a2e4a] to-[#0d1a2e] aspect-video">
+                <div className="absolute inset-0 bg-gradient-to-br from-[rgba(255,193,5,.15)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 flex items-end justify-between p-4 z-10">
+                  <div className="text-[.7rem] font-bold uppercase tracking-[.12em] text-[#ffc105] bg-[rgba(0,0,0,.6)] px-2 py-1 rounded backdrop-blur-sm">
+                    61 sec
+                  </div>
+                  <div className="text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform group-hover:scale-110">▶️</div>
+                </div>
+                <div className="absolute inset-0 bg-amber-600 opacity-35" />
+              </div>
+              <div className="bg-[#101e34] border border-[rgba(73,122,182,.2)] border-t-0 p-4 rounded-b-xl">
+                <h3 className="text-[#e8edf5] font-semibold text-[.95rem] mb-2 line-clamp-2">Photography Masterclass: Golden Hour Secrets</h3>
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-[#7a93b4] text-[.8rem]">Lens Academy</p>
+                  <span className="text-[#ffc105] text-[.75rem] font-bold">203.2K ▲</span>
+                </div>
+                <div className="flex gap-1.5 flex-wrap">
+                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Creative</span>
+                  <span className="text-[.7rem] text-[#497ab6] bg-[rgba(73,122,182,.1)] px-2 py-0.5 rounded-full">Tutorial</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Call to Action */}
+          <div className="mt-16 text-center reveal">
+            <button className="bg-gradient-to-br from-[#ffc105] to-[#e0a800] text-[#080f1c] border-none px-12 py-4 rounded transition-all hover:translate-y-[-2px] hover:shadow-[0_8px_32px_rgba(255,193,5,.35)] font-['Barlow_Condensed'] font-black uppercase tracking-[.1em] text-[1.05rem] cursor-pointer">
+              Explore All Videos ›
+            </button>
+          </div>
+        </div>
+      </section>
+
       {/* Placeholder for more sections */}
       <div className="h-screen flex items-center justify-center">
         <p className="text-xl">More sections coming soon...</p>
