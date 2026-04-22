@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 
 const GAMES_DATA: Record<number, any> = {
@@ -123,9 +123,10 @@ const GAMES_DATA: Record<number, any> = {
   },
 };
 
-export default function GameDetailPage({ params }: { params: { id: string } }) {
+export default function GameDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params);
   const router = useRouter();
-  const gameId = parseInt(params.id);
+  const gameId = parseInt(resolvedParams.id);
   const game = GAMES_DATA[gameId];
   const [scrolled, setScrolled] = useState(false);
 

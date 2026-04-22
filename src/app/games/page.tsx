@@ -15,6 +15,16 @@ const GAMES_DATA = [
     releaseDate: 'Mar 2026',
   },
   {
+    id: 10,
+    title: 'Interactive Space Model',
+    description: 'An interactive 3D model of our solar system where you can explore planets, moons, and celestial bodies.',
+    imageUrl: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=500&h=400&fit=crop',
+    genre: 'Space',
+    rating: 4.8,
+    players: 'Solo',
+    releaseDate: 'Apr 2026',
+  },
+  {
     id: 2,
     title: 'Endless Horse',
     description: 'A page with a pixelated horse whose legs get longer and longer as you scroll infinitely.',
@@ -193,7 +203,7 @@ export default function GamesPage() {
 
           {/* Filter Controls */}
           <div className="max-w-6xl mx-auto mb-12 flex flex-wrap gap-3 justify-center">
-            {['All', 'Interactive & Useless Fun', 'Humorous & Absurd Concepts'].map((filter) => (
+            {['All', 'Interactive & Useless Fun', 'Humorous & Absurd Concepts', 'Space'].map((filter) => (
               <button
                 key={filter}
                 onClick={() => setSelectedFilter(filter)}

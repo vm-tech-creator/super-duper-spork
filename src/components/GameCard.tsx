@@ -28,8 +28,10 @@ export default function GameCard({
 }: GameCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
+  const gameLink = id === 10 ? '/games/space' : `/games/${id}`;
+
   return (
-    <Link href={`/games/${id}`}>
+    <Link href={gameLink}>
       <div
         className="relative group cursor-pointer overflow-hidden rounded-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[rgba(255,193,5,.3)]"
         onMouseEnter={() => setIsHovered(true)}
