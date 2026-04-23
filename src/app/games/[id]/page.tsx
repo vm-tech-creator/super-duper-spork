@@ -146,7 +146,8 @@ const GAMES_DATA: Record<number, any> = {
   },
 };
 
-export default function GameDetailPage({ params }: { params: { id: string } }) {
+export default function GameDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params);
   const router = useRouter();
   const searchParams = useSearchParams();
   const gameId = parseInt(params.id);
