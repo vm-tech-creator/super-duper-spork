@@ -1,0 +1,13 @@
+<svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="wolfGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#212121;stop-opacity:1" /><stop offset="100%" style="stop-color:#424242;stop-opacity:1" /></linearGradient></defs>
+  <rect width="400" height="600" fill="url(#wolfGrad)"/>
+  <polygon points="200,80 230,160 170,160 200,100" fill="#fff" opacity="0.8"/>
+  <ellipse cx="200" cy="240" rx="80" ry="90" fill="#424242"/>
+  <circle cx="170" cy="220" r="12" fill="#ffd54f"/><circle cx="230" cy="220" r="12" fill="#ffd54f"/>
+  <path d="M 200 250 L 190 280 L 210 280 Z" fill="#424242"/>
+  <path d="M 150 300 Q 120 330 100 350" stroke="#fff" stroke-width="2" fill="none"/><path d="M 250 300 Q 280 330 300 350" stroke="#fff" stroke-width="2" fill="none"/>
+  <path d="M 100 450 Q 200 500 300 450" stroke="#fff" stroke-width="3" fill="none" opacity="0.6"/>
+  <rect x="50" y="480" width="300" height="110" fill="#000" opacity="0.85" rx="10"/>
+  <text x="200" y="530" font-size="40" font-weight="bold" text-anchor="middle" fill="#fff" font-family="Arial">Wolf Bond</text>
+  <text x="200" y="563" font-size="16" text-anchor="middle" fill="#ffd54f" font-family="Arial">Wildness Calls</text>
+</svg>

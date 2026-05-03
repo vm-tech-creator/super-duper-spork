@@ -1,0 +1,9 @@
+<svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="600" fill="#fff9c4"/>
+  <circle cx="200" cy="120" r="60" fill="#ffeb3b" opacity="0.8"/><path d="M 200 120 L 250 70 L 220 100 M 200 120 L 250 170 L 220 140 M 200 120 L 150 70 L 180 100 M 200 120 L 150 170 L 180 140" stroke="#ffeb3b" stroke-width="2" opacity="0.6"/>
+  <polygon points="100,250 300,250 280,450 120,450" fill="#ffeb3b" opacity="0.5"/>
+  <text x="200" y="350" font-size="120" text-anchor="middle" fill="#fbc02d" font-family="Arial" opacity="0.6">!</text>
+  <rect x="50" y="480" width="300" height="110" fill="#f57f17" opacity="0.9" rx="10"/>
+  <text x="200" y="528" font-size="40" font-weight="bold" text-anchor="middle" fill="#fff" font-family="Arial">Bright Ideas</text>
+  <text x="200" y="563" font-size="16" text-anchor="middle" fill="#fff" font-family="Arial">Illuminating Solutions</text>
+</svg>

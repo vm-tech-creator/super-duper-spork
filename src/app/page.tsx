@@ -94,6 +94,7 @@ export default function Home() {
         <ul className="flex gap-8 list-none">
           <li><a href="#categories" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">Explore</a></li>
           <li><a href="#why" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">Features</a></li>
+          <li><a href="/books" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">Books</a></li>
           <li><a href="#about" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">About</a></li>
           <li><a href="#" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">Sign In</a></li>
         </ul>

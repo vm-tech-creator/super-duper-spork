@@ -1,0 +1,3 @@
+<svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="600" fill="#7b1fa2"/><circle cx="200" cy="120" r="50" fill="#9c27b0"/><rect x="130" y="200" width="140" height="200" fill="#ba68c8"/><polygon points="90,420 310,420 290,500 110,500" fill="#9c27b0" opacity="0.7"/><path d="M 150 300 L 250 300" stroke="#e1bee7" stroke-width="4"/><rect x="50" y="480" width="300" height="110" fill="#000" opacity="0.85" rx="10"/><text x="200" y="528" font-size="40" font-weight="bold" text-anchor="middle" fill="#ce93d8" font-family="Arial">Empathy</text><text x="200" y="563" font-size="16" text-anchor="middle" fill="#fff" font-family="Arial">Understanding Others</text>
+</svg>
