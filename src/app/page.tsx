@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
@@ -18,6 +19,7 @@ export default function Home() {
   useEffect(() => {
     // Particles animation
     const pc = document.getElementById('particles');
+    const createdParticles: HTMLDivElement[] = [];
     if (pc) {
       const colors = ['#ffc105','#497ab6','#2b4c7d','#ffffff'];
       for (let i = 0; i < 28; i++) {
@@ -32,6 +34,7 @@ export default function Home() {
           animation-delay:${Math.random()*10}s;
         `;
         pc.appendChild(p);
+        createdParticles.push(p);
       }
     }
 
@@ -73,6 +76,11 @@ export default function Home() {
       });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Cleanup particles on unmount
+    return () => {
+      createdParticles.forEach(p => p.remove());
+    };
   }, []);
 
   return (
@@ -84,33 +92,33 @@ export default function Home() {
            }} />
 
       {/* Nav */}
-      <nav className={`fixed top-0 w-full z-50 flex items-center justify-between px-[5%] h-[68px] bg-[rgba(8,15,28,.85)] backdrop-blur-[16px] transition-shadow ${scrolled ? 'shadow-[0_4px_40px_rgba(0,0,0,.5)]' : ''} border-b border-[rgba(73,122,182,.2)]`}>
-        <a href="#" className="flex items-center gap-2.5 text-decoration-none">
-          <div className="w-9 h-9 bg-gradient-to-br from-[#ffc105] to-[#e0a800] rounded-lg grid place-items-center font-['Bebas_Neue'] text-xl text-[#080f1c] shadow-[0_0_16px_rgba(255,193,5,.35)]">
+      <nav className={`fixed top-0 w-full z-50 flex items-center justify-between px-[5%] h-[68px] bg-[#080f1c]/85 backdrop-blur-[16px] transition-shadow ${scrolled ? 'shadow-[0_4px_40px_rgba(0,0,0,.5)]' : ''} border-b border-[rgba(73,122,182,.2)]`}>
+        <Link href="/" className="flex items-center gap-2.5 text-decoration-none">
+          <div className="w-9 h-9 bg-gradient-to-br from-[#ffc105] to-[#e0a800] rounded-lg grid place-items-center font-bebas-neue text-xl text-[#080f1c] shadow-[0_0_16px_rgba(255,193,5,.35)]">
             S
           </div>
-          <div className="font-['Barlow_Condensed'] font-black text-xl uppercase tracking-[.04em]">
+          <div className="font-barlow-condensed font-black text-xl uppercase tracking-[.04em]">
             <span className="text-[#ffc105]">Sahara</span>
           </div>
-        </a>
+        </Link>
         <ul className="flex gap-8 list-none">
-          <li><a href="#categories" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">Explore</a></li>
-          <li><a href="#why" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">Features</a></li>
-          <li><a href="#about" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">About</a></li>
+          <li><Link href="#categories" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">Explore</Link></li>
+          <li><Link href="#why" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">Features</Link></li>
+          <li><Link href="#about" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">About</Link></li>
           <li><a href="#" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">Sign In</a></li>
         </ul>
         <div className="flex items-center gap-4">
           <select 
             value={videoMode} 
             onChange={(e) => setVideoMode(e.target.value as any)}
-            className="bg-[#101e34] border border-[rgba(73,122,182,.3)] text-[#e8edf5] px-4 py-2 rounded font-['Barlow_Condensed'] text-[.85rem] uppercase tracking-[.05em] cursor-pointer transition-all hover:border-[#ffc105]"
+            className="bg-[#101e34] border border-[rgba(73,122,182,.3)] text-[#e8edf5] px-4 py-2 rounded font-barlow-condensed text-[.85rem] uppercase tracking-[.05em] cursor-pointer transition-all hover:border-[#ffc105]"
           >
             <option value="classic">Classic Mode</option>
             <option value="fancy">✨ Fancy Mode</option>
             <option value="neon">⚡ Neon Mode</option>
             <option value="minimal">— Minimal Mode</option>
           </select>
-          <button className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2.5 rounded transition-all hover:bg-[#ffcf3a] hover:translate-y-[-1px] hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] text-[.95rem] cursor-pointer">
+          <button className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2.5 rounded transition-all hover:bg-[#ffcf3a] hover:translate-y-[-1px] hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] font-barlow-condensed font-bold uppercase tracking-[.08em] text-[.95rem] cursor-pointer">
             Explore Now
           </button>
         </div>
@@ -143,12 +151,12 @@ export default function Home() {
             Welcome to the World's Largest Supersite
           </div>
 
-          <h1 className="font-['Bebas_Neue'] text-[clamp(4rem,11vw,9rem)] leading-[.92] tracking-[.03em] text-[#e8edf5] animate-fade-up">
+          <h1 className="font-bebas-neue text-[clamp(4rem,11vw,9rem)] leading-[.92] tracking-[.03em] text-[#e8edf5] animate-fade-up">
             EXPLORE<br/>
             THE <span className="text-[#ffc105] drop-shadow-[0_0_40px_rgba(255,193,5,.4)]">SAHARA</span>
           </h1>
 
-          <p className="font-['Barlow_Condensed'] font-semibold text-[clamp(1rem,2.5vw,1.5rem)] uppercase tracking-[.25em] text-[#7a93b4] mt-3 animate-fade-up">
+          <p className="font-barlow-condensed font-semibold text-[clamp(1rem,2.5vw,1.5rem)] uppercase tracking-[.25em] text-[#7a93b4] mt-3 animate-fade-up">
             Games · Videos · Music · <span className="text-[#497ab6]">Education</span> &amp; Beyond
           </p>
 
@@ -158,32 +166,32 @@ export default function Home() {
           </p>
 
           <div className="flex items-center justify-center gap-4 mt-11 flex-wrap animate-fade-up">
-            <button className="bg-gradient-to-br from-[#ffc105] to-[#e0a800] text-[#080f1c] border-none px-10 py-4 rounded transition-all hover:translate-y-[-2px] hover:shadow-[0_8px_32px_rgba(255,193,5,.35)] font-['Barlow_Condensed'] font-black uppercase tracking-[.1em] text-[1.05rem] cursor-pointer">
+            <button className="bg-gradient-to-br from-[#ffc105] to-[#e0a800] text-[#080f1c] border-none px-10 py-4 rounded transition-all hover:translate-y-[-2px] hover:shadow-[0_8px_32px_rgba(255,193,5,.35)] font-barlow-condensed font-black uppercase tracking-[.1em] text-[1.05rem] cursor-pointer">
               Start Exploring →
             </button>
-            <button className="bg-transparent text-[#e8edf5] border border-[rgba(73,122,182,.2)] px-8 py-3.5 rounded transition-all hover:border-[#497ab6] hover:text-[#497ab6] hover:bg-[rgba(73,122,182,.08)] font-['Barlow_Condensed'] font-bold uppercase tracking-[.1em] text-[1.05rem] cursor-pointer">
+            <button className="bg-transparent text-[#e8edf5] border border-[rgba(73,122,182,.2)] px-8 py-3.5 rounded transition-all hover:border-[#497ab6] hover:text-[#497ab6] hover:bg-[rgba(73,122,182,.08)] font-barlow-condensed font-bold uppercase tracking-[.1em] text-[1.05rem] cursor-pointer">
               Watch Intro
             </button>
           </div>
 
           <div className="flex justify-center gap-12 mt-16 flex-wrap animate-fade-up">
             <div className="text-center">
-              <div className="text-[#ffc105] font-['Bebas_Neue'] text-[2.8rem] leading-none" data-target="250">0</div>
+              <div className="text-[#ffc105] font-bebas-neue text-[2.8rem] leading-none" data-target="250">0</div>
               <div className="text-[.75rem] text-[#7a93b4] uppercase tracking-[.12em] mt-1">Million Users</div>
             </div>
             <div className="w-px bg-[rgba(73,122,182,.2)] self-stretch my-1" />
             <div className="text-center">
-              <div className="text-[#ffc105] font-['Bebas_Neue'] text-[2.8rem] leading-none" data-target="10">0</div>
+              <div className="text-[#ffc105] font-bebas-neue text-[2.8rem] leading-none" data-target="10">0</div>
               <div className="text-[.75rem] text-[#7a93b4] uppercase tracking-[.12em] mt-1">M+ Content Items</div>
             </div>
             <div className="w-px bg-[rgba(73,122,182,.2)] self-stretch my-1" />
             <div className="text-center">
-              <div className="text-[#ffc105] font-['Bebas_Neue'] text-[2.8rem] leading-none" data-target="190">0</div>
+              <div className="text-[#ffc105] font-bebas-neue text-[2.8rem] leading-none" data-target="190">0</div>
               <div className="text-[.75rem] text-[#7a93b4] uppercase tracking-[.12em] mt-1">Countries</div>
             </div>
             <div className="w-px bg-[rgba(73,122,182,.2)] self-stretch my-1" />
             <div className="text-center">
-              <div className="text-[#ffc105] font-['Bebas_Neue'] text-[2.8rem] leading-none" data-target="4">0</div>
+              <div className="text-[#ffc105] font-bebas-neue text-[2.8rem] leading-none" data-target="4">0</div>
               <div className="text-[.75rem] text-[#7a93b4] uppercase tracking-[.12em] mt-1">Core Categories</div>
             </div>
           </div>
@@ -199,7 +207,7 @@ export default function Home() {
                 <div className="w-8 h-0.5 bg-[#ffc105]"></div>
                 Browse Categories
               </div>
-              <h2 className="font-['Bebas_Neue'] text-[clamp(2.4rem,5vw,3.8rem)] leading-none tracking-[.03em] text-[#e8edf5]">
+              <h2 className="font-bebas-neue text-[clamp(2.4rem,5vw,3.8rem)] leading-none tracking-[.03em] text-[#e8edf5]">
                 WHAT DO YOU WANT<br/><span className="text-[#ffc105]">TO EXPLORE TODAY?</span>
               </h2>
             </div>
@@ -209,41 +217,41 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-4 gap-5">
-            <div className="relative overflow-hidden rounded-xl border border-[rgba(73,122,182,.2)] bg-[#101e34] p-9 pb-8 cursor-pointer transition-all hover:translate-y-[-6px] hover:shadow-[0_24px_60px_rgba(0,0,0,.5)] hover:border-[rgba(255,193,5,.35)] group reveal">
+            <Link href="/games" className="relative overflow-hidden rounded-xl border border-[rgba(73,122,182,.2)] bg-[#101e34] p-9 pb-8 cursor-pointer transition-all hover:translate-y-[-6px] hover:shadow-[0_24px_60px_rgba(0,0,0,.5)] hover:border-[rgba(255,193,5,.35)] group reveal block">
               <div className="absolute inset-0 opacity-0 bg-gradient-to-br from-[rgba(255,193,5,.06)] to-transparent transition-opacity group-hover:opacity-100"></div>
               <div className="w-14 h-14 rounded-xl grid place-items-center text-2xl mb-5 relative z-10">🎮</div>
-              <div className="font-['Barlow_Condensed'] font-black text-[1.5rem] uppercase tracking-[.04em] text-[#e8edf5] mb-2 relative z-10">Games</div>
+              <div className="font-barlow-condensed font-black text-[1.5rem] uppercase tracking-[.04em] text-[#e8edf5] mb-2 relative z-10">Games</div>
               <div className="text-[.88rem] text-[#7a93b4] leading-[1.65] relative z-10">From casual mobile puzzles to immersive open-world adventures — discover thousands of titles across every genre imaginable.</div>
               <div className="absolute top-6 right-6 text-[3.5rem] leading-none text-[rgba(255,255,255,.04)] pointer-events-none">01</div>
               <div className="mt-6 flex items-center gap-2 text-[.82rem] font-semibold uppercase tracking-[.1em] text-[#ffc105] relative z-10 transition-all group-hover:gap-3.5">Browse Games ›</div>
-            </div>
+            </Link>
 
-            <div className="relative overflow-hidden rounded-xl border border-[rgba(73,122,182,.2)] bg-[#101e34] p-9 pb-8 cursor-pointer transition-all hover:translate-y-[-6px] hover:shadow-[0_24px_60px_rgba(0,0,0,.5)] hover:border-[rgba(255,193,5,.35)] group reveal">
+            <Link href="/videos" className="relative overflow-hidden rounded-xl border border-[rgba(73,122,182,.2)] bg-[#101e34] p-9 pb-8 cursor-pointer transition-all hover:translate-y-[-6px] hover:shadow-[0_24px_60px_rgba(0,0,0,.5)] hover:border-[rgba(255,193,5,.35)] group reveal block">
               <div className="absolute inset-0 opacity-0 bg-gradient-to-br from-[rgba(255,193,5,.06)] to-transparent transition-opacity group-hover:opacity-100"></div>
               <div className="w-14 h-14 rounded-xl grid place-items-center text-2xl mb-5 relative z-10">🎬</div>
-              <div className="font-['Barlow_Condensed'] font-black text-[1.5rem] uppercase tracking-[.04em] text-[#e8edf5] mb-2 relative z-10">Videos</div>
+              <div className="font-barlow-condensed font-black text-[1.5rem] uppercase tracking-[.04em] text-[#e8edf5] mb-2 relative z-10">Videos</div>
               <div className="text-[.88rem] text-[#7a93b4] leading-[1.65] relative z-10">Stream movies, series, short films, docs, and viral clips from creators worldwide.</div>
               <div className="absolute top-6 right-6 text-[3.5rem] leading-none text-[rgba(255,255,255,.04)] pointer-events-none">02</div>
               <div className="mt-6 flex items-center gap-2 text-[.82rem] font-semibold uppercase tracking-[.1em] text-[#ffc105] relative z-10 transition-all group-hover:gap-3.5">Watch Now ›</div>
-            </div>
+            </Link>
 
-            <div className="relative overflow-hidden rounded-xl border border-[rgba(73,122,182,.2)] bg-[#101e34] p-9 pb-8 cursor-pointer transition-all hover:translate-y-[-6px] hover:shadow-[0_24px_60px_rgba(0,0,0,.5)] hover:border-[rgba(255,193,5,.35)] group reveal">
+            <Link href="/music" className="relative overflow-hidden rounded-xl border border-[rgba(73,122,182,.2)] bg-[#101e34] p-9 pb-8 cursor-pointer transition-all hover:translate-y-[-6px] hover:shadow-[0_24px_60px_rgba(0,0,0,.5)] hover:border-[rgba(255,193,5,.35)] group reveal block">
               <div className="absolute inset-0 opacity-0 bg-gradient-to-br from-[rgba(255,193,5,.06)] to-transparent transition-opacity group-hover:opacity-100"></div>
               <div className="w-14 h-14 rounded-xl grid place-items-center text-2xl mb-5 relative z-10">🎵</div>
-              <div className="font-['Barlow_Condensed'] font-black text-[1.5rem] uppercase tracking-[.04em] text-[#e8edf5] mb-2 relative z-10">Music</div>
+              <div className="font-barlow-condensed font-black text-[1.5rem] uppercase tracking-[.04em] text-[#e8edf5] mb-2 relative z-10">Music</div>
               <div className="text-[.88rem] text-[#7a93b4] leading-[1.65] relative z-10">90M+ tracks. Every genre. Curated playlists, live sessions, and artist radio — all in one place.</div>
               <div className="absolute top-6 right-6 text-[3.5rem] leading-none text-[rgba(255,255,255,.04)] pointer-events-none">03</div>
-              <div className="mt-6 flex items-center gap-2 text-[.82rem] font-semibold uppercase tracking-[.1em] text-[#ffc105] relative z-10 transition-all group-hover:gap-3.5">Listen Now ›</div>
-            </div>
+              <div className="mt-6 flex items-center gap-2 text-[.82rem] font-semibold uppercase tracking-[.1em] text-[#ffc105] relative z-10 transition-all group-hover:gap-3.5">Browse Music ›</div>
+            </Link>
 
-            <div className="relative overflow-hidden rounded-xl border border-[rgba(73,122,182,.2)] bg-[#101e34] p-9 pb-8 cursor-pointer transition-all hover:translate-y-[-6px] hover:shadow-[0_24px_60px_rgba(0,0,0,.5)] hover:border-[rgba(255,193,5,.35)] group reveal">
+            <Link href="/education" className="relative overflow-hidden rounded-xl border border-[rgba(73,122,182,.2)] bg-[#101e34] p-9 pb-8 cursor-pointer transition-all hover:translate-y-[-6px] hover:shadow-[0_24px_60px_rgba(0,0,0,.5)] hover:border-[rgba(255,193,5,.35)] group reveal block">
               <div className="absolute inset-0 opacity-0 bg-gradient-to-br from-[rgba(255,193,5,.06)] to-transparent transition-opacity group-hover:opacity-100"></div>
               <div className="w-14 h-14 rounded-xl grid place-items-center text-2xl mb-5 relative z-10">📚</div>
-              <div className="font-['Barlow_Condensed'] font-black text-[1.5rem] uppercase tracking-[.04em] text-[#e8edf5] mb-2 relative z-10">Education</div>
+              <div className="font-barlow-condensed font-black text-[1.5rem] uppercase tracking-[.04em] text-[#e8edf5] mb-2 relative z-10">Education</div>
               <div className="text-[.88rem] text-[#7a93b4] leading-[1.65] relative z-10">Courses, tutorials, and learning paths from top institutions and expert instructors worldwide.</div>
               <div className="absolute top-6 right-6 text-[3.5rem] leading-none text-[rgba(255,255,255,.04)] pointer-events-none">04</div>
               <div className="mt-6 flex items-center gap-2 text-[.82rem] font-semibold uppercase tracking-[.1em] text-[#ffc105] relative z-10 transition-all group-hover:gap-3.5">Start Learning ›</div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
@@ -256,7 +264,7 @@ export default function Home() {
               <div className={`w-8 h-0.5 ${videoMode === 'neon' ? 'bg-[#00ff88] shadow-[0_0_10px_#00ff88]' : 'bg-[#ffc105]'}`}></div>
               Trending Now
             </div>
-            <h2 className={`font-['Bebas_Neue'] text-[clamp(2.4rem,5vw,3.8rem)] leading-none tracking-[.03em] ${videoMode === 'fancy' ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#ffc105] to-[#497ab6]' : videoMode === 'neon' ? 'text-[#00ff88] drop-shadow-[0_0_20px_#00ff88]' : 'text-[#e8edf5]'}`}>
+            <h2 className={`font-bebas-neue text-[clamp(2.4rem,5vw,3.8rem)] leading-none tracking-[.03em] ${videoMode === 'fancy' ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#ffc105] to-[#497ab6]' : videoMode === 'neon' ? 'text-[#00ff88] drop-shadow-[0_0_20px_#00ff88]' : 'text-[#e8edf5]'}`}>
               SHORT-FORM<br/><span className={videoMode === 'fancy' ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#497ab6] to-[#ffc105]' : videoMode === 'neon' ? 'text-[#ff00ff] drop-shadow-[0_0_20px_#ff00ff]' : 'text-[#ffc105]'}>VIDEOS FOR YOU</span>
             </h2>
           </div>
@@ -298,7 +306,7 @@ export default function Home() {
               { title: 'Comedy Sketch: Corporate Life Unplugged', creator: 'The Comedy Lab', views: '412.6K', duration: '75', color: 'indigo', tags: ['Comedy', 'Humor'] },
               { title: 'Photography Masterclass: Golden Hour Secrets', creator: 'Lens Academy', views: '203.2K', duration: '61', color: 'amber', tags: ['Creative', 'Tutorial'] },
             ].map((video, idx) => {
-              const colorMap: any = {
+              const colorMap: Record<string, string> = {
                 blue: '#1e40af', emerald: '#047857', purple: '#7c3aed', orange: '#ea580c',
                 cyan: '#0891b2', rose: '#be185d', indigo: '#4f46e5', amber: '#b45309'
               };
@@ -406,7 +414,7 @@ export default function Home() {
 
           {/* Call to Action */}
           <div className="mt-16 text-center reveal">
-            <button className={`px-12 py-4 rounded font-['Barlow_Condensed'] font-black uppercase tracking-[.1em] text-[1.05rem] cursor-pointer transition-all ${
+            <button className={`px-12 py-4 rounded font-barlow-condensed font-black uppercase tracking-[.1em] text-[1.05rem] cursor-pointer transition-all ${
               videoMode === 'neon'
                 ? 'bg-[#00ff88] text-[#000000] hover:shadow-[0_0_30px_#00ff88]'
                 : videoMode === 'fancy'
@@ -430,7 +438,7 @@ export default function Home() {
               Interactive Features
               <div className="w-8 h-0.5 bg-[#ffc105]"></div>
             </div>
-            <h2 className="font-['Bebas_Neue'] text-[clamp(2.4rem,5vw,3.8rem)] leading-none tracking-[.03em] text-[#e8edf5] mb-4">
+            <h2 className="font-bebas-neue text-[clamp(2.4rem,5vw,3.8rem)] leading-none tracking-[.03em] text-[#e8edf5] mb-4">
               EXPERIENCE<br/><span className="text-[#ffc105]">SMOOTH ANIMATIONS</span>
             </h2>
             <p className="text-[#7a93b4] max-w-[520px] mx-auto text-[.95rem] leading-[1.7]">
@@ -496,7 +504,7 @@ export default function Home() {
 
           {/* Interactive Button */}
           <div className="mt-20 text-center reveal">
-            <button className="bg-gradient-to-br from-[#ffc105] to-[#e0a800] text-[#080f1c] border-none px-12 py-4 rounded font-['Barlow_Condensed'] font-black uppercase tracking-[.1em] text-[1.05rem] cursor-pointer transition-all hover:translate-y-[-4px] hover:shadow-[0_12px_40px_rgba(255,193,5,.4)] active:translate-y-[-2px]">
+            <button className="bg-gradient-to-br from-[#ffc105] to-[#e0a800] text-[#080f1c] border-none px-12 py-4 rounded font-barlow-condensed font-black uppercase tracking-[.1em] text-[1.05rem] cursor-pointer transition-all hover:translate-y-[-4px] hover:shadow-[0_12px_40px_rgba(255,193,5,.4)] active:translate-y-[-2px]">
               Try Clicking Me! ✨
             </button>
           </div>
