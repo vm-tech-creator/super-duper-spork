@@ -2,6 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import CatBounceGame from '@/components/CatBounceGame';
+import SpaceExplorerGame from '@/components/SpaceExplorerGame';
+import MazeRunnerGame from '@/components/MazeRunnerGame';
+import BubblePopperGame from '@/components/BubblePopperGame';
 
 const GAMES_DATA: Record<number, any> = {
   1: {
@@ -120,6 +124,45 @@ const GAMES_DATA: Record<number, any> = {
     releaseDate: 'Feb 2026',
     developer: 'Literary Labs',
     features: ['Real Books', 'Hilarious Titles', 'Educational', 'Endless Laughs'],
+  },
+  10: {
+    id: 10,
+    title: 'Space Explorer 3D',
+    description: 'Navigate through stunning 3D space, collecting stars while avoiding asteroids in this immersive space adventure.',
+    fullDescription: 'Embark on an epic space journey in full 3D! Pilot your spaceship through asteroid fields, collect glowing stars, and experience the thrill of space exploration. With realistic physics, beautiful particle effects, and challenging gameplay, this is space adventure like you\'ve never seen before.',
+    imageUrl: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=600&fit=crop',
+    genre: '3D Action & Adventure',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'Apr 2026',
+    developer: 'Cosmic Studios',
+    features: ['3D Graphics', 'Realistic Physics', 'Particle Effects', 'Space Exploration', 'Mouse Controls'],
+  },
+  11: {
+    id: 11,
+    title: 'Maze Runner 3D',
+    description: 'Navigate through complex 3D mazes, collect coins, and race against time in this thrilling maze adventure.',
+    fullDescription: 'Challenge yourself in fully 3D maze environments! Use keyboard controls to navigate through intricate mazes, collect golden coins, and reach the finish before time runs out. Each level gets more challenging with bigger mazes and faster timers. Perfect for puzzle lovers and speed runners!',
+    imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop',
+    genre: '3D Puzzle & Action',
+    rating: 4.8,
+    players: 'Solo',
+    releaseDate: 'Apr 2026',
+    developer: 'Labyrinth Games',
+    features: ['3D Mazes', 'Keyboard Controls', 'Time Pressure', 'Progressive Difficulty', 'Coin Collection'],
+  },
+  12: {
+    id: 12,
+    title: 'Bubble Popper 3D',
+    description: 'Pop colorful 3D bubbles in this relaxing yet challenging bubble-popping extravaganza with combo system.',
+    fullDescription: 'Dive into a world of floating, colorful bubbles in stunning 3D! Pop bubbles of different sizes and colors to score points, build massive combos, and clear levels before time runs out. With beautiful particle effects, smooth animations, and addictive gameplay, this is the ultimate bubble-popping experience.',
+    imageUrl: 'https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=600&fit=crop',
+    genre: '3D Casual & Relaxing',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'Apr 2026',
+    developer: 'Bubble Dynamics',
+    features: ['3D Bubbles', 'Combo System', 'Particle Effects', 'Mouse Controls', 'Progressive Levels'],
   },
 };
 
@@ -299,9 +342,47 @@ export default function GameDetailPage({ params }: { params: { id: string } }) {
             <h2 className="font-['Barlow_Condensed'] font-black text-4xl uppercase tracking-[.04em]">
               Ready to Play {game.title}?
             </h2>
-            <button className="bg-[#ffc105] text-[#080f1c] border-none px-8 py-3 rounded font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] transition-all hover:bg-[#ffcf3a] hover:translate-y-[-2px] hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] cursor-pointer text-lg">
-              Play Now
-            </button>
+            {game.id === 5 ? (
+              <>
+                <p className="text-lg text-[#7a93b4]">
+                  Click anywhere in the game area below to spawn bouncing cats! Use the "Make It Rain" button for a cat storm.
+                </p>
+                <div className="mt-8 h-[600px] rounded-lg overflow-hidden border-2 border-[#ffc105]/30">
+                  <CatBounceGame />
+                </div>
+              </>
+            ) : game.id === 10 ? (
+              <>
+                <p className="text-lg text-[#7a93b4]">
+                  Use your mouse to pilot your spaceship through space! Collect stars while avoiding asteroids. Good luck, space explorer!
+                </p>
+                <div className="mt-8 h-[600px] rounded-lg overflow-hidden border-2 border-[#ffc105]/30">
+                  <SpaceExplorerGame />
+                </div>
+              </>
+            ) : game.id === 11 ? (
+              <>
+                <p className="text-lg text-[#7a93b4]">
+                  Use WASD keys to navigate through the 3D maze! Collect all coins and reach the exit before time runs out.
+                </p>
+                <div className="mt-8 h-[600px] rounded-lg overflow-hidden border-2 border-[#ffc105]/30">
+                  <MazeRunnerGame />
+                </div>
+              </>
+            ) : game.id === 12 ? (
+              <>
+                <p className="text-lg text-[#7a93b4]">
+                  Click on bubbles to pop them! Build combos by popping multiple bubbles quickly. Clear all bubbles before time runs out!
+                </p>
+                <div className="mt-8 h-[600px] rounded-lg overflow-hidden border-2 border-[#ffc105]/30">
+                  <BubblePopperGame />
+                </div>
+              </>
+            ) : (
+              <button className="bg-[#ffc105] text-[#080f1c] border-none px-8 py-3 rounded font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] transition-all hover:bg-[#ffcf3a] hover:translate-y-[-2px] hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] cursor-pointer text-lg">
+                Play Now
+              </button>
+            )}
           </div>
         </section>
       </main>
