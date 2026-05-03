@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ThePointingPointer from '@/components/games/ThePointingPointer';
 import EndlessHorse from '@/components/games/EndlessHorse';
@@ -150,7 +150,7 @@ export default function GameDetailPage({ params }: { params: Promise<{ id: strin
   const resolvedParams = use(params);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const gameId = parseInt(params.id);
+  const gameId = parseInt(resolvedParams.id);
   const game = GAMES_DATA[gameId];
   const [scrolled, setScrolled] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);

@@ -268,7 +268,7 @@ export default function SpaceModelPage() {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const controlsRef = useRef<OrbitControls | null>(null);
   const entitiesRef = useRef<Map<string, THREE.Object3D>>(new Map());
-  const orbitsRef = useRef<THREE.Line[]>([]);
+  const orbitsRef = useRef<THREE.Object3D[]>([]);
   const animationRef = useRef<number>(0);
   const raycasterRef = useRef<THREE.Raycaster>(new THREE.Raycaster());
   const mouseRef = useRef<THREE.Vector2>(new THREE.Vector2());
