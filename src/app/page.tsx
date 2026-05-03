@@ -647,7 +647,7 @@ export default function Home() {
                 title: 'Games',
                 desc: 'Casual to epic—genres for every mood and session length.',
                 icon: Gamepad2,
-                href: '#categories',
+                href: '/games',
                 cta: 'Browse games',
                 num: '01',
               },

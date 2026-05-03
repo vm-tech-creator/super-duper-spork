@@ -28,7 +28,7 @@ export default function GameCard({
 }: GameCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
-  const gameLink = id === 10 ? '/games/space' : `/games/${id}`;
+  const gameLink = id === 10 ? '/games/space' : id === 11 ? '/games/rocket' : `/games/${id}`;
 
   return (
     <Link href={gameLink}>

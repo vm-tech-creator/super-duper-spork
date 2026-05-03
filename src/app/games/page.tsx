@@ -25,6 +25,16 @@ const GAMES_DATA = [
     releaseDate: 'Apr 2026',
   },
   {
+    id: 11,
+    title: 'To create a rocket',
+    description: 'Build your own rocket from parts and launch it into space! Customize with thrusters, parachutes, fuel tanks, and more.',
+    imageUrl: 'https://images.unsplash.com/photo-1517976487492-5750f3195933?w=500&h=400&fit=crop',
+    genre: 'Space',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'Apr 2026',
+  },
+  {
     id: 2,
     title: 'Endless Horse',
     description: 'A page with a pixelated horse whose legs get longer and longer as you scroll infinitely.',
