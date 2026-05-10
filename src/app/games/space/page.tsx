@@ -1,20 +1,21 @@
 'use client';
 
-import { useState, useEffect, useRef, use } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import SiteHeader from '@/components/SiteHeader';
 
-interface SpaceEntity {
+type SpaceEntity = {
   id: string;
   name: string;
-  classification: 'Star' | 'Planet' | 'Moon' | 'Asteroid' | 'Comet' | 'Dwarf Planet';
+  classification: string;
   description: string;
   facts: string[];
   color: string;
   size: number;
   distance: number;
   orbitSpeed: number;
-}
+};
 
 const SPACE_ENTITIES: SpaceEntity[] = [
   {
@@ -823,220 +824,236 @@ export default function SpaceModelPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#080f1c] text-[#e8edf5] overflow-hidden">
-      {/* Noise overlay */}
-      <div
-        className="fixed inset-0 pointer-events-none opacity-25 z-0"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E")`,
-        }}
+    <div className="w-full h-screen bg-black text-white font-mono overflow-hidden pt-[92px]">
+      <SiteHeader
+        links={[
+          { label: 'Home', href: '/' },
+          { label: 'Games', href: '/games' },
+        ]}
+        rightSlot={
+          <a
+            href="/games"
+            className="rounded-xl border border-[#88a9d8]/20 bg-[#080f1c]/80 px-4 py-2 text-sm font-semibold uppercase tracking-[0.12em] text-[#ffc105] no-underline transition hover:bg-[#0a1222]"
+          >
+            Back to Games
+          </a>
+        }
       />
 
-      {/* Nav */}
-      <nav className="fixed top-0 w-full z-50 flex items-center justify-between px-[5%] h-[68px] bg-[rgba(8,15,28,.85)] backdrop-blur-[16px] border-b border-[rgba(73,122,182,.2)]">
-        <a href="/" className="flex items-center gap-2.5 text-decoration-none">
-          <div className="w-9 h-9 bg-gradient-to-br from-[#ffc105] to-[#e0a800] rounded-lg grid place-items-center font-['Bebas_Neue'] text-xl text-[#080f1c] shadow-[0_0_16px_rgba(255,193,5,.35)]">
-            S
-          </div>
-          <div className="font-['Barlow_Condensed'] font-black text-xl uppercase tracking-[.04em]">
-            <span className="text-[#ffc105]">Sahara</span>
-          </div>
-        </a>
-        <ul className="flex gap-8 list-none">
-          <li>
-            <a href="/" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] hover:text-[#ffc105] transition-colors">
-              Home
-            </a>
-          </li>
-          <li>
-            <a href="/games" className="text-[#ffc105] no-underline font-medium uppercase tracking-[.05em] text-[.875rem]">
-              Games
-            </a>
-          </li>
-        </ul>
-        <button className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2.5 rounded transition-all hover:bg-[#ffcf3a] hover:translate-y-[-1px] hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] text-[.95rem] cursor-pointer">
-          Sign In
-        </button>
-      </nav>
+      {/* KSP-style header */}
+      <div className="absolute top-[92px] left-0 right-0 h-16 bg-gradient-to-b from-gray-800 to-gray-900 border-b border-green-600 flex items-center justify-between px-4 z-50">
+        <div className="flex items-center space-x-4">
+          <div className="text-green-400 text-xl font-bold">SAHARA SPACE PROGRAM</div>
+          <div className="text-green-300 text-sm">v1.0.0</div>
+        </div>
+        <div className="flex items-center space-x-4 text-green-400">
+          <div>Funds: §120,000</div>
+          <div>Science: 0</div>
+          <div>Reputation: 0</div>
+        </div>
+      </div>
 
-      {/* Main Content */}
-      <div className="relative z-10 pt-[68px] h-screen flex">
-        {/* Left Sidebar - Entity List */}
-        <div className="w-80 h-full bg-[rgba(8,15,28,.9)] backdrop-blur-md border-r border-[rgba(73,122,182,.2)] flex flex-col">
-          <div className="p-4 border-b border-[rgba(73,122,182,.2)]">
-            <h2 className="font-['Bebas_Neue'] text-2xl text-[#ffc105] tracking-[.03em] mb-3">
-              Space Entities
-            </h2>
-            {/* Search Bar */}
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Search entities..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[rgba(73,122,182,.1)] border border-[rgba(73,122,182,.3)] rounded-lg px-4 py-2.5 text-[#e8edf5] placeholder-[#7a93b4] focus:outline-none focus:border-[#ffc105] transition-colors"
-              />
-              <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#7a93b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </div>
-          </div>
-          
-          {/* Entity List */}
-          <div className="flex-1 overflow-y-auto p-2 space-y-1">
-            {filteredEntities.map((entity) => (
-              <button
-                key={entity.id}
-                onClick={() => handleEntityClick(entity)}
-                className={`w-full text-left p-3 rounded-lg transition-all flex items-center gap-3 ${
-                  selectedEntity?.id === entity.id
-                    ? 'bg-[rgba(255,193,5,.2)] border border-[#ffc105]'
-                    : 'bg-[rgba(73,122,182,.1)] border border-transparent hover:bg-[rgba(255,193,5,.1)] hover:border-[rgba(255,193,5,.3)]'
-                }`}
-              >
-                <div
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: entity.color }}
-                />
-                <div className="flex-1 min-w-0">
-                  <div className="font-medium text-sm truncate">{entity.name}</div>
-                  <div className="text-xs text-[#7a93b4]">{entity.classification}</div>
-                </div>
-              </button>
-            ))}
+      {/* Main game area */}
+      <div className="pt-16 h-full relative">
+        {currentScreen === 'spacecenter' && <SpaceCenter onNavigate={goToScreen} />}
+        {currentScreen === 'vab' && <VAB onNavigate={goToScreen} />}
+        {currentScreen === 'tracking' && <TrackingStation onNavigate={goToScreen} />}
+        {currentScreen === 'launch' && <LaunchPad onNavigate={goToScreen} />}
+      </div>
+    </div>
+  );
+}
+
+type ScreenNavigation = {
+  onNavigate: (screen: Screen) => void;
+};
+
+function SpaceCenter({ onNavigate }: ScreenNavigation) {
+  return (
+    <div className="relative w-full h-full">
+      {/* 3D Space Center view placeholder */}
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-900 via-gray-800 to-black">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center text-green-400">
+            <div className="text-6xl mb-4">🚀</div>
+            <div className="text-xl">SAHARA SPACE CENTER</div>
+            <div className="text-sm text-green-300 mt-2">Kerbin</div>
           </div>
         </div>
 
-        {/* 3D Canvas */}
-        <div ref={containerRef} className="flex-1 relative" />
+        {/* Buildings */}
+        <div className="absolute bottom-20 left-20">
+          <button
+            onClick={() => onNavigate('vab')}
+            className="bg-gray-800 border border-green-600 text-green-400 px-4 py-2 hover:bg-gray-700 transition-colors"
+          >
+            VEHICLE ASSEMBLY BUILDING
+          </button>
+        </div>
 
-        {/* Hover Tooltip */}
-        {hoveredEntity && !showInfo && (
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-[rgba(8,15,28,.95)] backdrop-blur-md border border-[rgba(255,193,5,.3)] rounded-lg px-6 py-3 z-20">
-            <div className="text-center">
-              <div className="font-['Bebas_Neue'] text-xl text-[#ffc105] tracking-[.02em]">
-                {hoveredEntity.name}
-              </div>
-              <div className="text-sm text-[#7a93b4]">
-                {hoveredEntity.classification}
-              </div>
-            </div>
-          </div>
-        )}
+        <div className="absolute bottom-20 right-20">
+          <button
+            onClick={() => onNavigate('launch')}
+            className="bg-gray-800 border border-green-600 text-green-400 px-4 py-2 hover:bg-gray-700 transition-colors"
+          >
+            LAUNCH PAD
+          </button>
+        </div>
 
-        {/* Right Panel - Info */}
-        {showInfo && selectedEntity && (
-          <div className="w-96 h-full bg-[rgba(8,15,28,.95)] backdrop-blur-md border-l border-[rgba(73,122,182,.2)] flex flex-col overflow-hidden animate-[slideIn_0.3s_ease-out]">
-            <div className="p-4 border-b border-[rgba(73,122,182,.2)] flex items-center justify-between">
-              <h2 className="font-['Bebas_Neue'] text-2xl text-[#ffc105] tracking-[.03em]">
-                {selectedEntity.name}
-              </h2>
-              <button
-                onClick={handleBackToSystem}
-                className="text-[#7a93b4] hover:text-[#ffc105] transition-colors"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              {/* Classification Badge */}
-              <div className="flex items-center gap-2">
-                <span
-                  className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-[.05em]"
-                  style={{ backgroundColor: `${selectedEntity.color}30`, color: selectedEntity.color }}
-                >
-                  {selectedEntity.classification}
-                </span>
-              </div>
-
-              {/* Description */}
-              <div>
-                <h3 className="text-sm font-bold text-[#7a93b4] uppercase tracking-[.05em] mb-2">
-                  Overview
-                </h3>
-                <p className="text-[#e8edf5] leading-relaxed">
-                  {selectedEntity.description}
-                </p>
-              </div>
-
-              {/* Facts */}
-              <div>
-                <h3 className="text-sm font-bold text-[#7a93b4] uppercase tracking-[.05em] mb-2">
-                  Did You Know?
-                </h3>
-                <ul className="space-y-2">
-                  {selectedEntity.facts.map((fact, index) => (
-                    <li key={index} className="flex gap-2 text-sm text-[#e8edf5]">
-                      <span className="text-[#ffc105]">•</span>
-                      {fact}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Default Right Panel - Solar System Info */}
-        {!showInfo && (
-          <div className="w-96 h-full bg-[rgba(8,15,28,.95)] backdrop-blur-md border-l border-[rgba(73,122,182,.2)] flex flex-col overflow-hidden">
-            <div className="p-4 border-b border-[rgba(73,122,182,.2)]">
-              <h2 className="font-['Bebas_Neue'] text-2xl text-[#ffc105] tracking-[.03em]">
-                The Solar System
-              </h2>
-            </div>
-            
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              <p className="text-[#e8edf5] leading-relaxed">
-                {SOLAR_SYSTEM_INFO.description}
-              </p>
-
-              <div>
-                <h3 className="text-sm font-bold text-[#7a93b4] uppercase tracking-[.05em] mb-2">
-                  Key Facts
-                </h3>
-                <ul className="space-y-2">
-                  {SOLAR_SYSTEM_INFO.facts.map((fact, index) => (
-                    <li key={index} className="flex gap-2 text-sm text-[#e8edf5]">
-                      <span className="text-[#ffc105]">•</span>
-                      {fact}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="mt-6 p-4 bg-[rgba(255,193,5,.1)] rounded-lg border border-[rgba(255,193,5,.2)]">
-                <h3 className="text-sm font-bold text-[#ffc105] uppercase tracking-[.05em] mb-2">
-                  How to Navigate
-                </h3>
-                <ul className="space-y-1 text-sm text-[#7a93b4]">
-                  <li>🖱️ Click + drag to rotate</li>
-                  <li>🔍 Scroll to zoom in/out</li>
-                  <li>👆 Hover to identify objects</li>
-                  <li>👆 Click objects to learn more</li>
-                  <li>📋 Use left panel to search</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        )}
+        <div className="absolute top-20 right-20">
+          <button
+            onClick={() => onNavigate('tracking')}
+            className="bg-gray-800 border border-green-600 text-green-400 px-4 py-2 hover:bg-gray-700 transition-colors"
+          >
+            TRACKING STATION
+          </button>
+        </div>
       </div>
 
-      <style jsx global>{`
-        @keyframes slideIn {
-          from {
-            transform: translateX(100%);
-            opacity: 0;
-          }
-          to {
-            transform: translateX(0);
-            opacity: 1;
-          }
-        }
-      `}</style>
+      {/* UI Panels */}
+      <div className="absolute top-20 left-4 w-80">
+        <div className="bg-gray-900 border border-green-600 p-4">
+          <div className="text-green-400 font-bold mb-2">MISSION CONTROL</div>
+          <div className="text-sm text-green-300 space-y-1">
+            <div>Active Missions: 0</div>
+            <div>Available Kerbals: 4</div>
+            <div>Weather: Clear</div>
+            <div>Time: Year 1, Day 1</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="absolute bottom-4 left-4 w-80">
+        <div className="bg-gray-900 border border-green-600 p-4">
+          <div className="text-green-400 font-bold mb-2">ADMINISTRATION</div>
+          <div className="text-sm text-green-300 space-y-1">
+            <div>Strategy: None</div>
+            <div>Upgrades: None</div>
+            <div>Facilities: Basic</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function VAB({ onNavigate }: ScreenNavigation) {
+  return (
+    <div className="relative w-full h-full bg-gradient-to-b from-gray-900 to-black">
+      <div className="absolute top-4 left-4">
+        <button
+          onClick={() => onNavigate('spacecenter')}
+          className="bg-gray-800 border border-green-600 text-green-400 px-4 py-2 hover:bg-gray-700 transition-colors"
+        >
+          ← BACK TO SPACE CENTER
+        </button>
+      </div>
+
+      <div className="flex h-full pt-16">
+        <div className="w-1/4 bg-gray-900 border-r border-green-600 p-4">
+          <div className="text-green-400 font-bold mb-4">PARTS</div>
+          <div className="space-y-2 text-sm">
+            <div className="bg-gray-800 p-2 border border-green-600 cursor-pointer hover:bg-gray-700">
+              Command Pod Mk1
+            </div>
+            <div className="bg-gray-800 p-2 border border-green-600 cursor-pointer hover:bg-gray-700">
+              FL-T100 Fuel Tank
+            </div>
+            <div className="bg-gray-800 p-2 border border-green-600 cursor-pointer hover:bg-gray-700">
+              LV-909 Liquid Engine
+            </div>
+            <div className="bg-gray-800 p-2 border border-green-600 cursor-pointer hover:bg-gray-700">
+              AV-R8 Winglet
+            </div>
+            <div className="bg-gray-800 p-2 border border-green-600 cursor-pointer hover:bg-gray-700">
+              TT-38K Radial Decoupler
+            </div>
+          </div>
+        </div>
+
+        <div className="flex-1 flex flex-col">
+          <div className="bg-gray-900 border-b border-green-600 p-4">
+            <div className="text-green-400 font-bold">VEHICLE ASSEMBLY BUILDING</div>
+            <div className="text-sm text-green-300">Current Vessel: Untitled Space Craft</div>
+          </div>
+
+          <div className="flex-1 bg-gradient-to-b from-gray-800 to-gray-900 flex items-center justify-center">
+            <div className="text-center text-green-400">
+              <div className="text-8xl mb-4">🚀</div>
+              <div className="text-xl">ROCKET ASSEMBLY AREA</div>
+              <div className="text-sm text-green-300 mt-2">Drag parts here to build your rocket</div>
+            </div>
+          </div>
+
+          <div className="bg-gray-900 border-t border-green-600 p-4 flex justify-between">
+            <div className="text-sm text-green-300">
+              <div>Mass: 1.2t</div>
+              <div>Cost: §1,200</div>
+            </div>
+            <button className="bg-green-800 border border-green-600 text-green-400 px-4 py-2 hover:bg-green-700 transition-colors">
+              LAUNCH
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TrackingStation({ onNavigate }: ScreenNavigation) {
+  return (
+    <div className="relative w-full h-full bg-black">
+      <div className="absolute top-4 left-4">
+        <button
+          onClick={() => onNavigate('spacecenter')}
+          className="bg-gray-800 border border-green-600 text-green-400 px-4 py-2 hover:bg-gray-700 transition-colors"
+        >
+          ← BACK TO SPACE CENTER
+        </button>
+      </div>
+
+      <div className="pt-16 h-full flex">
+        <div className="w-1/3 bg-gray-900 border-r border-green-600 p-4">
+          <div className="text-green-400 font-bold mb-4">MISSIONS</div>
+          <div className="text-sm text-green-300">
+            No active missions
+          </div>
+        </div>
+
+        <div className="flex-1 bg-gradient-to-b from-gray-900 to-black flex items-center justify-center">
+          <div className="text-center text-green-400">
+            <div className="text-8xl mb-4">🛰️</div>
+            <div className="text-xl">TRACKING STATION</div>
+            <div className="text-sm text-green-300 mt-2">Monitor your space missions</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LaunchPad({ onNavigate }: ScreenNavigation) {
+  return (
+    <div className="relative w-full h-full bg-gradient-to-b from-blue-900 to-black">
+      <div className="absolute top-4 left-4">
+        <button
+          onClick={() => onNavigate('spacecenter')}
+          className="bg-gray-800 border border-green-600 text-green-400 px-4 py-2 hover:bg-gray-700 transition-colors"
+        >
+          ← BACK TO SPACE CENTER
+        </button>
+      </div>
+
+      <div className="pt-16 h-full flex items-center justify-center">
+        <div className="text-center text-green-400">
+          <div className="text-8xl mb-4">🚀</div>
+          <div className="text-xl">LAUNCH PAD</div>
+          <div className="text-sm text-green-300 mt-2">Ready for launch</div>
+          <button className="mt-4 bg-red-800 border border-red-600 text-red-400 px-6 py-3 hover:bg-red-700 transition-colors text-lg">
+            LAUNCH!
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

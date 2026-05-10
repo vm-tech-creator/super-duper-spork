@@ -3,6 +3,17 @@
 import { useState, useEffect } from 'react';
 import SaharaHeader from '@/components/SaharaHeader';
 import GameCard from '@/components/GameCard';
+import PacMan from '@/components/games/PacMan';
+import ThePointingPointer from '@/components/games/ThePointingPointer';
+import EndlessHorse from '@/components/games/EndlessHorse';
+import FindTheInvisibleCow from '@/components/games/FindTheInvisibleCow';
+import PasswordTester from '@/components/games/PasswordTester';
+import CatBounce from '@/components/games/CatBounce';
+import HackerTyper from '@/components/games/HackerTyper';
+import ElonFortune from '@/components/games/ElonFortune';
+import MusicQuiz from '@/components/games/MusicQuiz';
+import WeirdBooks from '@/components/games/WeirdBooks';
+import SiteHeader from '@/components/SiteHeader';
 
 const GAMES_DATA = [
   {
@@ -116,7 +127,7 @@ const GAMES_DATA = [
     releaseDate: 'Feb 2026',
   },
   {
-    id: 10,
+    id: 12,
     title: 'Pac-Man',
     description: 'A classic maze game where you navigate Pac-Man through a two-line pathway maze while avoiding colorful ghosts.',
     imageUrl: 'https://images.unsplash.com/photo-1535371579214-d6a72b3b5c47?w=500&h=400&fit=crop',
@@ -125,19 +136,20 @@ const GAMES_DATA = [
     players: 'Solo',
     releaseDate: 'Apr 2026',
   },
+  {
+    id: 13,
+    title: 'Neon Flames',
+    description: 'Paint your own nebula with glowing cosmic trails while a slow space background drifts behind you.',
+    imageUrl: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=500&h=400&fit=crop',
+    genre: 'Interactive & Useless Fun',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'May 2026',
+  },
 ];
 
 export default function GamesPage() {
-  const [scrolled, setScrolled] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState('All');
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     // Scroll reveal animation
@@ -186,6 +198,22 @@ export default function GamesPage() {
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E")`,
         }}
+      />
+
+      {/* Nav */}
+      <SiteHeader
+        links={[
+          { label: 'Home', href: '/' },
+          { label: 'Games', href: '/games' },
+        ]}
+        rightSlot={
+          <button
+            onClick={() => window.location.href = '/games/avatar'}
+            className="bg-[#4a90e2] text-white border-none px-4 py-2 rounded transition-all hover:bg-[#357abd] hover:translate-y-[-1px] hover:shadow-[0_4px_16px_rgba(74,144,226,.3)] font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] text-[.85rem] cursor-pointer"
+          >
+            Avatar
+          </button>
+        }
       />
 
       {/* Main Content */}
