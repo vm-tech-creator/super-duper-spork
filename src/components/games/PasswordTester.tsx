@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import Link from 'next/link';
 
 export default function PasswordTester({ onClose }: { onClose: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -11,6 +10,7 @@ export default function PasswordTester({ onClose }: { onClose: () => void }) {
   const passwordRef = useRef('');
   const strengthRef = useRef(0);
   const feedbackRef = useRef('');
+  const animationIdRef = useRef<number | null>(null);
 
   const [password, setPassword] = useState('');
   const [feedback, setFeedback] = useState('');
@@ -216,8 +216,9 @@ export default function PasswordTester({ onClose }: { onClose: () => void }) {
     window.addEventListener('resize', handleResize);
 
     const animate = () => {
-      requestAnimationFrame(animate);
+      animationIdRef.current = requestAnimationFrame(animate);
 
+      uiTexture.dispose();
       uiTexture = new THREE.CanvasTexture(updateCanvas());
       uiMaterial.map = uiTexture;
       uiMaterial.needsUpdate = true;
@@ -230,6 +231,11 @@ export default function PasswordTester({ onClose }: { onClose: () => void }) {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('resize', handleResize);
+      
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
+      }
+      
       renderer.dispose();
       uiTexture.dispose();
       uiMaterial.dispose();
@@ -246,11 +252,12 @@ export default function PasswordTester({ onClose }: { onClose: () => void }) {
 
       {/* Back button overlay */}
       <div className="absolute top-4 right-4">
-        <Link href="/games">
-          <button className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a]">
-            ← Back
-          </button>
-        </Link>
+        <button
+          onClick={onClose}
+          className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a] transition-colors"
+        >
+          ← Back
+        </button>
       </div>
 
       {/* Help text */}

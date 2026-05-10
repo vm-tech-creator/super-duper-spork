@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import Link from 'next/link';
 
 interface Item {
   name: string;
@@ -17,6 +16,7 @@ export default function ElonFortune({ onClose }: { onClose: () => void }) {
   const raycasterRef = useRef(new THREE.Raycaster());
   const mouseRef = useRef(new THREE.Vector2());
   const itemButtonsRef = useRef<Map<THREE.Mesh, Item>>(new Map());
+  const animationIdRef = useRef<number | null>(null);
 
   const [balance, setBalance] = useState(250000000000);
   const [purchases, setPurchases] = useState<{ name: string; count: number }[]>([]);
@@ -206,7 +206,7 @@ export default function ElonFortune({ onClose }: { onClose: () => void }) {
 
     let lastBalance = balance;
     const animate = () => {
-      requestAnimationFrame(animate);
+      animationIdRef.current = requestAnimationFrame(animate);
 
       if (lastBalance !== balance) {
         itemTexture.image = createItemCanvas();
@@ -225,6 +225,11 @@ export default function ElonFortune({ onClose }: { onClose: () => void }) {
     return () => {
       window.removeEventListener('click', handleMouseClick);
       window.removeEventListener('resize', handleResize);
+      
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
+      }
+      
       renderer.dispose();
       itemTexture.dispose();
       purchasesMaterial.dispose();
@@ -247,11 +252,12 @@ export default function ElonFortune({ onClose }: { onClose: () => void }) {
           <h1 className="text-[#ffc105] font-bold text-2xl">💰 Elon Musk's Fortune</h1>
           <p className="text-[#497ab6] text-sm">Try to spend $250 billion on ridiculous items!</p>
         </div>
-        <Link href="/games">
-          <button className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a]">
-            ← Back to Games
-          </button>
-        </Link>
+        <button
+          onClick={onClose}
+          className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a] transition-colors"
+        >
+          ← Back to Games
+        </button>
       </div>
 
       <div className="absolute top-24 left-0 right-0 bottom-0 text-center text-[#7a93b4] flex items-center justify-center">

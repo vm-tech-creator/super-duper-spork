@@ -377,13 +377,16 @@ export default function PacMan({ onClose }: { onClose: () => void }) {
 
     window.addEventListener('resize', handleResize);
 
+    let animationId: number | null = null;
     const animate = () => {
-      requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(animate);
 
+      gameTexture.dispose();
       gameTexture = new THREE.CanvasTexture(drawGameToCanvas());
       gameMaterial.map = gameTexture;
       gameMaterial.needsUpdate = true;
 
+      uiTexture.dispose();
       uiTexture = new THREE.CanvasTexture(createUICanvas());
       uiMaterial.map = uiTexture;
       uiMaterial.needsUpdate = true;
@@ -395,6 +398,7 @@ export default function PacMan({ onClose }: { onClose: () => void }) {
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      if (animationId) cancelAnimationFrame(animationId);
       renderer.dispose();
       gameTexture.dispose();
       uiTexture.dispose();
