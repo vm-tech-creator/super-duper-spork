@@ -230,41 +230,46 @@ export default function BookDetailPage() {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-        <div className="flex items-center justify-center min-h-screen">
+      <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <Header />
+        <div className="relative z-10 pt-24 flex items-center justify-center min-h-screen">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto mb-4"></div>
             <p className="text-gray-300">Loading book...</p>
           </div>
         </div>
-      </main>
+      </div>
     );
   }
 
   if (error || !book) {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-12 px-4">
-        <div className="max-w-4xl mx-auto">
-          <Link
-            href="/books"
-            className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mb-8 transition-colors"
-          >
-            <ChevronLeft className="w-5 h-5" />
-            Back to Books
-          </Link>
-          <div className="bg-red-900/30 border border-red-500 rounded-lg p-6 text-red-300">
-            <p>⚠️ {error || 'Book not found'}</p>
+      <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <Header />
+        <div className="relative z-10 pt-24 px-4">
+          <div className="max-w-4xl mx-auto">
+            <Link
+              href="/books"
+              className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mb-8 transition-colors"
+            >
+              <ChevronLeft className="w-5 h-5" />
+              Back to Books
+            </Link>
+            <div className="bg-red-900/30 border border-red-500 rounded-lg p-6 text-red-300">
+              <p>⚠️ {error || 'Book not found'}</p>
+            </div>
           </div>
         </div>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
+    <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       <Header />
-      <div className="py-8 px-4">
-        <div className="max-w-7xl mx-auto">
+      <main className="relative z-10 pt-24 px-4">
+        <div className="py-8">
+          <div className="max-w-7xl mx-auto">
           <Link href="/books" className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mb-8 transition-colors font-semibold">
             <ChevronLeft className="w-5 h-5" />
             Back to Library
@@ -377,8 +382,9 @@ export default function BookDetailPage() {
 
           {/* Recommendations Section */}
           <RecommendationsSection currentBook={book} />
+          </div>
         </div>
-      </div>
+      </main>
 
       <style>{`
         .custom-scrollbar::-webkit-scrollbar {
@@ -395,6 +401,6 @@ export default function BookDetailPage() {
           background: rgba(107, 114, 128, 0.8);
         }
       `}</style>
-    </main>
+    </div>
   );
 }
