@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import { useEffect } from 'react';
 import { BookOpen, Search, ChevronUp, ChevronDown, Bookmark } from 'lucide-react';
-import Header from '@/components/Header';
+import SaharaHeader from '@/components/SaharaHeader';
 import BookCard from '@/components/BookCard';
 import type { BookData } from '@/lib/books';
 
@@ -128,7 +128,7 @@ export default function BooksPage() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      <Header />
+      <SaharaHeader />
       <div className="py-12 px-4">
         <div className="max-w-7xl mx-auto">
           {/* Header Section */}

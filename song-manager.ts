@@ -1,4 +1,14 @@
-import type { OpenGraph } from '../node_modules/next/dist/lib/metadata/types/opengraph-types';
+/**
+ * OpenGraph metadata type for songs
+ */
+type OpenGraph = {
+  type: string;
+  title: string;
+  description: string;
+  siteName?: string;
+  musicians?: string[];
+  duration?: number;
+};
 
 /**
  * The "Already Boring" Song.

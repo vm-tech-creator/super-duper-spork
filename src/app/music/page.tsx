@@ -3,6 +3,7 @@
 import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import SaharaHeader from '@/components/SaharaHeader';
 
 export default function Music() {
   const router = useRouter();
@@ -29,9 +30,9 @@ export default function Music() {
   // Organized tracks by genre with lyrics
   const tracksByGenre: { [key: string]: any[] } = {
     Pop: [
-      { id: 1, title: 'Upbeat Vibes', artist: 'Luna Sky', duration: '3:45', lyrics: 'Dancing through the night\nFeel the rhythm, feel the light\nMove your body to the beat\nMake this moment so complete\nUpbeat vibes, here we go\nLet your spirit start to glow' },
-      { id: 2, title: 'Dance Tonight', artist: 'Pop Stars', duration: '4:12', lyrics: 'Tonight we dance, tonight we shine\nYour hand in mine, everything\'s fine\nThe music plays, we sway and spin\nLet the magic close you in\nDance tonight, dance so free\nYou and me, wild and carefree' },
-      { id: 3, title: 'Sunny Days', artist: 'Bright Mood', duration: '3:28', lyrics: 'Sunny days, here they come\nWalking to the beat of a drum\nGolden rays on my face\nFound my happy, found my place\nSunny days, never fade\nIn this moment, unafraid' },
+      { id: 100, title: 'Searching for Answers', artist: 'Echo & Whisper', duration: '3:45' },
+      { id: 101, title: 'Echoes of Yesterday', artist: 'Neon Pulse', duration: '4:12' },
+      { id: 102, title: 'Neon Hearts', artist: 'Skyline', duration: '3:28' },
     ],
     Rock: [
       { id: 4, title: 'Guitar Thunder', artist: 'Rock Masters', duration: '5:03', lyrics: 'Turn it up, feel the sound\nChords are shaking all around\nGuitar thunder in the air\nRocking out without a care\nLoud and proud, here we stand\nFeeling power, hand in hand' },
@@ -137,6 +138,25 @@ export default function Music() {
     }
   };
 
+  const playTrack = (trackIndex: number) => {
+    setCurrentTrack(trackIndex);
+    const trackToPlay = allTracks[trackIndex];
+    if (isPlaying && audioContextRef.current) {
+      audioContextRef.current.close();
+      audioContextRef.current = null;
+    }
+    if (synthTimeoutRef.current) {
+      clearTimeout(synthTimeoutRef.current);
+    }
+    try {
+      generateSynthesizedTrack(trackToPlay);
+      setIsPlaying(true);
+      synthTimeoutRef.current = setTimeout(() => setIsPlaying(false), 180000);
+    } catch (err) {
+      console.warn('Synthesis failed:', err);
+    }
+  };
+
   const handleTimeUpdate = () => {
     if (audioRef.current) {
       setCurrentTime(audioRef.current.currentTime);
@@ -215,7 +235,16 @@ export default function Music() {
     const trackId = track.id;
     
     // Generate different music based on track ID
-    if (trackId === 1) {
+    if (trackId === 100) {
+      // Searching for Answers - Introspective pop ballad
+      generateSearchingAnswers(audioContext, now, songDuration);
+    } else if (trackId === 101) {
+      // Echoes of Yesterday - Nostalgic pop
+      generateEchoesYesterday(audioContext, now, songDuration);
+    } else if (trackId === 102) {
+      // Neon Hearts - Synth-pop with energy
+      generateNeonHearts(audioContext, now, songDuration);
+    } else if (trackId === 1) {
       // Upbeat Vibes - Pop (original)
       generatePopUpbeat(audioContext, now, songDuration);
     } else if (trackId === 2) {
@@ -566,6 +595,269 @@ export default function Music() {
     pad.stop(now + songDuration);
     lead.start(now);
     lead.stop(now + songDuration);
+    bass.start(now);
+    bass.stop(now + songDuration);
+  };
+
+  // New Pop Songs Based on "WHERE IS MY HUSBAND!"
+  const generateSearchingAnswers = (audioContext: any, now: number, songDuration: number) => {
+    // Searching for Answers - Introspective pop ballad with emotional depth
+    const reverbDelay = audioContext.createDelay(0.5);
+    reverbDelay.delayTime.value = 0.15;
+    
+    // Soft, emotional piano-like lead
+    const lead = audioContext.createOscillator();
+    const leadGain = audioContext.createGain();
+    lead.type = 'sine';
+    lead.connect(leadGain);
+    leadGain.connect(reverbDelay);
+    reverbDelay.connect(audioContext.destination);
+    leadGain.gain.setValueAtTime(0.15, now);
+    
+    // Warm background pad
+    const pad = audioContext.createOscillator();
+    const padGain = audioContext.createGain();
+    pad.type = 'sine';
+    pad.connect(padGain);
+    padGain.connect(audioContext.destination);
+    pad.frequency.setValueAtTime(164.81, now);
+    padGain.gain.setValueAtTime(0.1, now);
+    
+    // Emotional melody progression (minor key feel)
+    const ballardMelody = [329.63, 293.66, 261.63, 246.94, 261.63, 293.66, 329.63, 349.23];
+    for (let i = 0; i < 18; i++) {
+      for (let j = 0; j < ballardMelody.length; j++) {
+        lead.frequency.setTargetAtTime(ballardMelody[j], now + i * 3.2 + j * 0.4, 0.1);
+      }
+    }
+    
+    // Delicate bass line
+    const bass = audioContext.createOscillator();
+    const bassGain = audioContext.createGain();
+    bass.type = 'sine';
+    bass.connect(bassGain);
+    bassGain.connect(audioContext.destination);
+    bassGain.gain.setValueAtTime(0.12, now);
+    
+    const ballardBass = [82.41, 82.41, 73.42, 65.41];
+    for (let i = 0; i < 45; i++) {
+      for (let j = 0; j < ballardBass.length; j++) {
+        bass.frequency.setTargetAtTime(ballardBass[j], now + i * 1.6 + j * 0.4, 0.05);
+      }
+    }
+    
+    // Soft, sparse kick pattern
+    for (let i = 0; i < songDuration; i += 1.6) {
+      const kick = audioContext.createOscillator();
+      const kickGain = audioContext.createGain();
+      kick.connect(kickGain);
+      kickGain.connect(audioContext.destination);
+      kick.frequency.setValueAtTime(100, now + i);
+      kick.frequency.exponentialRampToValueAtTime(40, now + i + 0.1);
+      kickGain.gain.setValueAtTime(0.5, now + i);
+      kickGain.gain.exponentialRampToValueAtTime(0.01, now + i + 0.15);
+      kick.start(now + i);
+      kick.stop(now + i + 0.15);
+    }
+    
+    // Gentle snare
+    for (let i = 0.8; i < songDuration; i += 1.6) {
+      const snare = audioContext.createOscillator();
+      const snareGain = audioContext.createGain();
+      snare.type = 'sine';
+      snare.connect(snareGain);
+      snareGain.connect(audioContext.destination);
+      snare.frequency.setValueAtTime(200, now + i);
+      snare.frequency.exponentialRampToValueAtTime(80, now + i + 0.04);
+      snareGain.gain.setValueAtTime(0.15, now + i);
+      snareGain.gain.exponentialRampToValueAtTime(0.01, now + i + 0.08);
+      snare.start(now + i);
+      snare.stop(now + i + 0.08);
+    }
+    
+    lead.start(now);
+    lead.stop(now + songDuration);
+    pad.start(now);
+    pad.stop(now + songDuration);
+    bass.start(now);
+    bass.stop(now + songDuration);
+  };
+
+  const generateEchoesYesterday = (audioContext: any, now: number, songDuration: number) => {
+    // Echoes of Yesterday - Nostalgic pop with retro synth vibes
+    const filter = audioContext.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(3000, now);
+    filter.Q.setValueAtTime(2, now);
+    
+    // Retro synth lead with vintage feel
+    const synth = audioContext.createOscillator();
+    const synthGain = audioContext.createGain();
+    synth.type = 'square';
+    synth.connect(filter);
+    filter.connect(synthGain);
+    synthGain.connect(audioContext.destination);
+    synthGain.gain.setValueAtTime(0.2, now);
+    
+    // Warm bass for nostalgic feel
+    const bass = audioContext.createOscillator();
+    const bassGain = audioContext.createGain();
+    bass.type = 'sine';
+    bass.connect(bassGain);
+    bassGain.connect(audioContext.destination);
+    bassGain.gain.setValueAtTime(0.18, now);
+    bass.frequency.setValueAtTime(87.31, now);
+    
+    // Nostalgic melodic progression
+    const nostalgicMelody = [440, 392, 349.23, 329.63, 349.23, 392, 440, 466.16];
+    for (let i = 0; i < 22; i++) {
+      for (let j = 0; j < nostalgicMelody.length; j++) {
+        synth.frequency.setTargetAtTime(nostalgicMelody[j], now + i * 2.24 + j * 0.28, 0.05);
+      }
+    }
+    
+    // Retro kick pattern (half-time feel)
+    for (let i = 0; i < songDuration; i += 0.8) {
+      const kick = audioContext.createOscillator();
+      const kickGain = audioContext.createGain();
+      kick.connect(kickGain);
+      kickGain.connect(audioContext.destination);
+      kick.frequency.setValueAtTime(130, now + i);
+      kick.frequency.exponentialRampToValueAtTime(50, now + i + 0.12);
+      kickGain.gain.setValueAtTime(0.6, now + i);
+      kickGain.gain.exponentialRampToValueAtTime(0.01, now + i + 0.12);
+      kick.start(now + i);
+      kick.stop(now + i + 0.12);
+    }
+    
+    // Snare with reverb
+    for (let i = 0.4; i < songDuration; i += 0.8) {
+      const snare = audioContext.createOscillator();
+      const snareGain = audioContext.createGain();
+      snare.type = 'triangle';
+      snare.connect(snareGain);
+      snareGain.connect(audioContext.destination);
+      snare.frequency.setValueAtTime(280, now + i);
+      snare.frequency.exponentialRampToValueAtTime(120, now + i + 0.05);
+      snareGain.gain.setValueAtTime(0.22, now + i);
+      snareGain.gain.exponentialRampToValueAtTime(0.01, now + i + 0.08);
+      snare.start(now + i);
+      snare.stop(now + i + 0.08);
+    }
+    
+    // Sparse hi-hat with vintage character
+    for (let i = 0; i < songDuration; i += 0.2) {
+      if (Math.random() > 0.4) {
+        const hat = audioContext.createBufferSource();
+        const hatGain = audioContext.createGain();
+        hatGain.connect(audioContext.destination);
+        hatGain.gain.setValueAtTime(0.08, now + i);
+        hatGain.gain.exponentialRampToValueAtTime(0.001, now + i + 0.1);
+        
+        const bufferSize = audioContext.sampleRate * 0.1;
+        const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let k = 0; k < bufferSize; k++) {
+          data[k] = (Math.random() * 2 - 1) * (1 - k / bufferSize);
+        }
+        hat.buffer = buffer;
+        hat.connect(hatGain);
+        hat.start(now + i);
+      }
+    }
+    
+    synth.start(now);
+    synth.stop(now + songDuration);
+    bass.start(now);
+    bass.stop(now + songDuration);
+  };
+
+  const generateNeonHearts = (audioContext: any, now: number, songDuration: number) => {
+    // Neon Hearts - Upbeat synth-pop with driving energy and futuristic feel
+    const filter = audioContext.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(4500, now);
+    filter.Q.setValueAtTime(3, now);
+    
+    // Bright, energetic synth
+    const synth = audioContext.createOscillator();
+    const synthGain = audioContext.createGain();
+    synth.type = 'sawtooth';
+    synth.connect(filter);
+    filter.connect(synthGain);
+    synthGain.connect(audioContext.destination);
+    synthGain.gain.setValueAtTime(0.22, now);
+    
+    // Punchy sub-bass
+    const bass = audioContext.createOscillator();
+    const bassGain = audioContext.createGain();
+    bass.type = 'sine';
+    bass.connect(bassGain);
+    bassGain.connect(audioContext.destination);
+    bassGain.gain.setValueAtTime(0.24, now);
+    bass.frequency.setValueAtTime(55, now);
+    
+    // Energetic, driving melody
+    const neonMelody = [659.25, 587.33, 523.25, 587.33, 659.25, 740, 659.25, 587.33];
+    for (let i = 0; i < 26; i++) {
+      for (let j = 0; j < neonMelody.length; j++) {
+        synth.frequency.setTargetAtTime(neonMelody[j], now + i * 1.84 + j * 0.23, 0.04);
+      }
+      // Dynamic filter sweeps for modern feel
+      filter.frequency.exponentialRampToValueAtTime(5500, now + i * 1.84 + 0.92);
+      filter.frequency.exponentialRampToValueAtTime(2500, now + i * 1.84 + 1.84);
+    }
+    
+    // Hard-hitting kick pattern
+    for (let i = 0; i < songDuration; i += 0.46) {
+      const kick = audioContext.createOscillator();
+      const kickGain = audioContext.createGain();
+      kick.connect(kickGain);
+      kickGain.connect(audioContext.destination);
+      kick.frequency.setValueAtTime(160, now + i);
+      kick.frequency.exponentialRampToValueAtTime(50, now + i + 0.09);
+      kickGain.gain.setValueAtTime(0.7, now + i);
+      kickGain.gain.exponentialRampToValueAtTime(0.01, now + i + 0.09);
+      kick.start(now + i);
+      kick.stop(now + i + 0.09);
+    }
+    
+    // Crisp snare
+    for (let i = 0.23; i < songDuration; i += 0.46) {
+      const snare = audioContext.createOscillator();
+      const snareGain = audioContext.createGain();
+      snare.type = 'square';
+      snare.connect(snareGain);
+      snareGain.connect(audioContext.destination);
+      snare.frequency.setValueAtTime(320, now + i);
+      snare.frequency.exponentialRampToValueAtTime(100, now + i + 0.05);
+      snareGain.gain.setValueAtTime(0.28, now + i);
+      snareGain.gain.exponentialRampToValueAtTime(0.01, now + i + 0.07);
+      snare.start(now + i);
+      snare.stop(now + i + 0.07);
+    }
+    
+    // Fast, tight hi-hat groove
+    for (let i = 0; i < songDuration; i += 0.115) {
+      const hat = audioContext.createBufferSource();
+      const hatGain = audioContext.createGain();
+      hatGain.connect(audioContext.destination);
+      hatGain.gain.setValueAtTime(0.13, now + i);
+      hatGain.gain.exponentialRampToValueAtTime(0.001, now + i + 0.08);
+      
+      const bufferSize = audioContext.sampleRate * 0.08;
+      const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let k = 0; k < bufferSize; k++) {
+        data[k] = (Math.random() * 2 - 1) * (1 - k / bufferSize);
+      }
+      hat.buffer = buffer;
+      hat.connect(hatGain);
+      hat.start(now + i);
+    }
+    
+    synth.start(now);
+    synth.stop(now + songDuration);
     bass.start(now);
     bass.stop(now + songDuration);
   };
@@ -1674,6 +1966,7 @@ Check it out at: /music
 
   return (
     <main className="min-h-screen bg-[#080f1c] text-[#e8edf5] overflow-x-hidden">
+      <SaharaHeader />
       {/* Noise overlay */}
       <div className="fixed inset-0 pointer-events-none opacity-40 z-0"
            style={{
@@ -1820,7 +2113,7 @@ Check it out at: /music
                   return (
                     <div
                       key={track.id}
-                      onClick={() => setCurrentTrack(globalIndex)}
+                      onClick={() => playTrack(globalIndex)}
                       className={`group cursor-pointer p-4 rounded-lg transition-all duration-200 ${
                         currentTrack === globalIndex
                           ? 'bg-gradient-to-br from-cyan-500/30 to-blue-500/30 border border-cyan-500/60'
