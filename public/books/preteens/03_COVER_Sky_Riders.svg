@@ -1,0 +1,57 @@
+<svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sky gradient background -->
+  <defs>
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a237e;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#64b5f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffb74d;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#e3f2fd;stop-opacity:0.7" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="400" height="600" fill="url(#skyGrad)"/>
+  
+  <!-- Clouds -->
+  <path d="M 50 150 Q 80 120 120 150 Q 150 130 180 150" fill="url(#cloudGrad)" opacity="0.8"/>
+  <path d="M 200 100 Q 240 70 280 100 Q 310 85 340 100" fill="url(#cloudGrad)" opacity="0.6"/>
+  
+  <!-- Flying person silhouette -->
+  <g id="flyer1" transform="translate(100, 200)">
+    <!-- Winged backpack -->
+    <ellipse cx="0" cy="0" rx="25" ry="35" fill="#ff6b6b" opacity="0.9"/>
+    <!-- Wings -->
+    <path d="M -25 -5 Q -60 -20 -70 0 Q -60 15 -25 5" fill="#ff8787" opacity="0.9"/>
+    <path d="M 25 -5 Q 60 -20 70 0 Q 60 15 25 5" fill="#ff8787" opacity="0.9"/>
+    <!-- Person -->
+    <circle cx="0" cy="-15" r="8" fill="#ffd1a3"/>
+    <rect x="-6" y="-5" width="12" height="15" fill="#4a90e2"/>
+    <rect x="-8" y="10" width="5" height="12" fill="#fff"/>
+    <rect x="3" y="10" width="5" height="12" fill="#fff"/>
+  </g>
+  
+  <!-- Flying person 2 -->
+  <g id="flyer2" transform="translate(280, 280)">
+    <ellipse cx="0" cy="0" rx="25" ry="35" fill="#4ecdc4" opacity="0.9"/>
+    <path d="M -25 -5 Q -60 -20 -70 0 Q -60 15 -25 5" fill="#6ee7de" opacity="0.9"/>
+    <path d="M 25 -5 Q 60 -20 70 0 Q 60 15 25 5" fill="#6ee7de" opacity="0.9"/>
+    <circle cx="0" cy="-15" r="8" fill="#ffd1a3"/>
+    <rect x="-6" y="-5" width="12" height="15" fill="#95e1d3"/>
+    <rect x="-8" y="10" width="5" height="12" fill="#fff"/>
+    <rect x="3" y="10" width="5" height="12" fill="#fff"/>
+  </g>
+  
+  <!-- Mountains in distance -->
+  <polygon points="0,400 150,250 300,400" fill="#424242" opacity="0.5"/>
+  <polygon points="100,400 220,300 340,400" fill="#616161" opacity="0.6"/>
+  
+  <!-- Title background -->
+  <rect x="30" y="480" width="340" height="90" fill="#000000" opacity="0.7" rx="10"/>
+  
+  <!-- Title -->
+  <text x="200" y="520" font-size="48" font-weight="bold" text-anchor="middle" fill="#ff6b6b" font-family="Arial">Sky Riders</text>
+  <text x="200" y="555" font-size="18" text-anchor="middle" fill="#ffffff" font-family="Arial">A Tale of Adventure in the Clouds</text>
+</svg>

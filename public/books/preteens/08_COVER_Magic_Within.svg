@@ -1,0 +1,13 @@
+<svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="magGrad" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:#512da8;stop-opacity:1" /><stop offset="100%" style="stop-color:#311b92;stop-opacity:1" /></linearGradient></defs>
+  <rect width="400" height="600" fill="url(#magGrad)"/>
+  <circle cx="200" cy="100" r="50" fill="#ff1493" opacity="0.6"/><circle cx="200" cy="100" r="40" fill="#ff69b4" opacity="0.8"/>
+  <polygon points="200,180 150,320 250,320" fill="#9c27b0" opacity="0.7"/>
+  <path d="M 100 250 Q 150 200 200 250 Q 250 200 300 250" stroke="#ff1493" stroke-width="3" fill="none" opacity="0.8"/>
+  <path d="M 80 350 L 200 420 L 320 350" stroke="#ff69b4" stroke-width="2" fill="none"/>
+  <circle cx="200" cy="300" r="60" fill="#7b1fa2" opacity="0.5"/>
+  <circle cx="200" cy="300" r="45" fill="#9c27b0" opacity="0.6"/>
+  <rect x="40" y="480" width="320" height="110" fill="#000" opacity="0.85" rx="10"/>
+  <text x="200" y="528" font-size="40" font-weight="bold" text-anchor="middle" fill="#ff1493" font-family="Arial">Magic Within</text>
+  <text x="200" y="565" font-size="16" text-anchor="middle" fill="#fff" font-family="Arial">Discovering Your Inner Power</text>
+</svg>

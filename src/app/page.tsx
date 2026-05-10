@@ -133,6 +133,7 @@ export default function Home() {
   useEffect(() => {
     // Particles animation
     const pc = document.getElementById('particles');
+    const createdParticles: HTMLDivElement[] = [];
     if (pc) {
       const colors = ['#ffc105','#497ab6','#2b4c7d','#ffffff'];
       for (let i = 0; i < 14; i++) {
@@ -147,6 +148,7 @@ export default function Home() {
           animation-delay:${Math.random()*10}s;
         `;
         pc.appendChild(p);
+        createdParticles.push(p);
       }
     }
 
@@ -188,6 +190,11 @@ export default function Home() {
       });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Cleanup particles on unmount
+    return () => {
+      createdParticles.forEach(p => p.remove());
+    };
   }, []);
 
   const getModeStyles = () => {
@@ -391,6 +398,7 @@ export default function Home() {
           <ul className="hidden list-none items-center gap-1 md:flex">
             {[
               ['Videos', '/videos'],
+              ['Books', '/books'],
               ['Explore', '#categories'],
               ['Features', '#why'],
               ['About', '#about'],
@@ -470,6 +478,7 @@ export default function Home() {
             <ul className="m-0 flex list-none flex-col gap-1 p-0">
               {[
                 ['Videos', '/videos'],
+                ['Books', '/books'],
                 ['Explore', '#categories'],
                 ['Features', '#why'],
                 ['About', '#about'],
@@ -645,7 +654,7 @@ export default function Home() {
                 title: 'Music',
                 desc: 'Playlists, live sets, and artist journeys in one flow.',
                 icon: Music2,
-                href: '#categories',
+                href: '/music',
                 cta: 'Listen',
                 num: '03',
               },
@@ -653,7 +662,7 @@ export default function Home() {
                 title: 'Education',
                 desc: 'Courses and explainers from institutions and indie experts alike.',
                 icon: BookOpen,
-                href: '#categories',
+                href: '/books',
                 cta: 'Learn',
                 num: '04',
               },

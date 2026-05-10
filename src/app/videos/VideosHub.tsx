@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import SaharaHeader from '@/components/SaharaHeader';
 import {
   Bell,
   ChevronDown,
@@ -201,6 +202,7 @@ export default function VideosHub() {
         background: `linear-gradient(165deg, ${C.ink} 0%, #0f1f38 45%, ${C.deep}ee 100%)`,
       }}
     >
+      <SaharaHeader />
       <a
         href="#main-feed"
         className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[200] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-[#ffc105] focus:text-[#080f1c] focus:font-bold"

@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import Link from 'next/link';
 
 export default function HackerTyper({ onClose }: { onClose: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -11,6 +10,7 @@ export default function HackerTyper({ onClose }: { onClose: () => void }) {
   const codeRef = useRef<string[]>([]);
   const displayCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const displayTextureRef = useRef<THREE.CanvasTexture | null>(null);
+  const animationIdRef = useRef<number | null>(null);
 
   const codeSnippets = [
     'ssh -i ~/.ssh/id_rsa user@192.168.1.1',
@@ -116,7 +116,7 @@ export default function HackerTyper({ onClose }: { onClose: () => void }) {
     window.addEventListener('resize', handleResize);
 
     const animate = () => {
-      requestAnimationFrame(animate);
+      animationIdRef.current = requestAnimationFrame(animate);
       renderer.render(scene, camera);
     };
 
@@ -125,10 +125,16 @@ export default function HackerTyper({ onClose }: { onClose: () => void }) {
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
       window.removeEventListener('resize', handleResize);
+      
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
+      }
+      
       renderer.dispose();
       texture.dispose();
       material.dispose();
       geometry.dispose();
+      
       if (containerRef.current && renderer.domElement.parentNode === containerRef.current) {
         containerRef.current.removeChild(renderer.domElement);
       }
@@ -147,11 +153,12 @@ export default function HackerTyper({ onClose }: { onClose: () => void }) {
           <div className="w-3 h-3 bg-green-500 rounded-full"></div>
           <span className="text-[#00ff00] ml-2 font-mono text-sm">HACKER_TERMINAL_v3.14</span>
         </div>
-        <Link href="/games">
-          <button className="text-[#00ff00] border border-[#00ff00] px-3 py-1 rounded text-sm hover:bg-[#00ff00] hover:text-black font-mono cursor-pointer">
-            [BACK]
-          </button>
-        </Link>
+        <button
+          onClick={onClose}
+          className="text-[#00ff00] border border-[#00ff00] px-3 py-1 rounded text-sm hover:bg-[#00ff00] hover:text-black font-mono cursor-pointer transition-colors"
+        >
+          [BACK]
+        </button>
       </div>
 
       {/* Footer overlay */}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import SaharaHeader from '@/components/SaharaHeader';
 import GameCard from '@/components/GameCard';
 import PacMan from '@/components/games/PacMan';
 import ThePointingPointer from '@/components/games/ThePointingPointer';
@@ -190,6 +191,7 @@ export default function GamesPage() {
       `,
       backgroundColor: '#001a4d'
     }}>
+      <SaharaHeader />
       {/* Noise overlay */}
       <div
         className="fixed inset-0 pointer-events-none opacity-40 z-0"

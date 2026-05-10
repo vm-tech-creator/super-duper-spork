@@ -1,0 +1,3 @@
+<svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="600" fill="#4a148c"/><circle cx="200" cy="130" r="50" fill="#7b1fa2"/><polygon points="200,210 100,350 300,350" fill="#9c27b0" opacity="0.7"/><path d="M 140 300 Q 200 360 260 300" stroke="#ce93d8" stroke-width="3" fill="none"/><ellipse cx="200" cy="450" rx="80" ry="60" fill="#7b1fa2" opacity="0.6"/><rect x="50" y="480" width="300" height="110" fill="#000" opacity="0.85" rx="10"/><text x="200" y="528" font-size="40" font-weight="bold" text-anchor="middle" fill="#ce93d8" font-family="Arial">Resolve</text><text x="200" y="563" font-size="16" text-anchor="middle" fill="#fff" font-family="Arial">Determined to Succeed</text>
+</svg>
