@@ -13,6 +13,7 @@ import MusicQuiz from '@/components/games/MusicQuiz';
 import WeirdBooks from '@/components/games/WeirdBooks';
 import PacMan from '@/components/games/PacMan';
 import NeonFlames from '@/components/games/NeonFlames';
+import SuperstarRacing from '@/components/games/SuperstarRacing';
 import SiteHeader from '@/components/SiteHeader';
 
 const GAMES_DATA: Record<number, any> = {
@@ -159,6 +160,19 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Cosmic Canvas',
     features: ['Neon Trail Painting', 'Cosmic Space Background', 'Glowing Particle Effects', 'Interactive Nebula Art'],
   },
+  14: {
+    id: 14,
+    title: 'Superstar Racing',
+    description: 'A hill climb-style racing adventure with hills, coins, fuel, and physics-driven controls.',
+    fullDescription: 'Rev up your engine and conquer twisting hills in Superstar Racing. Use acceleration, braking, and tilt control to keep the car balanced, collect coins, and stay fueled while climbing to new distance records.',
+    imageUrl: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=800&h=600&fit=crop',
+    genre: 'Racing',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'May 2026',
+    developer: 'Superstar Studios',
+    features: ['Hill Climb Physics', 'Fuel Management', 'Coin Collection', 'Tilt Control'],
+  },
 };
 
 export default function GameDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -200,6 +214,8 @@ export default function GameDetailPage({ params }: { params: Promise<{ id: strin
         return <PacMan onClose={() => setIsPlaying(false)} />;
       case 13:
         return <NeonFlames onClose={() => setIsPlaying(false)} />;
+      case 14:
+        return <SuperstarRacing onClose={() => setIsPlaying(false)} />;
       default:
         return null;
     }

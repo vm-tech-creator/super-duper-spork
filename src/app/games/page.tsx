@@ -13,6 +13,7 @@ import HackerTyper from '@/components/games/HackerTyper';
 import ElonFortune from '@/components/games/ElonFortune';
 import MusicQuiz from '@/components/games/MusicQuiz';
 import WeirdBooks from '@/components/games/WeirdBooks';
+import SuperstarRacing from '@/components/games/SuperstarRacing';
 import SiteHeader from '@/components/SiteHeader';
 
 const GAMES_DATA = [
@@ -142,6 +143,16 @@ const GAMES_DATA = [
     description: 'Paint your own nebula with glowing cosmic trails while a slow space background drifts behind you.',
     imageUrl: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=500&h=400&fit=crop',
     genre: 'Interactive & Useless Fun',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'May 2026',
+  },
+  {
+    id: 14,
+    title: 'Superstar Racing',
+    description: 'A hill climb-style racing adventure with hills, coins, fuel, and physics-driven controls.',
+    imageUrl: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=800&h=600&fit=crop',
+    genre: 'Racing',
     rating: 4.9,
     players: 'Solo',
     releaseDate: 'May 2026',
@@ -435,7 +446,7 @@ export default function GamesPage() {
 
           {/* Filter Controls */}
           <div className="max-w-6xl mx-auto mb-12 flex flex-wrap gap-3 justify-center">
-            {['All', 'Interactive & Useless Fun', 'Humorous & Absurd Concepts', 'Space'].map((filter) => (
+            {['All', 'Racing', 'Interactive & Useless Fun', 'Humorous & Absurd Concepts', 'Space'].map((filter) => (
               <button
                 key={filter}
                 onClick={() => setSelectedFilter(filter)}
