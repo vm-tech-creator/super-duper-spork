@@ -3,6 +3,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { addSandDollars } from '@/utils/sandDollars';
+import SiteHeader from '@/components/SiteHeader';
 
 interface RocketPart {
   id: string;
@@ -14,6 +16,55 @@ interface RocketPart {
   fuelCapacity?: number;
   thrust?: number;
 }
+
+interface Mission {
+  id: string;
+  name: string;
+  description: string;
+  targetAltitude: number;
+  difficulty: 'Easy' | 'Medium' | 'Hard' | 'Extreme';
+  baseReward: number;
+  objectives: string[];
+}
+
+const MISSIONS: Mission[] = [
+  {
+    id: 'suborbital',
+    name: 'Suborbital Flight',
+    description: 'Reach 100km altitude and return safely',
+    targetAltitude: 100,
+    difficulty: 'Easy',
+    baseReward: 100,
+    objectives: ['Reach 100km altitude', 'Deploy parachute', 'Land safely']
+  },
+  {
+    id: 'orbital',
+    name: 'Orbital Mission',
+    description: 'Reach 200km altitude and maintain stable orbit',
+    targetAltitude: 200,
+    difficulty: 'Medium',
+    baseReward: 250,
+    objectives: ['Reach 200km altitude', 'Maintain speed above 7000m/s', 'Safe reentry']
+  },
+  {
+    id: 'lunar',
+    name: 'Lunar Approach',
+    description: 'Reach 300km altitude - the limit of space',
+    targetAltitude: 300,
+    difficulty: 'Hard',
+    baseReward: 500,
+    objectives: ['Reach 300km altitude', 'Survive extreme conditions', 'Perfect landing']
+  },
+  {
+    id: 'extreme',
+    name: 'Edge of Space',
+    description: 'Push your rocket to 500km - the ultimate challenge',
+    targetAltitude: 500,
+    difficulty: 'Extreme',
+    baseReward: 1000,
+    objectives: ['Reach 500km altitude', 'Handle intense pressure', 'Achieve perfect splashdown']
+  }
+];
 
 const ROCKET_PARTS: RocketPart[] = [
   { id: 'body-large', name: 'Titan Body', type: 'body', color: '#e8e8e8', emissive: '#1a1a2e', scale: [2, 10, 2] },
@@ -32,10 +83,12 @@ const ROCKET_PARTS: RocketPart[] = [
   { id: 'antenna-comm', name: 'Comm Array', type: 'antenna', color: '#94a3b8', scale: [0.15, 2, 0.15] },
 ];
 
-type GamePhase = 'build' | 'ready' | 'countdown' | 'launch' | 'flight' | 'descent' | 'landed';
+type GamePhase = 'missionselect' | 'build' | 'ready' | 'countdown' | 'launch' | 'flight' | 'descent' | 'landed' | 'failed';
 
 export default function RocketBuilderPage() {
-  const [phase, setPhase] = useState<GamePhase>('build');
+  const [phase, setPhase] = useState<GamePhase>('missionselect');
+  const [currentMission, setCurrentMission] = useState<Mission | null>(null);
+  const [missionResult, setMissionResult] = useState<{ success: boolean; coinsEarned: number; message: string } | null>(null);
   const [placedParts, setPlacedParts] = useState<{ part: RocketPart; position: [number, number, number]; rotation: [number, number, number]; side: string }[]>([]);
   const [selectedPart, setSelectedPart] = useState<RocketPart | null>(null);
   const [attachSide, setAttachSide] = useState<string | null>(null);
@@ -694,6 +747,21 @@ export default function RocketBuilderPage() {
         if (newAlt <= 0) {
           setPhase('landed');
           setMessage('🎉 Mission Complete!');
+          // Handle mission completion
+          setTimeout(() => {
+            const isSuccess = newAlt >= (currentMission?.targetAltitude ?? 100) * 0.9 || altitude >= (currentMission?.targetAltitude ?? 100) * 0.9;
+            const baseReward = currentMission?.baseReward ?? 100;
+            let coinsEarned = isSuccess ? baseReward + 100 : Math.floor(baseReward * 0.2);
+            if (parachuteDeployed) coinsEarned += 50;
+            if (isSuccess) {
+              addSandDollars(coinsEarned);
+              setMissionResult({
+                success: true,
+                coinsEarned,
+                message: `Mission Success! +${coinsEarned} Sand Dollars!`
+              });
+            }
+          }, 500);
           return 0;
         }
         if (rocketRef.current) {
@@ -704,7 +772,7 @@ export default function RocketBuilderPage() {
     }, 33);
 
     return () => clearInterval(interval);
-  }, [phase, parachuteDeployed]);
+  }, [phase, parachuteDeployed, currentMission]);
 
   const handleDeployParachute = () => {
     setParachuteDeployed(true);
@@ -751,23 +819,191 @@ export default function RocketBuilderPage() {
     setTimeout(() => setMessage(null), 2000);
   };
 
+  const handleMissionSelect = (mission: Mission) => {
+    setCurrentMission(mission);
+    setPhase('build');
+    setAltitude(0);
+    setSpeed(0);
+    setPlacedParts([]);
+    setFuelLevels({});
+    setParachuteDeployed(false);
+    setMissionResult(null);
+  };
+
+  const calculateReward = () => {
+    if (!currentMission) return 0;
+    let reward = currentMission.baseReward;
+    
+    // Bonus for reaching target altitude
+    if (altitude >= currentMission.targetAltitude * 0.9) {
+      reward += 100;
+    }
+    
+    // Bonus for safe landing
+    if (phase === 'landed' && speed < 5) {
+      reward += 100;
+    }
+    
+    // Bonus for parachute deployment
+    if (parachuteDeployed) {
+      reward += 50;
+    }
+    
+    return Math.floor(reward);
+  };
+
+  const handleMissionComplete = () => {
+    const isSuccess = altitude >= (currentMission?.targetAltitude ?? 100) * 0.9;
+    const coinsEarned = isSuccess ? calculateReward() : Math.floor((currentMission?.baseReward ?? 100) * 0.2);
+    
+    if (isSuccess) {
+      addSandDollars(coinsEarned);
+      setMissionResult({
+        success: true,
+        coinsEarned,
+        message: `Mission Success! +${coinsEarned} Sand Dollars!`
+      });
+    } else {
+      setMissionResult({
+        success: false,
+        coinsEarned: 0,
+        message: `Mission Failed. Better luck next time!`
+      });
+    }
+    
+    setPhase('landed');
+  };
+
+  const handleReturnToMissions = () => {
+    setPhase('missionselect');
+    setMissionResult(null);
+    setCurrentMission(null);
+    setAltitude(0);
+    setSpeed(0);
+    setPlacedParts([]);
+    setFuelLevels({});
+    setParachuteDeployed(false);
+    setCountdown(3);
+  };
+
+  // Mission Selection Screen
+  if (phase === 'missionselect') {
+    return (
+      <div className="relative min-h-screen bg-[#050510] text-white overflow-hidden">
+        <SiteHeader
+          links={[
+            { label: 'Home', href: '/' },
+            { label: 'Games', href: '/games' },
+          ]}
+          rightSlot={
+            <a
+              href="/games"
+              className="rounded-xl border border-[#88a9d8]/20 bg-[#080f1c]/80 px-4 py-2 text-sm font-semibold uppercase tracking-[0.12em] text-[#ffc105] no-underline transition hover:bg-[#0a1222]"
+            >
+              Back to Games
+            </a>
+          }
+        />
+
+        <div className="pt-[68px] min-h-screen px-8 py-12">
+          <div className="max-w-6xl mx-auto">
+            {/* Header */}
+            <div className="mb-12">
+              <h1 className="text-5xl font-black bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent mb-2">
+                🚀 Kerbal Mission Control
+              </h1>
+              <p className="text-gray-400 text-lg">Select a mission and design your rocket to achieve the objective</p>
+            </div>
+
+            {/* Mission Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {MISSIONS.map(mission => (
+                <div key={mission.id} className="p-6 bg-[rgba(255,255,255,.05)] border border-amber-500/20 rounded-2xl hover:border-amber-500/50 transition-all hover:bg-[rgba(255,255,255,.08)]">
+                  <div className="flex items-start justify-between mb-4">
+                    <div>
+                      <h3 className="text-2xl font-bold text-amber-400">{mission.name}</h3>
+                      <p className="text-gray-400 text-sm mt-1">{mission.description}</p>
+                    </div>
+                    <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider ${{
+                      'Easy': 'bg-emerald-500/20 text-emerald-400',
+                      'Medium': 'bg-amber-500/20 text-amber-400',
+                      'Hard': 'bg-orange-500/20 text-orange-400',
+                      'Extreme': 'bg-red-500/20 text-red-400'
+                    }[mission.difficulty]}`}>
+                      {mission.difficulty}
+                    </span>
+                  </div>
+
+                  <div className="mb-4 p-4 bg-[rgba(255,255,255,.02)] rounded-lg">
+                    <div className="text-sm text-gray-500 uppercase tracking-wider mb-2">Target: {mission.targetAltitude}km</div>
+                    <div className="text-3xl font-black text-amber-400">{mission.baseReward}</div>
+                    <div className="text-xs text-gray-400">Sand Dollars Reward</div>
+                  </div>
+
+                  <div className="mb-4">
+                    <div className="text-xs text-gray-500 uppercase tracking-wider mb-2">Objectives:</div>
+                    <ul className="space-y-1 text-sm text-gray-300">
+                      {mission.objectives.map((obj, i) => (
+                        <li key={i} className="flex items-center gap-2">
+                          <span className="text-amber-400">✓</span> {obj}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <button
+                    onClick={() => handleMissionSelect(mission)}
+                    className="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black font-bold rounded-lg transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    SELECT MISSION
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Mission Results Screen
+  if (missionResult) {
+    return (
+      <div className="relative min-h-screen bg-[#050510] text-white flex items-center justify-center overflow-hidden">
+        <div className="text-center max-w-2xl px-8">
+          <div className="text-6xl mb-6">{missionResult.success ? '🎉' : '❌'}</div>
+          <h1 className={`text-5xl font-black mb-4 ${missionResult.success ? 'text-emerald-400' : 'text-red-400'}`}>
+            {missionResult.message}
+          </h1>
+          
+          {missionResult.success && (
+            <div className="my-8 p-6 bg-emerald-500/20 border border-emerald-500/50 rounded-xl">
+              <div className="text-sm text-gray-300 uppercase tracking-wider mb-2">Sand Dollars Earned</div>
+              <div className="text-6xl font-black text-emerald-400">{missionResult.coinsEarned}</div>
+            </div>
+          )}
+
+          <div className="space-y-4 mt-8">
+            <button
+              onClick={handleReturnToMissions}
+              className="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-black font-bold rounded-lg transition-all transform hover:scale-[1.02]"
+            >
+              NEXT MISSION
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative min-h-screen bg-[#050510] text-white overflow-hidden">
-      {/* Nav */}
-      <nav className="fixed top-0 w-full z-50 flex items-center justify-between px-[5%] h-[68px] bg-[rgba(5,5,16,.97)] backdrop-blur-xl border-b border-[rgba(251,191,36,.15)]">
-        <a href="/" className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 rounded-xl grid place-items-center font-bold text-2xl text-black shadow-lg shadow-amber-500/30">
-            S
-          </div>
-          <div className="font-bold text-2xl uppercase tracking-widest">
-            <span className="text-amber-400">Sahara</span>
-          </div>
-        </a>
-        <ul className="flex gap-10 text-sm font-medium">
-          <li><a href="/" className="text-gray-500 hover:text-amber-400 transition-all">Home</a></li>
-          <li><a href="/games" className="text-amber-400">Games</a></li>
-        </ul>
-      </nav>
+      <SiteHeader
+        links={[
+          { label: 'Home', href: '/' },
+          { label: 'Games', href: '/games' },
+        ]}
+      />
 
       {/* Main */}
       <div className="pt-[68px] h-screen flex">

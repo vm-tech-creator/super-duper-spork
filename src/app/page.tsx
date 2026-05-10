@@ -42,16 +42,6 @@ const SPOTLIGHT_VIDEOS = [
     href: 'https://www.youtube.com/watch?v=h3Yfk_uaexU',
   },
   {
-    title: 'Old Spice | The Man Your Man Could Smell Like',
-    creator: 'Old Spice',
-    views: '62M+',
-    duration: '1',
-    color: '#047857',
-    tags: ['Entertaining', 'Lifestyle'],
-    platform: 'youtube' as const,
-    href: 'https://www.youtube.com/watch?v=owGykVbfgUE',
-  },
-  {
     title: 'Dramatic Chipmunk',
     creator: 'YouTube classic',
     views: '50M+',
@@ -423,14 +413,6 @@ export default function Home() {
                 )}
               </li>
             ))}
-            <li>
-              <a
-                href="#"
-                className="rounded-lg px-3 py-2 text-sm font-medium text-[#8ba3c4] no-underline transition-colors hover:bg-white/[0.04] hover:text-[#ffc105]"
-              >
-                Sign in
-              </a>
-            </li>
           </ul>
 
           <div className="flex items-center gap-2 sm:gap-3">

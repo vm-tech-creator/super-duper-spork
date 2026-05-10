@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import { addSandDollars, calculateCatBounceCoins } from '@/utils/sandDollars';
 
 interface Cat {
   mesh: THREE.Mesh;
@@ -15,6 +16,8 @@ export default function CatBounce({ onClose }: { onClose: () => void }) {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const catsRef = useRef<Cat[]>([]);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const [score, setScore] = useState(0);
+  const scoreIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const catImages = [
     'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=100&h=100&fit=crop',
@@ -125,15 +128,41 @@ export default function CatBounce({ onClose }: { onClose: () => void }) {
 
     window.addEventListener('resize', handleResize);
 
+    // Start score timer
+    scoreIntervalRef.current = setInterval(() => {
+      setScore(prev => prev + 1);
+    }, 1000); // 1 point per second
+
     // Cleanup
     return () => {
       window.removeEventListener('resize', handleResize);
+      if (scoreIntervalRef.current) {
+        clearInterval(scoreIntervalRef.current);
+      }
       if (containerRef.current) {
         try {
           containerRef.current.removeChild(renderer.domElement);
         } catch (e) {}
       }
       renderer.dispose();
+
+      // Award coins when leaving
+      const coins = calculateCatBounceCoins(score);
+      if (coins > 0) {
+        addSandDollars(coins);
+
+        // Show notification
+        const notification = document.createElement('div');
+        notification.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg font-bold z-50 shadow-lg';
+        notification.textContent = `+${coins} Sand Dollars!`;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          if (document.body.contains(notification)) {
+            document.body.removeChild(notification);
+          }
+        }, 3000);
+      }
     };
   }, []);
 
@@ -160,6 +189,7 @@ export default function CatBounce({ onClose }: { onClose: () => void }) {
       {/* Header */}
       <div className="absolute top-4 left-4">
         <h1 className="text-[#ffc105] font-bold text-2xl">🐱 Cat Bounce</h1>
+        <p className="text-white">Score: {score} | Earn coins by watching cats bounce!</p>
       </div>
     </div>
   );

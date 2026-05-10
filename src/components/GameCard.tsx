@@ -31,6 +31,10 @@ export default function GameCard({
 
   const gameLink = id === 10 ? '/games/space' : id === 11 ? '/games/rocket' : `/games/${id}`;
 
+  const handleCardClick = () => {
+    router.push(gameLink);
+  };
+
   return (
     <div
       className="relative group cursor-pointer overflow-hidden rounded-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[rgba(255,193,5,.3)] h-full"

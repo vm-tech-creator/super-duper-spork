@@ -9,7 +9,7 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "format": "prettier --write .",
-    "type-check": "tsc --noEmit",
+    "type-check": "tsc -noEmit",
     "portless:build": "portless build",
     "portless:publish": "portless publish"
   },

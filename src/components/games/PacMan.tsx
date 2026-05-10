@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { addSandDollars, calculatePacManCoins } from '@/utils/sandDollars';
 
 interface Position {
   x: number;
@@ -200,12 +201,25 @@ export default function PacMan({ onClose }: { onClose: () => void }) {
     });
   }, [pacmanPos, ghosts]);
 
-  // Check win
+  // Award coins when game ends
   useEffect(() => {
-    if (pelletsLeft === 0 && pelletsLeft !== undefined) {
-      setWon(true);
+    if (gameOver || won) {
+      const coins = calculatePacManCoins(score, won);
+      addSandDollars(coins);
+
+      // Show notification
+      const notification = document.createElement('div');
+      notification.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg font-bold z-50 shadow-lg';
+      notification.textContent = `+${coins} Sand Dollars!`;
+      document.body.appendChild(notification);
+
+      setTimeout(() => {
+        if (document.body.contains(notification)) {
+          document.body.removeChild(notification);
+        }
+      }, 3000);
     }
-  }, [pelletsLeft]);
+  }, [gameOver, won, score]);
 
   const drawGameToCanvas = () => {
     const canvas = document.createElement('canvas');

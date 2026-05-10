@@ -2,6 +2,17 @@
 
 import { useState, useEffect } from 'react';
 import GameCard from '@/components/GameCard';
+import PacMan from '@/components/games/PacMan';
+import ThePointingPointer from '@/components/games/ThePointingPointer';
+import EndlessHorse from '@/components/games/EndlessHorse';
+import FindTheInvisibleCow from '@/components/games/FindTheInvisibleCow';
+import PasswordTester from '@/components/games/PasswordTester';
+import CatBounce from '@/components/games/CatBounce';
+import HackerTyper from '@/components/games/HackerTyper';
+import ElonFortune from '@/components/games/ElonFortune';
+import MusicQuiz from '@/components/games/MusicQuiz';
+import WeirdBooks from '@/components/games/WeirdBooks';
+import SiteHeader from '@/components/SiteHeader';
 
 const GAMES_DATA = [
   {
@@ -115,7 +126,7 @@ const GAMES_DATA = [
     releaseDate: 'Feb 2026',
   },
   {
-    id: 10,
+    id: 12,
     title: 'Pac-Man',
     description: 'A classic maze game where you navigate Pac-Man through a two-line pathway maze while avoiding colorful ghosts.',
     imageUrl: 'https://images.unsplash.com/photo-1535371579214-d6a72b3b5c47?w=500&h=400&fit=crop',
@@ -124,19 +135,20 @@ const GAMES_DATA = [
     players: 'Solo',
     releaseDate: 'Apr 2026',
   },
+  {
+    id: 13,
+    title: 'Neon Flames',
+    description: 'Paint your own nebula with glowing cosmic trails while a slow space background drifts behind you.',
+    imageUrl: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=500&h=400&fit=crop',
+    genre: 'Interactive & Useless Fun',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'May 2026',
+  },
 ];
 
 export default function GamesPage() {
-  const [scrolled, setScrolled] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState('All');
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     // Scroll reveal animation
@@ -187,41 +199,20 @@ export default function GamesPage() {
       />
 
       {/* Nav */}
-      <nav
-        className={`fixed top-0 w-full z-50 flex items-center justify-between px-[5%] h-[68px] bg-[rgba(8,15,28,.85)] backdrop-blur-[16px] transition-shadow ${
-          scrolled ? 'shadow-[0_4px_40px_rgba(0,0,0,.5)]' : ''
-        } border-b border-[rgba(73,122,182,.2)]`}
-      >
-        <a href="/" className="flex items-center gap-2.5 text-decoration-none">
-          <div className="w-9 h-9 bg-gradient-to-br from-[#ffc105] to-[#e0a800] rounded-lg grid place-items-center font-['Bebas_Neue'] text-xl text-[#080f1c] shadow-[0_0_16px_rgba(255,193,5,.35)]">
-            S
-          </div>
-          <div className="font-['Barlow_Condensed'] font-black text-xl uppercase tracking-[.04em]">
-            <span className="text-[#ffc105]">Sahara</span>
-          </div>
-        </a>
-        <ul className="flex gap-8 list-none">
-          <li>
-            <a
-              href="/"
-              className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]"
-            >
-              Home
-            </a>
-          </li>
-          <li>
-            <a
-              href="/games"
-              className="text-[#ffc105] no-underline font-medium uppercase tracking-[.05em] text-[.875rem]"
-            >
-              Games
-            </a>
-          </li>
-        </ul>
-        <button className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2.5 rounded transition-all hover:bg-[#ffcf3a] hover:translate-y-[-1px] hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] text-[.95rem] cursor-pointer">
-          Sign In
-        </button>
-      </nav>
+      <SiteHeader
+        links={[
+          { label: 'Home', href: '/' },
+          { label: 'Games', href: '/games' },
+        ]}
+        rightSlot={
+          <button
+            onClick={() => window.location.href = '/games/avatar'}
+            className="bg-[#4a90e2] text-white border-none px-4 py-2 rounded transition-all hover:bg-[#357abd] hover:translate-y-[-1px] hover:shadow-[0_4px_16px_rgba(74,144,226,.3)] font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] text-[.85rem] cursor-pointer"
+          >
+            Avatar
+          </button>
+        }
+      />
 
       {/* Main Content */}
       <main className="relative z-10 pt-[120px]">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import ThePointingPointer from '@/components/games/ThePointingPointer';
 import EndlessHorse from '@/components/games/EndlessHorse';
@@ -12,6 +12,8 @@ import ElonFortune from '@/components/games/ElonFortune';
 import MusicQuiz from '@/components/games/MusicQuiz';
 import WeirdBooks from '@/components/games/WeirdBooks';
 import PacMan from '@/components/games/PacMan';
+import NeonFlames from '@/components/games/NeonFlames';
+import SiteHeader from '@/components/SiteHeader';
 
 const GAMES_DATA: Record<number, any> = {
   1: {
@@ -131,8 +133,8 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Literary Labs',
     features: ['Real Books', 'Hilarious Titles', 'Educational', 'Endless Laughs'],
   },
-  10: {
-    id: 10,
+  12: {
+    id: 12,
     title: 'Pac-Man',
     description: 'A classic maze game where you navigate Pac-Man through a two-line pathway maze while avoiding colorful ghosts.',
     fullDescription: 'Navigate the classic Pac-Man through a perfectly designed maze filled with pellets. Collect all pellets to win while avoiding four intelligent ghosts with unique AI behaviors. Arrow keys or WASD to move. A nostalgic return to arcade gaming.',
@@ -144,15 +146,27 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Arcade Legends',
     features: ['Maze Navigation', 'AI Ghosts', 'Pellet Collection', 'Arcade Classic'],
   },
+  13: {
+    id: 13,
+    title: 'Neon Flames',
+    description: 'A paint-your-own-nebula experience where your cursor leaves glowing, cosmic trails in a drifting starfield.',
+    fullDescription: 'Step into a cosmic studio and paint a neon nebula with a trail of glowing particles. Your cursor leaves shimmering space dust and bright auroras while a slowly moving starfield shimmers behind the scene. The result is a meditative interactive art piece with vivid color and cosmic motion.',
+    imageUrl: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&h=600&fit=crop',
+    genre: 'Interactive & Useless Fun',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'May 2026',
+    developer: 'Cosmic Canvas',
+    features: ['Neon Trail Painting', 'Cosmic Space Background', 'Glowing Particle Effects', 'Interactive Nebula Art'],
+  },
 };
 
 export default function GameDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const gameId = parseInt(params.id);
+  const gameId = parseInt(resolvedParams.id);
   const game = GAMES_DATA[gameId];
-  const [scrolled, setScrolled] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
   // Auto-start game if play=true in query params
@@ -161,14 +175,6 @@ export default function GameDetailPage({ params }: { params: Promise<{ id: strin
       setIsPlaying(true);
     }
   }, [searchParams]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   const renderGame = () => {
     switch (gameId) {
@@ -190,8 +196,10 @@ export default function GameDetailPage({ params }: { params: Promise<{ id: strin
         return <MusicQuiz onClose={() => setIsPlaying(false)} />;
       case 9:
         return <WeirdBooks onClose={() => setIsPlaying(false)} />;
-      case 10:
+      case 12:
         return <PacMan onClose={() => setIsPlaying(false)} />;
+      case 13:
+        return <NeonFlames onClose={() => setIsPlaying(false)} />;
       default:
         return null;
     }
@@ -229,41 +237,12 @@ export default function GameDetailPage({ params }: { params: Promise<{ id: strin
       />
 
       {/* Nav */}
-      <nav
-        className={`fixed top-0 w-full z-50 flex items-center justify-between px-[5%] h-[68px] bg-[rgba(8,15,28,.85)] backdrop-blur-[16px] transition-shadow ${
-          scrolled ? 'shadow-[0_4px_40px_rgba(0,0,0,.5)]' : ''
-        } border-b border-[rgba(73,122,182,.2)]`}
-      >
-        <a href="/" className="flex items-center gap-2.5 text-decoration-none">
-          <div className="w-9 h-9 bg-gradient-to-br from-[#ffc105] to-[#e0a800] rounded-lg grid place-items-center font-['Bebas_Neue'] text-xl text-[#080f1c] shadow-[0_0_16px_rgba(255,193,5,.35)]">
-            S
-          </div>
-          <div className="font-['Barlow_Condensed'] font-black text-xl uppercase tracking-[.04em]">
-            <span className="text-[#ffc105]">Sahara</span>
-          </div>
-        </a>
-        <ul className="flex gap-8 list-none">
-          <li>
-            <a
-              href="/"
-              className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]"
-            >
-              Home
-            </a>
-          </li>
-          <li>
-            <a
-              href="/games"
-              className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]"
-            >
-              Games
-            </a>
-          </li>
-        </ul>
-        <button className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2.5 rounded transition-all hover:bg-[#ffcf3a] hover:translate-y-[-1px] hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] text-[.95rem] cursor-pointer">
-          Sign In
-        </button>
-      </nav>
+      <SiteHeader
+        links={[
+          { label: 'Home', href: '/' },
+          { label: 'Games', href: '/games' },
+        ]}
+      />
 
       {/* Main Content */}
       <main className="relative z-10">
