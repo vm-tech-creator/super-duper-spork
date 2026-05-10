@@ -2,14 +2,19 @@
 export const SAND_DOLLARS_KEY = 'sandDollars';
 
 export const getSandDollars = (): number => {
-  if (typeof window === 'undefined') return 500; // Default for SSR
+  if (typeof window === 'undefined') return 1000; // Default for SSR
   const stored = localStorage.getItem(SAND_DOLLARS_KEY);
-  return stored ? parseInt(stored) : 500; // Start with 500
+  return stored ? parseInt(stored) : 1000; // Start with 1000
 };
 
 export const setSandDollars = (amount: number): void => {
   if (typeof window === 'undefined') return;
   localStorage.setItem(SAND_DOLLARS_KEY, Math.max(0, amount).toString());
+};
+
+export const resetSandDollars = (amount = 1000): number => {
+  setSandDollars(amount);
+  return amount;
 };
 
 export const addSandDollars = (amount: number): number => {
