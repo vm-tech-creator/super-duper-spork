@@ -128,7 +128,6 @@ export default function BooksPage() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      <Header />
       <main className="relative z-10 pt-24 px-4">
         <div className="py-12">
           <div className="max-w-7xl mx-auto">
