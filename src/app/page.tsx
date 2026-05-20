@@ -602,6 +602,7 @@ export default function Home() {
   useEffect(() => {
     // Particles animation
     const pc = document.getElementById('particles');
+    const createdParticles: HTMLDivElement[] = [];
     if (pc) {
       const colors = ['#ffc105','#497ab6','#2b4c7d','#ffffff'];
       for (let i = 0; i < 14; i++) {
@@ -616,6 +617,7 @@ export default function Home() {
           animation-delay:${Math.random()*10}s;
         `;
         pc.appendChild(p);
+        createdParticles.push(p);
       }
     }
 
@@ -657,6 +659,11 @@ export default function Home() {
       });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    // Cleanup particles on unmount
+    return () => {
+      createdParticles.forEach(p => p.remove());
+    };
   }, []);
 
   const getModeStyles = () => {
@@ -956,6 +963,7 @@ export default function Home() {
             {[
               ['Games', '/games'],
               ['Videos', '/videos'],
+              ['Books', '/books'],
               ['Explore', '#categories'],
               ['Features', '#why'],
               ['About', '#about'],
@@ -1044,6 +1052,7 @@ export default function Home() {
               {[
                 ['Games', '/games'],
                 ['Videos', '/videos'],
+                ['Books', '/books'],
                 ['Explore', '#categories'],
                 ['Features', '#why'],
                 ['About', '#about'],

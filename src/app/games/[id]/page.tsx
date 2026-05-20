@@ -1,11 +1,21 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect, use } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import CatBounceGame from '@/components/CatBounceGame';
 import SpaceExplorerGame from '@/components/SpaceExplorerGame';
 import MazeRunnerGame from '@/components/MazeRunnerGame';
 import BubblePopperGame from '@/components/BubblePopperGame';
+import ThePointingPointer from '@/components/games/ThePointingPointer';
+import EndlessHorse from '@/components/games/EndlessHorse';
+import FindTheInvisibleCow from '@/components/games/FindTheInvisibleCow';
+import PasswordTester from '@/components/games/PasswordTester';
+import CatBounce from '@/components/games/CatBounce';
+import HackerTyper from '@/components/games/HackerTyper';
+import ElonFortune from '@/components/games/ElonFortune';
+import MusicQuiz from '@/components/games/MusicQuiz';
+import WeirdBooks from '@/components/games/WeirdBooks';
+import PacMan from '@/components/games/PacMan';
 
 const GAMES_DATA: Record<number, any> = {
   1: {
@@ -164,13 +174,36 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Bubble Dynamics',
     features: ['3D Bubbles', 'Combo System', 'Particle Effects', 'Mouse Controls', 'Progressive Levels'],
   },
+  10: {
+    id: 10,
+    title: 'Pac-Man',
+    description: 'A classic maze game where you navigate Pac-Man through a two-line pathway maze while avoiding colorful ghosts.',
+    fullDescription: 'Navigate the classic Pac-Man through a perfectly designed maze filled with pellets. Collect all pellets to win while avoiding four intelligent ghosts with unique AI behaviors. Arrow keys or WASD to move. A nostalgic return to arcade gaming.',
+    imageUrl: 'https://images.unsplash.com/photo-1535371579214-d6a72b3b5c47?w=800&h=600&fit=crop',
+    genre: 'Classic Arcade Game',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'Apr 2026',
+    developer: 'Arcade Legends',
+    features: ['Maze Navigation', 'AI Ghosts', 'Pellet Collection', 'Arcade Classic'],
+  },
 };
 
-export default function GameDetailPage({ params }: { params: { id: string } }) {
+export default function GameDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = use(params);
   const router = useRouter();
-  const gameId = parseInt(params.id);
+  const searchParams = useSearchParams();
+  const gameId = parseInt(resolvedParams.id);
   const game = GAMES_DATA[gameId];
   const [scrolled, setScrolled] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  // Auto-start game if play=true in query params
+  useEffect(() => {
+    if (searchParams.get('play') === 'true') {
+      setIsPlaying(true);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -179,6 +212,37 @@ export default function GameDetailPage({ params }: { params: { id: string } }) {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const renderGame = () => {
+    switch (gameId) {
+      case 1:
+        return <ThePointingPointer onClose={() => setIsPlaying(false)} />;
+      case 2:
+        return <EndlessHorse onClose={() => setIsPlaying(false)} />;
+      case 3:
+        return <FindTheInvisibleCow onClose={() => setIsPlaying(false)} />;
+      case 4:
+        return <PasswordTester onClose={() => setIsPlaying(false)} />;
+      case 5:
+        return <CatBounce onClose={() => setIsPlaying(false)} />;
+      case 6:
+        return <HackerTyper onClose={() => setIsPlaying(false)} />;
+      case 7:
+        return <ElonFortune onClose={() => setIsPlaying(false)} />;
+      case 8:
+        return <MusicQuiz onClose={() => setIsPlaying(false)} />;
+      case 9:
+        return <WeirdBooks onClose={() => setIsPlaying(false)} />;
+      case 10:
+        return <PacMan onClose={() => setIsPlaying(false)} />;
+      default:
+        return null;
+    }
+  };
+
+  if (isPlaying) {
+    return renderGame();
+  }
 
   if (!game) {
     return (

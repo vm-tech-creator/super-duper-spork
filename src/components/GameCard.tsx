@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 interface GameCardProps {
   id: number;
@@ -26,15 +26,22 @@ export default function GameCard({
   releaseDate,
   onPlay,
 }: GameCardProps) {
+  const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
 
+  const gameLink = id === 10 ? '/games/space' : id === 11 ? '/games/rocket' : `/games/${id}`;
+
+  const handleCardClick = () => {
+    router.push(gameLink);
+  };
+
   return (
-    <Link href={`/games/${id}`}>
-      <div
-        className="relative group cursor-pointer overflow-hidden rounded-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[rgba(255,193,5,.3)]"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
+    <div
+      className="relative group cursor-pointer overflow-hidden rounded-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[rgba(255,193,5,.3)] h-full"
+      onClick={handleCardClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {/* Background Image */}
       <div className="relative h-72 w-full overflow-hidden bg-gradient-to-br from-[#1a2f5c] to-[#080f1c]">
         <img
@@ -43,7 +50,7 @@ export default function GameCard({
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#080f1c] via-[rgba(8,15,28,.4)] to-transparent transition-opacity duration-300"  />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#080f1c] via-[rgba(8,15,28,.4)] to-transparent transition-opacity duration-300" />
       </div>
 
       {/* Content */}
@@ -76,7 +83,6 @@ export default function GameCard({
 
         {/* Play Button */}
         <button
-          onClick={onPlay}
           className="w-full bg-gradient-to-r from-[#ffc105] to-[#e0a800] text-[#080f1c] border-none px-4 py-3 rounded font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] text-sm transition-all duration-300 hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] hover:translate-y-[-2px] cursor-pointer active:translate-y-0 mt-2"
         >
           Play Now
@@ -87,7 +93,6 @@ export default function GameCard({
       {isHovered && (
         <div className="pointer-events-none absolute inset-0 rounded-lg border border-[#ffc105] opacity-50" />
       )}
-      </div>
-    </Link>
+    </div>
   );
 }

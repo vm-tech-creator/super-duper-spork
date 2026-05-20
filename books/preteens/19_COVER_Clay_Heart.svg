@@ -1,0 +1,11 @@
+<svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="600" fill="#fff3e0"/>
+  <rect x="80" y="80" width="240" height="320" fill="#e8dcc8" stroke="#8d6e63" stroke-width="4"/>
+  <circle cx="200" cy="220" r="50" fill="#a1887f" opacity="0.7"/>
+  <path d="M 140 180 Q 200 120 260 180" stroke="#d7ccc8" stroke-width="3" fill="none"/>
+  <ellipse cx="100" cy="380" rx="30" ry="80" fill="#a1887f"/><ellipse cx="300" cy="380" rx="30" ry="80" fill="#a1887f"/>
+  <path d="M 150 420 Q 200 460 250 420" stroke="#bcaaa4" stroke-width="2" fill="none"/>
+  <rect x="50" y="480" width="300" height="110" fill="#5d4037" opacity="0.9" rx="10"/>
+  <text x="200" y="528" font-size="40" font-weight="bold" text-anchor="middle" fill="#d7ccc8" font-family="Arial">Clay Heart</text>
+  <text x="200" y="563" font-size="16" text-anchor="middle" fill="#fff" font-family="Arial">Sculpting Identity</text>
+</svg>
