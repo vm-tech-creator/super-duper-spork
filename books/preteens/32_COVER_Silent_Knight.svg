@@ -1,3 +1,0 @@
-<svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
-  <rect width="400" height="600" fill="#eeeeee"/><rect x="80" y="80" width="240" height="300" fill="#9c9c9c" stroke="#616161" stroke-width="3"/><circle cx="160" cy="200" r="30" fill="#e0e0e0"/><circle cx="240" cy="200" r="30" fill="#e0e0e0"/><rect x="130" y="250" width="140" height="100" fill="#757575"/><polygon points="100,400 300,400 280,480 120,480" fill="#bdbdbd"/><rect x="50" y="480" width="300" height="110" fill="#424242" opacity="0.9" rx="10"/><text x="200" y="528" font-size="40" font-weight="bold" text-anchor="middle" fill="#e0e0e0" font-family="Arial">Silent Knight</text><text x="200" y="563" font-size="16" text-anchor="middle" fill="#fff" font-family="Arial">Defending What Matters</text>
-</svg>

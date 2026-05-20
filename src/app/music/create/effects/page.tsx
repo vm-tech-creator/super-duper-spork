@@ -1,11 +1,10 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useState } from 'react';
+import SaharaHeader from '@/components/SaharaHeader';
 
 export default function EffectsRack() {
-  const router = useRouter();
   const [dryWet, setDryWet] = useState(50);
   const [selectedEffect, setSelectedEffect] = useState('reverb');
 
@@ -49,20 +48,18 @@ export default function EffectsRack() {
   ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white">
-      <div className="max-w-7xl mx-auto">
-        {/* Navigation Header */}
-        <nav className="flex items-center justify-between p-6 border-b border-slate-700">
-          <Link href="/" className="text-2xl font-bold text-yellow-400 hover:text-yellow-300 transition-colors">
-            🌍 Sahara Supersite
-          </Link>
-          <button
-            onClick={() => router.back()}
-            className="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-semibold transition-all transform hover:scale-105"
+    <main className="min-h-screen pt-[120px] bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white">
+      <SaharaHeader
+        rightSlot={
+          <Link
+            href="/music"
+            className="hidden rounded-xl bg-[#ffc105] px-4 py-2 text-sm font-semibold text-[#0a0f18] no-underline shadow-[0_4px_24px_rgba(255,193,5,0.28)] transition hover:bg-[#ffcf3a] sm:inline-flex"
           >
-            ← Back
-          </button>
-        </nav>
+            Back to Music
+          </Link>
+        }
+      />
+      <div className="max-w-7xl mx-auto">
 
         {/* Hero Section */}
         <section className="py-16 px-4">

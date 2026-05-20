@@ -108,15 +108,16 @@ export default function BooksPage() {
     setCurrentPage(1);
   }, [searchQuery, selectedCategory, sortOrder]);
 
-  const stats = useMemo(() => {
+  const getCategoryStats = () => {
     return {
       preteen: books.filter(b => b.category === 'preteen').length,
       teen: books.filter(b => b.category === 'teen').length,
       adult: books.filter(b => b.category === 'adult').length,
       bookmarked: books.filter(b => bookmarkedIds.includes(b.id)).length,
     };
-  }, [books, bookmarkedIds]);
+  };
 
+  const stats = getCategoryStats();
   const categoryColors: Record<CategoryFilter, string> = {
     preteen: 'from-blue-400 to-cyan-300',
     teen: 'from-purple-400 to-pink-300',
@@ -337,9 +338,8 @@ export default function BooksPage() {
             </p>
           </div>
         )}
-          </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }

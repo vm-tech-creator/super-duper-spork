@@ -1,3 +1,0 @@
-<svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
-  <rect width="400" height="600" fill="#3d2317"/><circle cx="200" cy="130" r="60" fill="#5d3d2d" stroke="#9d6d4d" stroke-width="2"/><polygon points="200,210 100,350 300,350" fill="#7d4d3d" opacity="0.8"/><path d="M 140 300 Q 200 360 260 300" stroke="#ad7d5d" stroke-width="3" fill="none"/><ellipse cx="200" cy="470" rx="120" ry="70" fill="#5d3d2d" opacity="0.6"/><rect x="50" y="480" width="300" height="110" fill="#1a0a02" opacity="0.9" rx="10"/><text x="200" y="528" font-size="40" font-weight="bold" text-anchor="middle" fill="#ad7d5d" font-family="Arial">Watershed</text><text x="200" y="563" font-size="16" text-anchor="middle" fill="#ccc" font-family="Arial">Turning Point</text>
-</svg>
