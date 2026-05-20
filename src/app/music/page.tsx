@@ -1995,7 +1995,7 @@ Check it out at: /music
         <div className="p-6">
           {/* Genres Section */}
           <div className="mb-8">
-            <h3 className="text-cyan-400 font-bold uppercase text-xs tracking-widest mb-4">Genres</h3>
+            <h3 className="text-cyan-400 font-barlow font-bold uppercase text-xs tracking-widest mb-4">Genres</h3>
             <div className="space-y-2">
               {Object.keys(tracksByGenre).map((genre) => (
                 <button
@@ -2015,7 +2015,7 @@ Check it out at: /music
 
           {/* Age Level Section */}
           <div className="mb-8">
-            <h3 className="text-cyan-400 font-bold uppercase text-xs tracking-widest mb-4">Age Level</h3>
+            <h3 className="text-cyan-400 font-barlow font-bold uppercase text-xs tracking-widest mb-4">Age Level</h3>
             <div className="space-y-2">
               {Object.keys(tracksByAge).map((ageLevel) => (
                 <button
@@ -2035,7 +2035,7 @@ Check it out at: /music
 
           {/* Moods Section */}
           <div className="mb-8">
-            <h3 className="text-cyan-400 font-bold uppercase text-xs tracking-widest mb-4">Moods</h3>
+            <h3 className="text-cyan-400 font-barlow font-bold uppercase text-xs tracking-widest mb-4">Moods</h3>
             <div className="space-y-2">
               {moods.map((mood) => (
                 <button
@@ -2050,7 +2050,7 @@ Check it out at: /music
 
           {/* Eras Section */}
           <div className="mb-8">
-            <h3 className="text-cyan-400 font-bold uppercase text-xs tracking-widest mb-4">Eras</h3>
+            <h3 className="text-cyan-400 font-barlow font-bold uppercase text-xs tracking-widest mb-4">Eras</h3>
             <div className="space-y-2">
               {eras.map((era) => (
                 <button
@@ -2065,7 +2065,7 @@ Check it out at: /music
 
           {/* Favorites Section */}
           <div className="mb-8">
-            <h3 className="text-cyan-400 font-bold uppercase text-xs tracking-widest mb-4">
+            <h3 className="text-cyan-400 font-barlow font-bold uppercase text-xs tracking-widest mb-4">
               ❤️ Favorites ({favorites.length})
             </h3>
             {favorites.length > 0 ? (
@@ -2095,8 +2095,8 @@ Check it out at: /music
                 <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/40 rounded-lg p-6 mb-8">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-cyan-400 text-sm font-semibold mb-1">NOW PLAYING</p>
-                      <h2 className="text-2xl font-bold text-white">{allTracks[currentTrack]?.title}</h2>
+                      <p className="text-cyan-400 text-sm font-barlow font-semibold mb-1">NOW PLAYING</p>
+                      <h2 className="text-2xl font-bebas-neue font-bold text-white">{allTracks[currentTrack]?.title}</h2>
                       <p className="text-gray-300 text-sm mt-1">{allTracks[currentTrack]?.artist}</p>
                     </div>
                     <span className="text-4xl animate-pulse">🎵</span>
@@ -2130,7 +2130,7 @@ Check it out at: /music
                       </div>
 
                       {/* Track Info */}
-                      <h3 className="font-bold text-white group-hover:text-cyan-400 transition-colors line-clamp-2 mb-1">
+                      <h3 className="font-barlow font-bold text-white group-hover:text-cyan-400 transition-colors line-clamp-2 mb-1">
                         {track.title}
                       </h3>
                       <p className="text-gray-400 text-sm line-clamp-1 mb-3">{track.artist}</p>
@@ -2164,7 +2164,7 @@ Check it out at: /music
         <div className="flex items-center gap-4 mb-3">
           {/* Track Info */}
           <div className="flex-1 min-w-0">
-            <p className="text-white font-semibold truncate">
+            <p className="text-white font-barlow font-semibold truncate">
               {currentTrack < allTracks.length ? allTracks[currentTrack]?.title : 'Select a track'}
             </p>
             <p className="text-gray-400 text-sm truncate">
@@ -2199,7 +2199,7 @@ Check it out at: /music
             </button>
             <button
               onClick={handlePlayPause}
-              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg transition-all transform hover:scale-110"
+              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-barlow font-bold text-lg transition-all transform hover:scale-110"
               title={isPlaying ? 'Pause' : 'Play'}
             >
               {isPlaying ? '⏸' : '▶'}

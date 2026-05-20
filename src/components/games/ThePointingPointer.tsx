@@ -61,17 +61,17 @@ export default function ThePointingPointer({ onClose }: { onClose: () => void })
     <div className="fixed inset-0 overflow-hidden bg-gradient-to-br from-[#080f1c] to-[#001a4d]" ref={containerRef}>
       {/* Header with Navigation */}
       <div className="absolute top-4 left-4 z-50">
-        <h1 className="text-[#ffc105] font-bold text-2xl mb-2">👉 The Pointing Pointer</h1>
+        <h1 className="text-[#ffc105] font-bebas-neue font-bold text-2xl mb-2">👉 The Pointing Pointer</h1>
         <div className="flex gap-2">
           <button
             onClick={() => window.location.href = '/games'}
-            className="bg-[#497ab6] text-[#e8edf5] border-none px-4 py-1 rounded text-sm font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#2b4c7d] transition-all"
+            className="bg-[#497ab6] text-[#e8edf5] border-none px-4 py-1 rounded text-sm font-barlow font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#2b4c7d] transition-all"
           >
             ← Games
           </button>
           <button
             onClick={() => window.location.href = '/'}
-            className="bg-[#497ab6] text-[#e8edf5] border-none px-4 py-1 rounded text-sm font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#2b4c7d] transition-all"
+            className="bg-[#497ab6] text-[#e8edf5] border-none px-4 py-1 rounded text-sm font-barlow font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#2b4c7d] transition-all"
           >
             🏠 Home
           </button>
@@ -130,7 +130,7 @@ export default function ThePointingPointer({ onClose }: { onClose: () => void })
 
       {/* Instructions */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center z-40">
-        <p className="text-[#ffc105] text-lg font-bold mb-2">
+        <p className="text-[#ffc105] text-lg font-barlow font-bold mb-2">
           Move your mouse around!
         </p>
         <p className="text-[#7a93b4] text-sm">
@@ -142,7 +142,7 @@ export default function ThePointingPointer({ onClose }: { onClose: () => void })
       <div className="absolute top-4 right-4 z-50">
         <button
           onClick={onClose}
-          className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a]"
+          className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-barlow font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a]"
         >
           ← Back to Game Details
         </button>

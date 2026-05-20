@@ -27,14 +27,14 @@ export default function SaharaHeader() {
         }`}
       >
         <Link href="/" className="flex items-center gap-3 no-underline">
-          <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#ffc105] to-[#d9a004] font-['Bebas_Neue'] text-xl text-[#0a0f18] shadow-[0_4px_20px_rgba(255,193,5,0.22)]">
+          <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#ffc105] to-[#d9a004] font-bebas-neue text-xl text-[#0a0f18] shadow-[0_4px_20px_rgba(255,193,5,0.22)]">
             S
           </div>
           <div className="leading-tight">
-            <div className="font-['Barlow_Condensed'] text-[0.7rem] font-bold uppercase tracking-[0.2em] text-[#88a9d8]">
+            <div className="font-barlow text-[0.7rem] font-bold uppercase tracking-[0.2em] text-[#88a9d8]">
               Supersite
             </div>
-            <div className="font-['Barlow_Condensed'] text-lg font-extrabold uppercase tracking-wide text-[#f0f4fa]">
+            <div className="font-bebas-neue text-lg font-extrabold uppercase tracking-wide text-[#f0f4fa]">
               Sahara
             </div>
           </div>
@@ -52,14 +52,14 @@ export default function SaharaHeader() {
               {href.startsWith('/') ? (
                 <Link
                   href={href}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-[#8ba3c4] no-underline transition-colors hover:bg-white/[0.04] hover:text-[#ffc105]"
+                  className="rounded-lg px-3 py-2 text-sm font-barlow font-medium text-[#8ba3c4] no-underline transition-colors hover:bg-white/[0.04] hover:text-[#ffc105]"
                 >
                   {label}
                 </Link>
               ) : (
                 <a
                   href={href}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-[#8ba3c4] no-underline transition-colors hover:bg-white/[0.04] hover:text-[#ffc105]"
+                  className="rounded-lg px-3 py-2 text-sm font-barlow font-medium text-[#8ba3c4] no-underline transition-colors hover:bg-white/[0.04] hover:text-[#ffc105]"
                 >
                   {label}
                 </a>
@@ -69,7 +69,7 @@ export default function SaharaHeader() {
           <li>
             <a
               href="#"
-              className="rounded-lg px-3 py-2 text-sm font-medium text-[#8ba3c4] no-underline transition-colors hover:bg-white/[0.04] hover:text-[#ffc105]"
+              className="rounded-lg px-3 py-2 text-sm font-barlow font-medium text-[#8ba3c4] no-underline transition-colors hover:bg-white/[0.04] hover:text-[#ffc105]"
             >
               Sign in
             </a>
@@ -81,7 +81,7 @@ export default function SaharaHeader() {
             value={siteMode}
             onChange={(e) => setSiteMode(e.target.value)}
             aria-label="Visual theme"
-            className={`max-w-[7.5rem] cursor-pointer rounded-xl border py-2 pl-3 pr-8 text-[0.7rem] font-semibold uppercase tracking-wide sm:max-w-none sm:text-xs ${
+            className={`max-w-[7.5rem] cursor-pointer rounded-xl border py-2 pl-3 pr-8 text-[0.7rem] font-barlow font-semibold uppercase tracking-wide sm:max-w-none sm:text-xs ${
               siteMode === 'neon'
                 ? 'border-[#00ff88]/50 bg-black/80 text-[#00ff88]'
                 : siteMode === 'fancy'
@@ -108,7 +108,7 @@ export default function SaharaHeader() {
 
           <Link
             href="/videos"
-            className="hidden items-center gap-2 rounded-xl bg-[#ffc105] px-4 py-2 text-sm font-semibold text-[#0a0f18] no-underline shadow-[0_4px_24px_rgba(255,193,5,0.28)] transition hover:bg-[#ffcf3a] sm:inline-flex"
+            className="hidden items-center gap-2 rounded-xl bg-[#ffc105] px-4 py-2 text-sm font-barlow font-semibold text-[#0a0f18] no-underline shadow-[0_4px_24px_rgba(255,193,5,0.28)] transition hover:bg-[#ffcf3a] sm:inline-flex"
           >
             Watch
             <ArrowRight className="h-4 w-4" aria-hidden />
@@ -140,7 +140,7 @@ export default function SaharaHeader() {
                 {href.startsWith('/') ? (
                   <Link
                     href={href}
-                    className="block rounded-lg px-3 py-3 text-sm font-medium text-[#c5d4eb] no-underline hover:bg-white/[0.05]"
+                    className="block rounded-lg px-3 py-3 text-sm font-barlow font-medium text-[#c5d4eb] no-underline hover:bg-white/[0.05]"
                     onClick={() => setMobileNav(false)}
                   >
                     {label}
@@ -148,7 +148,7 @@ export default function SaharaHeader() {
                 ) : (
                   <a
                     href={href}
-                    className="block rounded-lg px-3 py-3 text-sm font-medium text-[#c5d4eb] no-underline hover:bg-white/[0.05]"
+                    className="block rounded-lg px-3 py-3 text-sm font-barlow font-medium text-[#c5d4eb] no-underline hover:bg-white/[0.05]"
                     onClick={() => setMobileNav(false)}
                   >
                     {label}
@@ -159,7 +159,7 @@ export default function SaharaHeader() {
             <li>
               <Link
                 href="/videos"
-                className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-[#ffc105] py-3 text-sm font-semibold text-[#0a0f18] no-underline"
+                className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-[#ffc105] py-3 text-sm font-barlow font-semibold text-[#0a0f18] no-underline"
                 onClick={() => setMobileNav(false)}
               >
                 Start watching

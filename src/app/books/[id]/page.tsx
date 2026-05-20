@@ -50,7 +50,7 @@ function RecommendationsSection({ currentBook }: { currentBook: BookData }) {
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center gap-3 mb-8">
           <BookOpen className="w-8 h-8 text-blue-400" />
-          <h2 className="text-3xl font-bold text-white">You Might Also Like</h2>
+          <h2 className="text-3xl font-bebas-neue font-bold text-white">You Might Also Like</h2>
         </div>
         <p className="text-gray-300 mb-8">Since you enjoyed this {currentBook.category} book, check out these recommendations:</p>
 
@@ -66,8 +66,8 @@ function RecommendationsSection({ currentBook }: { currentBook: BookData }) {
 
                 {/* Book Info */}
                 <div className="absolute inset-0 flex flex-col justify-end p-3 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  <h3 className="text-white font-bold text-sm line-clamp-2">{book.title}</h3>
-                  <p className="text-blue-300 text-xs mt-2 font-semibold">Read Now →</p>
+                  <h3 className="text-white font-barlow font-bold text-sm line-clamp-2">{book.title}</h3>
+                  <p className="text-blue-300 text-xs mt-2 font-barlow font-semibold">Read Now →</p>
                 </div>
               </div>
             </Link>
@@ -270,7 +270,7 @@ export default function BookDetailPage() {
       <main className="relative z-10 pt-24 px-4">
         <div className="py-8">
           <div className="max-w-7xl mx-auto">
-          <Link href="/books" className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mb-8 transition-colors font-semibold">
+          <Link href="/books" className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mb-8 transition-colors font-barlow font-semibold">
             <ChevronLeft className="w-5 h-5" />
             Back to Library
           </Link>
@@ -292,7 +292,7 @@ export default function BookDetailPage() {
                     </div>
 
                     <div className="flex-1 flex flex-col justify-center items-center text-center">
-                      <p className="text-sm font-semibold text-amber-900 mb-4 tracking-widest uppercase">
+                      <p className="text-sm font-barlow font-semibold text-amber-900 mb-4 tracking-widest uppercase">
                         {book.category.charAt(0).toUpperCase() + book.category.slice(1)} Edition
                       </p>
                       <div className="w-12 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mb-6"></div>
@@ -313,7 +313,7 @@ export default function BookDetailPage() {
                   <div className="relative z-10 w-full h-full flex flex-col">
                     <div className="pb-6 border-b-2 border-gray-300 flex-shrink-0 flex justify-between items-start">
                       <div>
-                        <h1 className="text-3xl font-bold text-gray-900 font-serif leading-tight mb-2">{book.title}</h1>
+                        <h1 className="text-3xl font-bebas-neue font-bold text-gray-900 font-serif leading-tight mb-2">{book.title}</h1>
                         <div className="h-1 w-16 bg-gradient-to-r from-blue-500 to-purple-500"></div>
                       </div>
                       
@@ -360,20 +360,20 @@ export default function BookDetailPage() {
           <div className="flex justify-center gap-4 mt-8">
             <button
               onClick={() => handlePageChange('prev')}
-              className="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all font-semibold disabled:opacity-50"
+              className="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all font-barlow font-semibold disabled:opacity-50"
               disabled={currentPage === 1 || isTransitioning}
             >
               ← Previous Page
             </button>
             <Link
               href="/books"
-              className="px-8 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg transition-all font-semibold shadow-lg hover:shadow-xl"
+              className="px-8 py-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-lg transition-all font-barlow font-semibold shadow-lg hover:shadow-xl"
             >
               Back to Library
             </Link>
             <button
               onClick={() => handlePageChange('next')}
-              className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all font-semibold disabled:opacity-50"
+              className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all font-barlow font-semibold disabled:opacity-50"
               disabled={currentPage === pages.length || isTransitioning}
             >
               Next Page →

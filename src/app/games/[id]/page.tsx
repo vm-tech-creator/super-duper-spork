@@ -14,6 +14,8 @@ import WeirdBooks from '@/components/games/WeirdBooks';
 import PacMan from '@/components/games/PacMan';
 import NeonFlames from '@/components/games/NeonFlames';
 import SuperstarRacing from '@/components/games/SuperstarRacing';
+import SpaceWar from '@/components/games/SpaceWar';
+import Snake from '@/components/games/Snake';
 import SiteHeader from '@/components/SiteHeader';
 
 const GAMES_DATA: Record<number, any> = {
@@ -173,6 +175,32 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Superstar Studios',
     features: ['Hill Climb Physics', 'Fuel Management', 'Coin Collection', 'Tilt Control'],
   },
+  15: {
+    id: 15,
+    title: 'Space War',
+    description: 'Battle against an AI opponent in rocket combat! Use arrow keys to move and space to shoot.',
+    fullDescription: 'Engage in epic rocket combat against an intelligent AI opponent. Navigate your rocket in any direction using arrow keys, aim your blasters, and fire to destroy the enemy. Features realistic physics, collision detection, health systems, and dynamic AI behavior.',
+    imageUrl: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=800&h=600&fit=crop',
+    genre: 'Space',
+    rating: 4.9,
+    players: '1v1',
+    releaseDate: 'May 2026',
+    developer: 'Cosmic Combat',
+    features: ['Arrow Key Controls', 'AI Opponent', 'Blasters', 'Collision Detection', 'Health System'],
+  },
+  16: {
+    id: 16,
+    title: 'Snake',
+    description: 'A classic snake game where you eat apples to grow longer. Don\'t hit the walls or yourself!',
+    fullDescription: 'The timeless classic Snake game returns! Control your snake using arrow keys, eat apples to grow longer, and avoid hitting the walls or your own tail. Features smooth gameplay, score tracking, high score system, and instant restart functionality.',
+    imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&h=600&fit=crop',
+    genre: 'Classic Arcade Game',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'May 2026',
+    developer: 'Retro Games',
+    features: ['Arrow Key Controls', 'Apple Collection', 'Growth Mechanics', 'Collision Detection', 'High Score System'],
+  },
 };
 
 export default function GameDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -216,6 +244,10 @@ export default function GameDetailPage({ params }: { params: Promise<{ id: strin
         return <NeonFlames onClose={() => setIsPlaying(false)} />;
       case 14:
         return <SuperstarRacing onClose={() => setIsPlaying(false)} />;
+      case 15:
+        return <SpaceWar onClose={() => setIsPlaying(false)} />;
+      case 16:
+        return <Snake onClose={() => setIsPlaying(false)} />;
       default:
         return null;
     }

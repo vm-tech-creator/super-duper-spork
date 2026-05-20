@@ -19,7 +19,7 @@ const MILESTONES: Milestone[] = [
 ];
 
 const PIXELS_PER_MILE = 5280;
-const TOKEN_VALUE = 0.01; // 1 token per 0.01 mile
+const TOKEN_VALUE = 0.01;
 
 export default function EndlessHorse({ onClose }: { onClose: () => void }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -29,6 +29,7 @@ export default function EndlessHorse({ onClose }: { onClose: () => void }) {
   const [distance, setDistance] = useState(0);
   const animationRef = useRef<number>();
   const scrollRef = useRef(0);
+  const [horseColor, setHorseColor] = useState('#8B4513');
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -37,7 +38,6 @@ export default function EndlessHorse({ onClose }: { onClose: () => void }) {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Set canvas size
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -45,9 +45,8 @@ export default function EndlessHorse({ onClose }: { onClose: () => void }) {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Draw pixelated horse
     const drawHorse = (x: number, y: number, legLen: number) => {
-      ctx.fillStyle = '#f5f5dc'; // Beige background
+      ctx.fillStyle = '#f5f5dc';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const pixelSize = 8;
@@ -58,24 +57,24 @@ export default function EndlessHorse({ onClose }: { onClose: () => void }) {
         ctx.fillRect(px, py, pw, ph);
       };
 
-      // Draw body (brown)
-      drawPixelRect(x, y, scale(100), scale(60), '#8B4513');
+      // Draw body
+      drawPixelRect(x, y, scale(100), scale(60), horseColor);
 
-      // Draw head (brown)
-      drawPixelRect(x - scale(80), y - scale(40), scale(60), scale(50), '#8B4513');
+      // Draw head
+      drawPixelRect(x - scale(80), y - scale(40), scale(60), scale(50), horseColor);
 
-      // Draw mane (black)
+      // Draw mane
       drawPixelRect(x - scale(60), y - scale(60), scale(20), scale(30), '#000000');
       drawPixelRect(x - scale(40), y - scale(55), scale(20), scale(25), '#000000');
       drawPixelRect(x - scale(20), y - scale(50), scale(20), scale(20), '#000000');
 
-      // Draw ear (brown)
-      drawPixelRect(x - scale(90), y - scale(100), scale(12), scale(30), '#8B4513');
+      // Draw ear
+      drawPixelRect(x - scale(90), y - scale(100), scale(12), scale(30), horseColor);
 
-      // Draw snout (light brown)
+      // Draw snout
       drawPixelRect(x - scale(100), y - scale(20), scale(25), scale(20), '#A0522D');
 
-      // Draw eye (black)
+      // Draw eye
       drawPixelRect(x - scale(95), y - scale(45), scale(4), scale(4), '#000000');
 
       // Draw front legs
@@ -93,7 +92,7 @@ export default function EndlessHorse({ onClose }: { onClose: () => void }) {
       drawPixelRect(backLegX1, legBottomY, scale(12), legLen, '#A0522D');
       drawPixelRect(backLegX2, legBottomY, scale(12), legLen, '#A0522D');
 
-      // Draw tail (black)
+      // Draw tail
       const tailStartX = x - scale(100);
       const tailStartY = y + scale(20);
       for (let i = 0; i < Math.min(legLen, 200); i += 8) {
@@ -105,9 +104,15 @@ export default function EndlessHorse({ onClose }: { onClose: () => void }) {
           '#000000'
         );
       }
+
+      // Draw hooves
+      const hoofSize = scale(8);
+      drawPixelRect(frontLegX1, legBottomY + legLen - hoofSize, scale(12), hoofSize, '#000000');
+      drawPixelRect(frontLegX2, legBottomY + legLen - hoofSize, scale(12), hoofSize, '#000000');
+      drawPixelRect(backLegX1, legBottomY + legLen - hoofSize, scale(12), hoofSize, '#000000');
+      drawPixelRect(backLegX2, legBottomY + legLen - hoofSize, scale(12), hoofSize, '#000000');
     };
 
-    // Handle scroll
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
       scrollRef.current += e.deltaY;
@@ -120,7 +125,10 @@ export default function EndlessHorse({ onClose }: { onClose: () => void }) {
       const newTokens = Math.floor(newDistance / TOKEN_VALUE);
       setTokens(newTokens);
 
-      // Check milestones
+      // Change horse color based on distance
+      const colors = ['#8B4513', '#A0522D', '#CD853F', '#DEB887', '#F4A460', '#D2691E'];
+      setHorseColor(colors[Math.min(Math.floor(newDistance / 10), colors.length - 1)]);
+
       setMilestones((prev) =>
         prev.map((m) => ({
           ...m,
@@ -131,7 +139,6 @@ export default function EndlessHorse({ onClose }: { onClose: () => void }) {
 
     window.addEventListener('wheel', handleWheel, { passive: false });
 
-    // Animation loop
     const animate = () => {
       drawHorse(canvas.width / 2, canvas.height / 3, legLength);
       animationRef.current = requestAnimationFrame(animate);
@@ -157,12 +164,26 @@ export default function EndlessHorse({ onClose }: { onClose: () => void }) {
         style={{ display: 'block' }}
       />
 
-      {/* Header */}
+      {/* Header with Navigation */}
       <div className="absolute top-4 left-4 z-10">
         <h1 className="text-[#8B4513] font-bold text-3xl drop-shadow-lg">
           🐴 Endless Horse
         </h1>
         <p className="text-[#A0522D] text-sm mt-2">Scroll to stretch those legs!</p>
+        <div className="flex gap-2 mt-3">
+          <button
+            onClick={() => window.location.href = '/games'}
+            className="bg-[#497ab6] text-[#e8edf5] border-none px-4 py-1 rounded text-sm font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#2b4c7d] transition-all"
+          >
+            ← Games
+          </button>
+          <button
+            onClick={() => window.location.href = '/'}
+            className="bg-[#497ab6] text-[#e8edf5] border-none px-4 py-1 rounded text-sm font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#2b4c7d] transition-all"
+          >
+            🏠 Home
+          </button>
+        </div>
       </div>
 
       {/* Stats */}
@@ -175,6 +196,9 @@ export default function EndlessHorse({ onClose }: { onClose: () => void }) {
         </div>
         <div className="text-[#f5f5dc] text-sm mt-1">
           Leg Length: <span className="text-yellow-400">{Math.round(legLength)}px</span>
+        </div>
+        <div className="text-[#f5f5dc] text-sm mt-1">
+          Horse Color: <span className="inline-block w-4 h-4 rounded ml-1" style={{ backgroundColor: horseColor }}></span>
         </div>
       </div>
 
@@ -192,6 +216,13 @@ export default function EndlessHorse({ onClose }: { onClose: () => void }) {
             ))}
           </div>
         )}
+      </div>
+
+      {/* Instructions */}
+      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10 bg-black/40 px-6 py-3 rounded-lg backdrop-blur text-center">
+        <p className="text-[#f5f5dc] text-sm">
+          🖱️ Scroll down to stretch the horse's legs!
+        </p>
       </div>
 
       {/* Controls */}

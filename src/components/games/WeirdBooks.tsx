@@ -257,7 +257,7 @@ export default function WeirdBooks({ onClose }: { onClose: () => void }) {
       <div className="absolute top-4 right-4">
         <button
           onClick={onClose}
-          className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a] transition-colors"
+          className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-barlow font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a] transition-colors"
         >
           ← Back
         </button>

@@ -14,6 +14,8 @@ import ElonFortune from '@/components/games/ElonFortune';
 import MusicQuiz from '@/components/games/MusicQuiz';
 import WeirdBooks from '@/components/games/WeirdBooks';
 import SuperstarRacing from '@/components/games/SuperstarRacing';
+import SpaceWar from '@/components/games/SpaceWar';
+import Snake from '@/components/games/Snake';
 import SiteHeader from '@/components/SiteHeader';
 
 const GAMES_DATA = [
@@ -128,7 +130,27 @@ const GAMES_DATA = [
     releaseDate: 'Feb 2026',
   },
   {
-    id: 12,
+    id: 15,
+    title: 'Space War',
+    description: 'Battle against an AI opponent in rocket combat! Use arrow keys to move and space to shoot.',
+    imageUrl: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=500&h=400&fit=crop',
+    genre: 'Space',
+    rating: 4.9,
+    players: '1v1',
+    releaseDate: 'May 2026',
+  },
+  {
+    id: 16,
+    title: 'Snake',
+    description: 'A classic snake game where you eat apples to grow longer. Don\'t hit the walls or yourself!',
+    imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=400&fit=crop',
+    genre: 'Classic Arcade Game',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'May 2026',
+  },
+  {
+    id: 13,
     title: 'Pac-Man',
     description: 'A classic maze game where you navigate Pac-Man through a two-line pathway maze while avoiding colorful ghosts.',
     imageUrl: 'https://images.unsplash.com/photo-1535371579214-d6a72b3b5c47?w=500&h=400&fit=crop',
@@ -220,7 +242,7 @@ export default function GamesPage() {
         rightSlot={
           <button
             onClick={() => window.location.href = '/games/avatar'}
-            className="bg-[#4a90e2] text-white border-none px-4 py-2 rounded transition-all hover:bg-[#357abd] hover:translate-y-[-1px] hover:shadow-[0_4px_16px_rgba(74,144,226,.3)] font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] text-[.85rem] cursor-pointer"
+            className="bg-[#4a90e2] text-white border-none px-4 py-2 rounded transition-all hover:bg-[#357abd] hover:translate-y-[-1px] hover:shadow-[0_4px_16px_rgba(74,144,226,.3)] font-barlow font-bold uppercase tracking-[.08em] text-[.85rem] cursor-pointer"
           >
             Avatar
           </button>
@@ -427,10 +449,10 @@ export default function GamesPage() {
                 <div className="space-y-6">
                   <div>
                     <div className="inline-flex items-center justify-center gap-2 mb-3 px-4 py-2 rounded-full bg-[rgba(255,193,5,.15)] border border-[rgba(255,193,5,.3)]">
-                      <span className="text-[#ffc105] font-bold text-xs uppercase tracking-widest">🎮 Gaming Universe</span>
+                      <span className="text-[#ffc105] font-barlow font-bold text-xs uppercase tracking-widest">🎮 Gaming Universe</span>
                     </div>
                   </div>
-                  <h1 className="font-['Barlow_Condensed'] font-black text-5xl uppercase tracking-[.04em] text-[#e8edf5] drop-shadow-[0_0_20px_rgba(255,193,5,.3)] leading-tight">
+                  <h1 className="font-bebas-neue font-black text-5xl uppercase tracking-[.04em] text-[#e8edf5] drop-shadow-[0_0_20px_rgba(255,193,5,.3)] leading-tight">
                     DISCOVER{' '}
                     <span className="text-[#ffc105] drop-shadow-[0_0_30px_rgba(255,193,5,.5)]">
                       AMAZING GAMES
@@ -494,12 +516,12 @@ export default function GamesPage() {
             <div className="text-center space-y-4">
               <div className="flex items-center justify-center gap-2 mb-4">
                 <span className="text-3xl animate-bounce" style={{ animationDelay: '0.1s' }}>⭐</span>
-                <h2 className="font-['Bebas_Neue'] text-[clamp(2.4rem,5vw,3.8rem)] leading-none tracking-[.03em] text-[#e8edf5]">
+                <h2 className="font-bebas-neue text-[clamp(2.4rem,5vw,3.8rem)] leading-none tracking-[.03em] text-[#e8edf5]">
                   EXPLORE MORE
                 </h2>
                 <span className="text-3xl animate-bounce" style={{ animationDelay: '0.2s' }}>⭐</span>
               </div>
-              <p className="text-[#ffc105] font-black text-[1.5rem] drop-shadow-[0_0_10px_rgba(255,193,5,.3)]">CONTENT CATEGORIES</p>
+              <p className="text-[#ffc105] font-bebas-neue font-black text-[1.5rem] drop-shadow-[0_0_10px_rgba(255,193,5,.3)]">CONTENT CATEGORIES</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
@@ -563,7 +585,7 @@ export default function GamesPage() {
             <div className="space-y-4">
               <div className="flex items-center justify-center gap-3 mb-4">
                 <span className="text-3xl animate-spin" style={{ animationDuration: '2s' }}>🎯</span>
-                <h2 className="font-['Barlow_Condensed'] font-black text-4xl uppercase tracking-[.04em] text-[#ffc105] drop-shadow-[0_0_20px_rgba(255,193,5,.3)]">
+                <h2 className="font-bebas-neue font-black text-4xl uppercase tracking-[.04em] text-[#ffc105] drop-shadow-[0_0_20px_rgba(255,193,5,.3)]">
                   READY TO PLAY?
                 </h2>
                 <span className="text-3xl animate-spin" style={{ animationDuration: '2s', animationDirection: 'reverse' }}>🎯</span>
@@ -573,7 +595,7 @@ export default function GamesPage() {
               </p>
             </div>
             
-            <button className="relative group px-10 py-4 rounded-lg font-['Barlow_Condensed'] font-black uppercase tracking-[.1em] transition-all duration-300 text-lg overflow-hidden bg-gradient-to-r from-[#ffc105] to-[#ffcf3a] text-[#080f1c] hover:shadow-[0_0_40px_rgba(255,193,5,.5)] hover:translate-y-[-3px] active:translate-y-0 cursor-pointer">
+            <button className="relative group px-10 py-4 rounded-lg font-bebas-neue font-black uppercase tracking-[.1em] transition-all duration-300 text-lg overflow-hidden bg-gradient-to-r from-[#ffc105] to-[#ffcf3a] text-[#080f1c] hover:shadow-[0_0_40px_rgba(255,193,5,.5)] hover:translate-y-[-3px] active:translate-y-0 cursor-pointer">
               <span className="absolute inset-0 bg-gradient-to-r from-[#ffcf3a] to-[#ffc105] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
               <span className="relative z-10 flex items-center justify-center gap-2">
                 <span className="animate-bounce" style={{ animationDelay: '0s' }}>▶</span>
@@ -600,7 +622,7 @@ export default function GamesPage() {
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
             <div className="group">
-              <h4 className="font-bold text-[#ffc105] mb-4 uppercase tracking-[.08em] text-sm flex items-center gap-2 group-hover:text-[#ffcf3a] transition-colors">
+              <h4 className="font-barlow font-bold text-[#ffc105] mb-4 uppercase tracking-[.08em] text-sm flex items-center gap-2 group-hover:text-[#ffcf3a] transition-colors">
                 <span className="text-lg">🎮</span> Games
               </h4>
               <ul className="space-y-3 text-[#7a93b4] text-sm">
@@ -611,7 +633,7 @@ export default function GamesPage() {
             </div>
 
             <div className="group">
-              <h4 className="font-bold text-[#ffc105] mb-4 uppercase tracking-[.08em] text-sm flex items-center gap-2 group-hover:text-[#ffcf3a] transition-colors">
+              <h4 className="font-barlow font-bold text-[#ffc105] mb-4 uppercase tracking-[.08em] text-sm flex items-center gap-2 group-hover:text-[#ffcf3a] transition-colors">
                 <span className="text-lg">🏢</span> Company
               </h4>
               <ul className="space-y-3 text-[#7a93b4] text-sm">
@@ -622,7 +644,7 @@ export default function GamesPage() {
             </div>
 
             <div className="group">
-              <h4 className="font-bold text-[#ffc105] mb-4 uppercase tracking-[.08em] text-sm flex items-center gap-2 group-hover:text-[#ffcf3a] transition-colors">
+              <h4 className="font-barlow font-bold text-[#ffc105] mb-4 uppercase tracking-[.08em] text-sm flex items-center gap-2 group-hover:text-[#ffcf3a] transition-colors">
                 <span className="text-lg">💬</span> Support
               </h4>
               <ul className="space-y-3 text-[#7a93b4] text-sm">
@@ -633,7 +655,7 @@ export default function GamesPage() {
             </div>
 
             <div className="group">
-              <h4 className="font-bold text-[#ffc105] mb-4 uppercase tracking-[.08em] text-sm flex items-center gap-2 group-hover:text-[#ffcf3a] transition-colors">
+              <h4 className="font-barlow font-bold text-[#ffc105] mb-4 uppercase tracking-[.08em] text-sm flex items-center gap-2 group-hover:text-[#ffcf3a] transition-colors">
                 <span className="text-lg">⚖️</span> Legal
               </h4>
               <ul className="space-y-3 text-[#7a93b4] text-sm">

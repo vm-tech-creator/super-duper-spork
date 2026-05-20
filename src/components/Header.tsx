@@ -35,14 +35,14 @@ export default function Header() {
         className={`mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-2xl border px-3 py-2.5 pl-4 shadow-lg shadow-black/10 transition-[background,border-color,box-shadow] duration-300 sm:px-5 sm:py-3 ${headerClass}`}
       >
         <Link href="/" className="flex items-center gap-3 no-underline">
-          <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#ffc105] to-[#d9a004] font-['Bebas_Neue'] text-xl text-[#0a0f18] shadow-[0_4px_20px_rgba(255,193,5,0.22)]">
+          <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#ffc105] to-[#d9a004] font-bebas-neue text-xl text-[#0a0f18] shadow-[0_4px_20px_rgba(255,193,5,0.22)]">
             S
           </div>
           <div className="leading-tight">
-            <div className="font-['Barlow_Condensed'] text-[0.7rem] font-bold uppercase tracking-[0.2em] text-[#88a9d8]">
+            <div className="font-barlow text-[0.7rem] font-bold uppercase tracking-[0.2em] text-[#88a9d8]">
               Supersite
             </div>
-            <div className="font-['Barlow_Condensed'] text-lg font-extrabold uppercase tracking-wide text-[#f0f4fa]">
+            <div className="font-bebas-neue text-lg font-extrabold uppercase tracking-wide text-[#f0f4fa]">
               Sahara
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function Header() {
             value={siteMode}
             onChange={(e) => setSiteMode(e.target.value as typeof siteMode)}
             aria-label="Visual theme"
-            className={`max-w-[7.5rem] cursor-pointer rounded-xl border py-2 pl-3 pr-8 text-[0.7rem] font-semibold uppercase tracking-wide sm:max-w-none sm:text-xs ${modeSelectClass}`}
+            className={`max-w-[7.5rem] cursor-pointer rounded-xl border py-2 pl-3 pr-8 text-[0.7rem] font-barlow font-semibold uppercase tracking-wide sm:max-w-none sm:text-xs ${modeSelectClass}`}
           >
             <option value="classic">Classic</option>
             <option value="fancy">Fancy</option>
@@ -93,7 +93,7 @@ export default function Header() {
 
           <Link
             href="/videos"
-            className="hidden items-center gap-2 rounded-xl bg-[#ffc105] px-4 py-2 text-sm font-semibold text-[#0a0f18] no-underline shadow-[0_4px_24px_rgba(255,193,5,0.28)] transition hover:bg-[#ffcf3a] sm:inline-flex"
+            className="hidden items-center gap-2 rounded-xl bg-[#ffc105] px-4 py-2 text-sm font-barlow font-semibold text-[#0a0f18] no-underline shadow-[0_4px_24px_rgba(255,193,5,0.28)] transition hover:bg-[#ffcf3a] sm:inline-flex"
           >
             Watch
             <ArrowRight className="h-4 w-4" aria-hidden />
@@ -133,7 +133,7 @@ export default function Header() {
           </ul>
           <Link
             href="/videos"
-            className="mt-3 inline-flex items-center gap-2 rounded-xl bg-[#ffc105] px-4 py-2 text-sm font-semibold text-[#0a0f18] no-underline shadow-[0_4px_24px_rgba(255,193,5,0.28)] transition hover:bg-[#ffcf3a]"
+            className="mt-3 inline-flex items-center gap-2 rounded-xl bg-[#ffc105] px-4 py-2 text-sm font-barlow font-semibold text-[#0a0f18] no-underline shadow-[0_4px_24px_rgba(255,193,5,0.28)] transition hover:bg-[#ffcf3a]"
           >
             Watch
             <ArrowRight className="h-4 w-4" aria-hidden />

@@ -382,14 +382,14 @@ export default function Home() {
           }`}
         >
           <Link href="/" className="flex items-center gap-3 no-underline">
-            <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#ffc105] to-[#d9a004] font-['Bebas_Neue'] text-xl text-[#0a0f18] shadow-[0_4px_20px_rgba(255,193,5,0.22)]">
+            <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#ffc105] to-[#d9a004] font-bebas-neue text-xl text-[#0a0f18] shadow-[0_4px_20px_rgba(255,193,5,0.22)]">
               S
             </div>
             <div className="leading-tight">
-              <div className="font-['Barlow_Condensed'] text-[0.7rem] font-bold uppercase tracking-[0.2em] text-[#88a9d8]">
+              <div className="font-barlow text-[0.7rem] font-bold uppercase tracking-[0.2em] text-[#88a9d8]">
                 Supersite
               </div>
-              <div className="font-['Barlow_Condensed'] text-lg font-extrabold uppercase tracking-wide text-[#f0f4fa]">
+              <div className="font-bebas-neue text-lg font-extrabold uppercase tracking-wide text-[#f0f4fa]">
                 Sahara
               </div>
             </div>
@@ -547,7 +547,7 @@ export default function Home() {
           </div>
 
           <h1
-            className={`animate-fade-up font-['Bebas_Neue'] text-[clamp(3.25rem,10vw,6.75rem)] leading-[0.95] tracking-[0.02em] ${
+            className={`animate-fade-up font-bebas-neue text-[clamp(3.25rem,10vw,6.75rem)] leading-[0.95] tracking-[0.02em] ${
               siteMode === 'neon'
                 ? 'text-[#00ff88]'
                 : siteMode === 'fancy'
@@ -606,10 +606,10 @@ export default function Home() {
                 key={sub}
                 className={`relative text-center ${i > 0 ? 'sm:before:absolute sm:before:left-0 sm:before:top-1/2 sm:before:h-10 sm:before:w-px sm:before:-translate-y-1/2 sm:before:bg-[#88a9d8]/15' : ''}`}
               >
-                <div className="font-['Bebas_Neue'] text-4xl leading-none text-[#ffc105] sm:text-[2.75rem]" data-target={target}>
+                <div className="font-bebas-neue text-4xl leading-none text-[#ffc105] sm:text-[2.75rem]" data-target={target}>
                   0
                 </div>
-                <div className="mt-1.5 text-[0.65rem] font-medium uppercase tracking-[0.12em] text-[#8ba3c4]">{sub}</div>
+                <div className="mt-1.5 text-[0.65rem] font-barlow font-medium uppercase tracking-[0.12em] text-[#8ba3c4]">{sub}</div>
               </div>
             ))}
           </div>
@@ -621,13 +621,13 @@ export default function Home() {
         <div className="mx-auto max-w-6xl">
           <div className="reveal mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#88a9d8]">Spaces</p>
-              <h2 className="font-['Bebas_Neue'] text-[clamp(2.5rem,5vw,3.5rem)] leading-none tracking-wide text-[#f0f4fa]">
+              <p className="mb-3 text-xs font-barlow font-bold uppercase tracking-[0.2em] text-[#88a9d8]">Spaces</p>
+              <h2 className="font-bebas-neue text-[clamp(2.5rem,5vw,3.5rem)] leading-none tracking-wide text-[#f0f4fa]">
                 Pick a world
                 <span className="text-[#ffc105]">.</span>
               </h2>
             </div>
-            <p className="max-w-md text-sm leading-relaxed text-[#8ba3c4] md:text-base">
+            <p className="max-w-md text-sm font-barlow leading-relaxed text-[#8ba3c4] md:text-base">
               Each area is tuned for discovery—same palette and navigation everywhere so you always know where you are.
             </p>
           </div>
@@ -676,12 +676,12 @@ export default function Home() {
                   <div className="relative z-10 mb-5 flex h-12 w-12 items-center justify-center rounded-2xl border border-[#88a9d8]/15 bg-[#0c1829]/80 text-[#ffc105] shadow-inner">
                     <Icon className="h-6 w-6" strokeWidth={1.75} aria-hidden />
                   </div>
-                  <h3 className="relative z-10 font-['Barlow_Condensed'] text-xl font-bold uppercase tracking-wide text-[#f0f4fa]">
+                  <h3 className="relative z-10 font-bebas-neue text-xl font-bold uppercase tracking-wide text-[#f0f4fa]">
                     {cat.title}
                   </h3>
-                  <p className="relative z-10 mt-2 text-sm leading-relaxed text-[#8ba3c4]">{cat.desc}</p>
-                  <span className="absolute right-5 top-5 font-['Bebas_Neue'] text-5xl text-[#f0f4fa]/[0.04]">{cat.num}</span>
-                  <div className="relative z-10 mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#ffc105] transition-[gap] group-hover:gap-3">
+                  <p className="relative z-10 mt-2 text-sm font-barlow leading-relaxed text-[#8ba3c4]">{cat.desc}</p>
+                  <span className="absolute right-5 top-5 font-bebas-neue text-5xl text-[#f0f4fa]/[0.04]">{cat.num}</span>
+                  <div className="relative z-10 mt-6 inline-flex items-center gap-2 text-sm font-barlow font-semibold text-[#ffc105] transition-[gap] group-hover:gap-3">
                     {cat.cta}
                     <ArrowRight className="h-4 w-4" aria-hidden />
                   </div>
@@ -707,16 +707,16 @@ export default function Home() {
       <section className={`py-[120px] px-[5%] ${modeStyle.sectionVideos}`} id="videos">
         <div className="max-w-[1400px] mx-auto">
           <div className="reveal mb-14 max-w-2xl">
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#88a9d8]">Spotlight</p>
-            <h2 className="font-['Bebas_Neue'] text-[clamp(2.25rem,4.5vw,3.25rem)] leading-none tracking-wide text-[#f0f4fa]">
+            <p className="mb-3 text-xs font-barlow font-bold uppercase tracking-[0.2em] text-[#88a9d8]">Spotlight</p>
+            <h2 className="font-bebas-neue text-[clamp(2.25rem,4.5vw,3.25rem)] leading-none tracking-wide text-[#f0f4fa]">
               Short-form picks
               <span className="text-[#ffc105]">.</span>
             </h2>
-            <p className="mt-4 text-sm leading-relaxed text-[#8ba3c4] sm:text-base">
+            <p className="mt-4 text-sm font-barlow leading-relaxed text-[#8ba3c4] sm:text-base">
               Tap a card to open a classic funny clip on{' '}
-              <span className="font-medium text-[#e8edf5]">YouTube</span> or{' '}
-              <span className="font-medium text-[#e8edf5]">TikTok</span> in a new tab. More on{' '}
-              <Link href="/videos" className="font-medium text-[#ffc105] no-underline hover:underline">
+              <span className="font-barlow font-medium text-[#e8edf5]">YouTube</span> or{' '}
+              <span className="font-barlow font-medium text-[#e8edf5]">TikTok</span> in a new tab. More on{' '}
+              <Link href="/videos" className="font-barlow font-medium text-[#ffc105] no-underline hover:underline">
                 LaughTube
               </Link>
               .
@@ -729,7 +729,7 @@ export default function Home() {
                 key={category}
                 type="button"
                 onClick={() => setActiveCategory(category)}
-                className={`rounded-full px-4 py-2 text-xs font-semibold transition ${
+                className={`rounded-full px-4 py-2 text-xs font-barlow font-semibold transition ${
                   activeCategory === category
                     ? 'bg-[#ffc105] text-[#0a0f18] shadow-[0_4px_20px_rgba(255,193,5,0.2)]'
                     : 'border border-[#88a9d8]/18 bg-[#0c1829]/50 text-[#8ba3c4] hover:border-[#88a9d8]/35 hover:text-[#e8edf5]'
@@ -742,7 +742,7 @@ export default function Home() {
 
           {/* Videos Grid with Player Boxes */}
           {visibleSpotlightVideos.length === 0 ? (
-            <p className="reveal text-sm text-[#8ba3c4]">Nothing in this filter—pick &quot;All&quot; or another vibe.</p>
+            <p className="reveal text-sm font-barlow text-[#8ba3c4]">Nothing in this filter—pick &quot;All&quot; or another vibe.</p>
           ) : (
           <div className={`grid gap-5 ${siteMode === 'minimal' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'}`}>
             {visibleSpotlightVideos.map((video, idx) => {
@@ -757,19 +757,19 @@ export default function Home() {
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="text-center">
                             <div className="text-6xl mb-4 group-hover:scale-150 transition-transform duration-500">▶️</div>
-                            <p className="text-[#ffc105] font-black text-sm">CLICK TO PLAY</p>
+                            <p className="text-[#ffc105] font-bebas-neue font-black text-sm">CLICK TO PLAY</p>
                           </div>
                         </div>
                         <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#ffc105] to-[#497ab6] group-hover:h-2 transition-all duration-300"></div>
                       </div>
-                      <div className="absolute top-4 right-4 bg-[rgba(0,0,0,.7)] border border-[#ffc105] px-3 py-1.5 rounded-full text-[.7rem] font-bold uppercase text-[#ffc105]">
+                      <div className="absolute top-4 right-4 bg-[rgba(0,0,0,.7)] border border-[#ffc105] px-3 py-1.5 rounded-full text-[.7rem] font-barlow font-bold uppercase text-[#ffc105]">
                         {video.duration}s
                       </div>
                       <div className="bg-gradient-to-b from-[#101e34] to-[#0d1a2e] border-2 border-t-0 border-[#ffc105] p-5 rounded-b-2xl">
-                        <h3 className="text-[#ffc105] font-black text-[1rem] mb-2 line-clamp-2">{video.title}</h3>
+                        <h3 className="text-[#ffc105] font-bebas-neue font-black text-[1rem] mb-2 line-clamp-2">{video.title}</h3>
                         <div className="flex items-center justify-between">
-                          <p className="text-[#7a93b4] text-[.8rem]">{video.creator}</p>
-                          <span className="text-[#ffc105] font-bold drop-shadow-[0_0_8px_rgba(255,193,5,.5)]">⭐ {video.views}</span>
+                          <p className="text-[#7a93b4] text-[.8rem] font-barlow">{video.creator}</p>
+                          <span className="text-[#ffc105] font-barlow font-bold drop-shadow-[0_0_8px_rgba(255,193,5,.5)]">⭐ {video.views}</span>
                         </div>
                       </div>
                     </div>
@@ -785,12 +785,12 @@ export default function Home() {
                           <div className="text-4xl text-[#00ff88] drop-shadow-[0_0_10px_#00ff88]">▶️</div>
                         </div>
                       </div>
-                      <div className="absolute top-2 right-2 bg-[#00ff88] text-[#000000] px-2 py-1 rounded font-mono text-[.7rem] font-bold">
+                      <div className="absolute top-2 right-2 bg-[#00ff88] text-[#000000] px-2 py-1 rounded font-mono text-[.7rem] font-barlow font-bold">
                         {video.duration}s
                       </div>
                       <div className="bg-[#0a0a0a] border-2 border-t-0 border-[#ff00ff] p-4 rounded-b-lg">
-                        <h3 className="text-[#00ff88] font-mono text-[.9rem] mb-1 line-clamp-2 drop-shadow-[0_0_10px_#00ff88]">{video.title}</h3>
-                        <p className="text-[#ff00ff] text-[.75rem] font-mono">{video.creator}</p>
+                        <h3 className="text-[#00ff88] font-bebas-neue font-mono text-[.9rem] mb-1 line-clamp-2 drop-shadow-[0_0_10px_#00ff88]">{video.title}</h3>
+                        <p className="text-[#ff00ff] text-[.75rem] font-barlow font-mono">{video.creator}</p>
                       </div>
                     </div>
                   </a>
@@ -805,14 +805,14 @@ export default function Home() {
                           <div className="text-5xl text-[#e94560] group-hover:scale-125 transition-transform">{parseInt(video.duration) < 50 ? '🎯' : parseInt(video.duration) < 70 ? '⚡' : '🔥'}</div>
                         </div>
                       </div>
-                      <div className="absolute top-3 right-3 bg-[#e94560] text-white px-3 py-1 rounded-full text-[.7rem] font-bold">
+                      <div className="absolute top-3 right-3 bg-[#e94560] text-white px-3 py-1 rounded-full text-[.7rem] font-barlow font-bold">
                         {video.duration}sec
                       </div>
                       <div className="bg-gradient-to-r from-[#1a2a3a] to-[#0f3460] border-2 border-t-0 border-[#e94560] p-4 rounded-b-xl">
-                        <h3 className="text-white font-bold text-[.95rem] mb-2 line-clamp-2">{video.title}</h3>
+                        <h3 className="text-white font-bebas-neue font-bold text-[.95rem] mb-2 line-clamp-2">{video.title}</h3>
                         <div className="flex justify-between text-[.75rem]">
-                          <span className="text-[#eeffff]">{video.creator}</span>
-                          <span className="text-[#e94560] font-bold">👁 {video.views}</span>
+                          <span className="text-[#eeffff] font-barlow">{video.creator}</span>
+                          <span className="text-[#e94560] font-barlow font-bold">👁 {video.views}</span>
                         </div>
                       </div>
                     </div>
@@ -828,12 +828,12 @@ export default function Home() {
                           <div className="text-5xl text-[#496bb0]">▶️</div>
                         </div>
                       </div>
-                      <div className="absolute top-2 right-2 bg-[#496bb0] text-[#d0d8e8] px-2 py-1 rounded text-[.7rem] font-bold">
+                      <div className="absolute top-2 right-2 bg-[#496bb0] text-[#d0d8e8] px-2 py-1 rounded text-[.7rem] font-barlow font-bold">
                         {video.duration}s
                       </div>
                       <div className="bg-[#0f1520] border border-t-0 border-[rgba(73,107,176,.3)] p-4 rounded-b-lg">
-                        <h3 className="text-[#d0d8e8] font-semibold text-[.9rem] mb-1 line-clamp-2">{video.title}</h3>
-                        <p className="text-[#8899c5] text-[.75rem]">{video.creator}</p>
+                        <h3 className="text-[#d0d8e8] font-bebas-neue font-semibold text-[.9rem] mb-1 line-clamp-2">{video.title}</h3>
+                        <p className="text-[#8899c5] text-[.75rem] font-barlow">{video.creator}</p>
                       </div>
                     </div>
                   </a>
@@ -850,12 +850,12 @@ export default function Home() {
                           </div>
                         </div>
                       </div>
-                      <div className="absolute top-3 right-3 bg-[#ffc105]/20 backdrop-blur-sm border border-[#ffc105]/40 px-3 py-1 rounded-full text-[.7rem] font-bold text-[#ffc105]">
+                      <div className="absolute top-3 right-3 bg-[#ffc105]/20 backdrop-blur-sm border border-[#ffc105]/40 px-3 py-1 rounded-full text-[.7rem] font-barlow font-bold text-[#ffc105]">
                         {video.duration}s
                       </div>
                       <div className="bg-[#ffffff]/[0.05] backdrop-blur-md border-t border-[#ffffff]/20 rounded-b-xl p-4">
-                        <h3 className="text-[#e8edf5] font-semibold text-[.9rem] mb-1 line-clamp-2">{video.title}</h3>
-                        <p className="text-[#b8c5dd] text-[.75rem]">{video.creator}</p>
+                        <h3 className="text-[#e8edf5] font-bebas-neue font-semibold text-[.9rem] mb-1 line-clamp-2">{video.title}</h3>
+                        <p className="text-[#b8c5dd] text-[.75rem] font-barlow">{video.creator}</p>
                       </div>
                     </div>
                   </a>
@@ -869,10 +869,10 @@ export default function Home() {
                       </div>
                     </div>
                     <div>
-                      <h3 className="font-semibold text-[#e8edf5] text-[.95rem] mb-2 line-clamp-2">{video.title}</h3>
+                      <h3 className="font-bebas-neue font-semibold text-[#e8edf5] text-[.95rem] mb-2 line-clamp-2">{video.title}</h3>
                       <div className="flex items-center justify-between text-[.8rem]">
-                        <span className="text-[#7a93b4]">{video.creator} • {video.duration}s</span>
-                        <span className="text-[#ffc105] font-semibold">{video.views}</span>
+                        <span className="text-[#7a93b4] font-barlow">{video.creator} • {video.duration}s</span>
+                        <span className="text-[#ffc105] font-barlow font-semibold">{video.views}</span>
                       </div>
                     </div>
                   </a>
@@ -899,15 +899,15 @@ export default function Home() {
                           <Play className="h-6 w-6 fill-current" aria-hidden />
                         </div>
                       </div>
-                      <div className="absolute bottom-3 right-3 rounded-lg bg-black/55 px-2 py-1 text-[0.65rem] font-semibold tabular-nums text-white backdrop-blur-sm">
+                      <div className="absolute bottom-3 right-3 rounded-lg bg-black/55 px-2 py-1 text-[0.65rem] font-barlow font-semibold tabular-nums text-white backdrop-blur-sm">
                         {video.duration}s
                       </div>
                     </div>
                     <div className="border-t border-[#88a9d8]/10 p-4">
-                      <h3 className="mb-2 line-clamp-2 text-[0.95rem] font-semibold leading-snug text-[#f0f4fa]">{video.title}</h3>
+                      <h3 className="mb-2 line-clamp-2 text-[0.95rem] font-bebas-neue font-semibold leading-snug text-[#f0f4fa]">{video.title}</h3>
                       <div className="flex items-center justify-between gap-2 text-[0.8rem]">
-                        <p className="truncate text-[#8ba3c4]">{video.creator}</p>
-                        <span className="shrink-0 font-medium text-[#ffc105]">{video.views}</span>
+                        <p className="truncate text-[#8ba3c4] font-barlow">{video.creator}</p>
+                        <span className="shrink-0 font-barlow font-medium text-[#ffc105]">{video.views}</span>
                       </div>
                     </div>
                   </a>
@@ -920,7 +920,7 @@ export default function Home() {
           <div className="reveal mt-16 text-center">
             <Link
               href="/videos"
-              className="inline-flex items-center gap-2 rounded-2xl bg-[#ffc105] px-10 py-3.5 text-sm font-semibold text-[#0a0f18] no-underline shadow-[0_8px_28px_rgba(255,193,5,0.22)] transition hover:-translate-y-0.5 hover:bg-[#ffcf3a]"
+              className="inline-flex items-center gap-2 rounded-2xl bg-[#ffc105] px-10 py-3.5 text-sm font-barlow font-semibold text-[#0a0f18] no-underline shadow-[0_8px_28px_rgba(255,193,5,0.22)] transition hover:-translate-y-0.5 hover:bg-[#ffcf3a]"
             >
               Open LaughTube
               <ArrowRight className="h-4 w-4" aria-hidden />
@@ -932,11 +932,11 @@ export default function Home() {
       <section className={`px-[5%] py-24 ${modeStyle.sectionWhy}`} id="why">
         <div className="mx-auto max-w-6xl">
           <div className="reveal mb-14 text-center">
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#88a9d8]">Why Sahara</p>
-            <h2 className="font-['Bebas_Neue'] text-[clamp(2.25rem,4.5vw,3.25rem)] tracking-wide text-[#f0f4fa]">
+            <p className="mb-3 text-xs font-barlow font-bold uppercase tracking-[0.2em] text-[#88a9d8]">Why Sahara</p>
+            <h2 className="font-bebas-neue text-[clamp(2.25rem,4.5vw,3.25rem)] tracking-wide text-[#f0f4fa]">
               Built to feel fast<span className="text-[#ffc105]">.</span>
             </h2>
-            <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-[#8ba3c4] sm:text-base">
+            <p className="mx-auto mt-4 max-w-lg text-sm font-barlow leading-relaxed text-[#8ba3c4] sm:text-base">
               Motion and color support the content—nothing screams for attention unless you ask it to.
             </p>
           </div>
@@ -981,8 +981,8 @@ export default function Home() {
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-[#88a9d8]/12 bg-[#080f1c]/60 text-[#ffc105] transition group-hover:border-[#ffc105]/25">
                   <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
                 </div>
-                <h3 className="text-base font-semibold text-[#f0f4fa]">{title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-[#8ba3c4]">{body}</p>
+                <h3 className="text-base font-bebas-neue font-semibold text-[#f0f4fa]">{title}</h3>
+                <p className="mt-2 text-sm font-barlow leading-relaxed text-[#8ba3c4]">{body}</p>
               </div>
             ))}
           </div>
@@ -992,11 +992,11 @@ export default function Home() {
       <section className="px-[5%] py-24" id="about">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-center">
           <div className="reveal">
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#88a9d8]">About</p>
-            <h2 className="font-['Bebas_Neue'] text-[clamp(2rem,4vw,2.75rem)] leading-none tracking-wide text-[#f0f4fa]">
+            <p className="mb-3 text-xs font-barlow font-bold uppercase tracking-[0.2em] text-[#88a9d8]">About</p>
+            <h2 className="font-bebas-neue text-[clamp(2rem,4vw,2.75rem)] leading-none tracking-wide text-[#f0f4fa]">
               A supersite for curious people<span className="text-[#ffc105]">.</span>
             </h2>
-            <p className="mt-5 text-sm leading-relaxed text-[#8ba3c4] sm:text-base">
+            <p className="mt-5 text-sm font-barlow leading-relaxed text-[#8ba3c4] sm:text-base">
               Sahara is a demo front door: rich landing, curated video hub, and room to grow. The palette stays anchored in
               deep blue (#2b4c7d), mid blue (#497ab6), soft blue (#88a9d8), and warm gold (#ffc105)—professional enough for
               classrooms, warm enough for home.
@@ -1004,14 +1004,14 @@ export default function Home() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/videos"
-                className="inline-flex items-center gap-2 rounded-2xl bg-[#ffc105] px-6 py-3 text-sm font-semibold text-[#0a0f18] no-underline transition hover:bg-[#ffcf3a]"
+                className="inline-flex items-center gap-2 rounded-2xl bg-[#ffc105] px-6 py-3 text-sm font-barlow font-semibold text-[#0a0f18] no-underline transition hover:bg-[#ffcf3a]"
               >
                 Try LaughTube
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
               <a
                 href="#categories"
-                className="inline-flex items-center rounded-2xl border border-[#88a9d8]/20 px-6 py-3 text-sm font-semibold text-[#e8edf5] no-underline transition hover:border-[#88a9d8]/40"
+                className="inline-flex items-center rounded-2xl border border-[#88a9d8]/20 px-6 py-3 text-sm font-barlow font-semibold text-[#e8edf5] no-underline transition hover:border-[#88a9d8]/40"
               >
                 Back to spaces
               </a>
@@ -1022,10 +1022,10 @@ export default function Home() {
               className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full opacity-50 blur-3xl"
               style={{ background: 'radial-gradient(circle, rgba(255,193,5,0.35), transparent 70%)' }}
             />
-            <blockquote className="relative text-lg font-medium leading-relaxed text-[#e8edf5]">
+            <blockquote className="relative text-lg font-barlow font-medium leading-relaxed text-[#e8edf5]">
               “Good design disappears. You notice the content, the joke, the lesson—not the chrome around it.”
             </blockquote>
-            <p className="relative mt-6 text-sm text-[#8ba3c4]">— The whole point of this refresh</p>
+            <p className="relative mt-6 text-sm font-barlow text-[#8ba3c4]">— The whole point of this refresh</p>
           </div>
         </div>
       </section>
@@ -1034,20 +1034,20 @@ export default function Home() {
         <div className="mx-auto flex max-w-6xl flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <span className="grid h-9 w-9 place-items-center rounded-lg bg-[#ffc105] font-['Bebas_Neue'] text-lg text-[#0a0f18]">
+              <span className="grid h-9 w-9 place-items-center rounded-lg bg-[#ffc105] font-bebas-neue text-lg text-[#0a0f18]">
                 S
               </span>
-              <span className="font-['Barlow_Condensed'] text-lg font-bold uppercase tracking-wide text-[#f0f4fa]">
+              <span className="font-bebas-neue text-lg font-bold uppercase tracking-wide text-[#f0f4fa]">
                 Sahara
               </span>
             </div>
-            <p className="mt-3 max-w-xs text-sm leading-relaxed text-[#8ba3c4]">
+            <p className="mt-3 max-w-xs text-sm font-barlow leading-relaxed text-[#8ba3c4]">
               Explore. Learn. Laugh. One modern surface—no visual noise required.
             </p>
           </div>
           <div className="flex flex-wrap gap-10 text-sm">
             <div>
-              <p className="mb-3 font-semibold text-[#f0f4fa]">Explore</p>
+              <p className="mb-3 font-barlow font-semibold text-[#f0f4fa]">Explore</p>
               <ul className="m-0 flex list-none flex-col gap-2 p-0">
                 <li>
                   <Link href="/videos" className="text-[#8ba3c4] no-underline hover:text-[#ffc105]">
@@ -1067,7 +1067,7 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <p className="mb-3 font-semibold text-[#f0f4fa]">Project</p>
+              <p className="mb-3 font-barlow font-semibold text-[#f0f4fa]">Project</p>
               <ul className="m-0 flex list-none flex-col gap-2 p-0">
                 <li>
                   <a href="#about" className="text-[#8ba3c4] no-underline hover:text-[#ffc105]">
@@ -1075,13 +1075,13 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <span className="text-[#5c6d8a]">Sign in — coming soon</span>
+                  <span className="text-[#5c6d8a] font-barlow">Sign in — coming soon</span>
                 </li>
               </ul>
             </div>
           </div>
         </div>
-        <p className="mx-auto mt-12 max-w-6xl border-t border-[#88a9d8]/10 pt-8 text-center text-xs text-[#5c6d8a]">
+        <p className="mx-auto mt-12 max-w-6xl border-t border-[#88a9d8]/10 pt-8 text-center text-xs font-barlow text-[#5c6d8a]">
           © {new Date().getFullYear()} Sahara demo · Crafted for clarity
         </p>
       </footer>

@@ -11,87 +11,130 @@ interface Cat {
   imageUrl: string;
   size: number;
   rotation: number;
+  scale: number;
 }
 
 export default function CatBounce({ onClose }: { onClose: () => void }) {
-  const [cats, setCats] = useState<Cat[]>([]);
+  const catsRef = useRef<Cat[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number | null>(null);
   const nextIdRef = useRef(0);
+  const [cats, setCats] = useState<Cat[]>([]);
 
   const catImages = [
-    'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=80&h=80&fit=crop&auto=format',
-    'https://images.unsplash.com/photo-1579581570160-ce0133b63971?w=80&h=80&fit=crop&auto=format',
-    'https://images.unsplash.com/photo-1519052537078-e6302a4968d4?w=80&h=80&fit=crop&auto=format',
-    'https://images.unsplash.com/photo-1506755855726-85d230d8b83e?w=80&h=80&fit=crop&auto=format',
-    'https://images.unsplash.com/photo-1514888286974-6c05e2bfb302?w=80&h=80&fit=crop&auto=format',
-    'https://images.unsplash.com/photo-1495360010591-d7aa0f1dee33?w=80&h=80&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=100&h=100&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1579581570160-ce0133b63971?w=100&h=100&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1519052537078-e6302a4968d4?w=100&h=100&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1506755855726-85d230d8b83e?w=100&h=100&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1514888286974-6c05e2bfb302?w=100&h=100&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1495360010591-d7aa0f1dee33?w=100&h=100&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1526336024174-e58f5cdd8e13?w=100&h=100&fit=crop&auto=format',
+    'https://images.unsplash.com/photo-1573865526739-10659fec78a5?w=100&h=100&fit=crop&auto=format',
   ];
 
   const createCat = () => {
     const newCat: Cat = {
       id: nextIdRef.current++,
-      x: Math.random() * (window.innerWidth - 80),
-      y: Math.random() * (window.innerHeight - 80),
-      vx: (Math.random() - 0.5) * 8,
-      vy: (Math.random() - 0.5) * 8,
+      x: Math.random() * (window.innerWidth - 100),
+      y: Math.random() * (window.innerHeight - 100),
+      vx: (Math.random() - 0.5) * 12,
+      vy: (Math.random() - 0.5) * 12,
       imageUrl: catImages[Math.floor(Math.random() * catImages.length)],
-      size: 80,
+      size: 100,
       rotation: Math.random() * 360,
+      scale: 0,
     };
-    setCats(prev => [...prev, newCat]);
+    catsRef.current.push(newCat);
+    
+    // Animate scale in
+    let scale = 0;
+    const scaleIn = setInterval(() => {
+      scale += 0.1;
+      if (scale >= 1) {
+        scale = 1;
+        clearInterval(scaleIn);
+      }
+      const catIndex = catsRef.current.findIndex(c => c.id === newCat.id);
+      if (catIndex !== -1) {
+        catsRef.current[catIndex].scale = scale;
+        setCats([...catsRef.current]);
+      }
+    }, 16);
   };
 
   const makeItRain = () => {
-    for (let i = 0; i < 10; i++) {
-      setTimeout(() => createCat(), i * 100);
+    for (let i = 0; i < 15; i++) {
+      setTimeout(() => createCat(), i * 50);
     }
+  };
+
+  const clearCats = () => {
+    catsRef.current = [];
+    setCats([]);
   };
 
   useEffect(() => {
     // Create initial cats
-    for (let i = 0; i < 5; i++) {
-      setTimeout(() => createCat(), i * 200);
+    for (let i = 0; i < 8; i++) {
+      setTimeout(() => createCat(), i * 150);
     }
 
     // Make it rain function available globally
     (window as any).makeItRain = makeItRain;
+    (window as any).clearCats = clearCats;
 
     return () => {
       delete (window as any).makeItRain;
+      delete (window as any).clearCats;
     };
   }, []);
 
   useEffect(() => {
     const animate = () => {
-      setCats(prevCats => 
-        prevCats.map(cat => {
-          let newX = cat.x + cat.vx;
-          let newY = cat.y + cat.vy;
-          let newVx = cat.vx;
-          let newVy = cat.vy;
+      const gravity = 0.3;
+      const friction = 0.99;
+      const bounceEnergy = 0.85;
 
-          // Bounce off walls
-          if (newX <= 0 || newX >= window.innerWidth - cat.size) {
-            newVx = -newVx;
-            newX = Math.max(0, Math.min(window.innerWidth - cat.size, newX));
-          }
-          if (newY <= 0 || newY >= window.innerHeight - cat.size) {
-            newVy = -newVy;
-            newY = Math.max(0, Math.min(window.innerHeight - cat.size, newY));
-          }
+      catsRef.current = catsRef.current.map(cat => {
+        let newX = cat.x + cat.vx;
+        let newY = cat.y + cat.vy;
+        let newVx = cat.vx * friction;
+        let newVy = cat.vy * friction + gravity;
 
-          return {
-            ...cat,
-            x: newX,
-            y: newY,
-            vx: newVx,
-            vy: newVy,
-            rotation: cat.rotation + 2,
-          };
-        })
-      );
+        // Bounce off walls
+        if (newX <= 0) {
+          newVx = Math.abs(newVx) * bounceEnergy;
+          newX = 0;
+        } else if (newX >= window.innerWidth - cat.size) {
+          newVx = -Math.abs(newVx) * bounceEnergy;
+          newX = window.innerWidth - cat.size;
+        }
 
+        if (newY <= 0) {
+          newVy = Math.abs(newVy) * bounceEnergy;
+          newY = 0;
+        } else if (newY >= window.innerHeight - cat.size) {
+          newVy = -Math.abs(newVy) * bounceEnergy;
+          newY = window.innerHeight - cat.size;
+        }
+
+        // Add some random movement to keep it interesting
+        if (Math.random() > 0.98) {
+          newVx += (Math.random() - 0.5) * 2;
+          newVy -= Math.random() * 3;
+        }
+
+        return {
+          ...cat,
+          x: newX,
+          y: newY,
+          vx: newVx,
+          vy: newVy,
+          rotation: cat.rotation + (newVx + newVy) * 0.5,
+        };
+      });
+
+      setCats([...catsRef.current]);
       animationFrameRef.current = requestAnimationFrame(animate);
     };
 
@@ -106,32 +149,61 @@ export default function CatBounce({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 overflow-hidden bg-gradient-to-br from-[#0d1a2e] to-[#001a4d]">
+      {/* Background particles */}
+      <div className="absolute inset-0 opacity-20">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-2 h-2 bg-[#ffc105] rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 2}s`,
+            }}
+          />
+        ))}
+      </div>
+
       {/* Bouncing Cats */}
       {cats.map(cat => (
         <div
           key={cat.id}
-          className="absolute transition-all duration-100"
+          className="absolute transition-transform"
           style={{
             left: cat.x,
             top: cat.y,
-            transform: `rotate(${cat.rotation}deg)`,
+            transform: `rotate(${cat.rotation}deg) scale(${cat.scale})`,
+            transition: 'transform 0.1s linear',
           }}
         >
           <div className="relative">
             <img
               src={cat.imageUrl}
               alt="Bouncing cat"
-              className="w-20 h-20 rounded-full border-2 border-[#ffc105] shadow-lg"
+              className="w-24 h-24 rounded-full border-3 border-[#ffc105] shadow-2xl"
               style={{
-                filter: 'drop-shadow(0 0 10px rgba(255, 193, 5, 0.4))',
+                filter: 'drop-shadow(0 0 15px rgba(255, 193, 5, 0.6))',
               }}
             />
-            <div className="absolute -bottom-1 -right-1 text-lg">
+            <div className="absolute -bottom-2 -right-2 text-2xl animate-bounce">
               🐾
+            </div>
+            {/* Speed indicator */}
+            <div className="absolute -top-1 -right-1 text-xs bg-black/50 text-white px-1 rounded">
+              {Math.round(Math.sqrt(cat.vx * cat.vx + cat.vy * cat.vy))}
             </div>
           </div>
         </div>
       ))}
+
+      {/* Cat counter */}
+      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-40">
+        <div className="bg-black/50 backdrop-blur px-4 py-2 rounded-full">
+          <span className="text-[#ffc105] font-bold text-lg">
+            🐱 {cats.length} cats
+          </span>
+        </div>
+      </div>
 
       {/* Header with Navigation */}
       <div className="absolute top-4 left-4 z-50">
@@ -155,10 +227,10 @@ export default function CatBounce({ onClose }: { onClose: () => void }) {
       {/* Instructions */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center z-40">
         <p className="text-[#ffc105] text-lg font-bold mb-2">
-          Cats are bouncing around!
+          Cats are bouncing with gravity!
         </p>
         <p className="text-[#7a93b4] text-sm">
-          Click "Make it Rain Cats" to add more bouncing cats
+          Click buttons to add more cats or clear them all
         </p>
       </div>
 
@@ -168,13 +240,19 @@ export default function CatBounce({ onClose }: { onClose: () => void }) {
           onClick={() => (window as any).makeItRain()}
           className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a] transition-all hover:shadow-lg"
         >
-          🌧️ Make it Rain Cats
+          🌧️ Rain Cats
+        </button>
+        <button
+          onClick={() => (window as any).clearCats()}
+          className="bg-[#e74c3c] text-white border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#c0392b] transition-all hover:shadow-lg"
+        >
+          🧹 Clear
         </button>
         <button
           onClick={onClose}
           className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a] transition-all hover:shadow-lg"
         >
-          ← Back to Game Details
+          ← Back
         </button>
       </div>
     </div>

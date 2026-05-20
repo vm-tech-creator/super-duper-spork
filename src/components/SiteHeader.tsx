@@ -16,14 +16,14 @@ export default function SiteHeader({ links = defaultLinks, rightSlot }: SiteHead
     <header className="fixed top-0 left-0 right-0 z-[100] px-3 pt-3 sm:px-5 sm:pt-4">
       <nav className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-2xl border border-[#88a9d8]/18 bg-[#080f1c]/88 px-3 py-2.5 pl-4 shadow-lg shadow-black/10 backdrop-blur-2xl transition-[background,border-color,box-shadow] duration-300">
         <Link href="/" className="flex items-center gap-3 no-underline">
-          <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#ffc105] to-[#d9a004] font-['Bebas_Neue'] text-xl text-[#0a0f18] shadow-[0_4px_20px_rgba(255,193,5,0.22)]">
+          <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#ffc105] to-[#d9a004] font-bebas-neue text-xl text-[#0a0f18] shadow-[0_4px_20px_rgba(255,193,5,0.22)]">
             S
           </div>
           <div className="leading-tight">
-            <div className="font-['Barlow_Condensed'] text-[0.7rem] font-bold uppercase tracking-[0.2em] text-[#88a9d8]">
+            <div className="font-barlow text-[0.7rem] font-bold uppercase tracking-[0.2em] text-[#88a9d8]">
               Supersite
             </div>
-            <div className="font-['Barlow_Condensed'] text-lg font-extrabold uppercase tracking-wide text-[#f0f4fa]">
+            <div className="font-bebas-neue text-lg font-extrabold uppercase tracking-wide text-[#f0f4fa]">
               Sahara
             </div>
           </div>

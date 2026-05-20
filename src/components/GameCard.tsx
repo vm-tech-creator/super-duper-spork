@@ -66,7 +66,7 @@ export default function GameCard({
         </div>
 
         {/* Title */}
-        <h3 className="font-['Barlow_Condensed'] text-xl font-black uppercase tracking-[.04em] text-[#e8edf5] line-clamp-2">
+        <h3 className="font-bebas-neue text-xl font-black uppercase tracking-[.04em] text-[#e8edf5] line-clamp-2">
           {title}
         </h3>
 
@@ -83,7 +83,7 @@ export default function GameCard({
 
         {/* Play Button */}
         <button
-          className="w-full bg-gradient-to-r from-[#ffc105] to-[#e0a800] text-[#080f1c] border-none px-4 py-3 rounded font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] text-sm transition-all duration-300 hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] hover:translate-y-[-2px] cursor-pointer active:translate-y-0 mt-2"
+          className="w-full bg-gradient-to-r from-[#ffc105] to-[#e0a800] text-[#080f1c] border-none px-4 py-3 rounded font-barlow font-bold uppercase tracking-[.08em] text-sm transition-all duration-300 hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] hover:translate-y-[-2px] cursor-pointer active:translate-y-0 mt-2"
         >
           Play Now
         </button>
