@@ -399,6 +399,8 @@ export default function Home() {
             {[
               ['Videos', '/videos'],
               ['Books', '/books'],
+              ['Music', '/music'],
+              ['Games', '/games'],
               ['Explore', '#categories'],
               ['Features', '#why'],
               ['About', '#about'],
@@ -479,6 +481,8 @@ export default function Home() {
               {[
                 ['Videos', '/videos'],
                 ['Books', '/books'],
+                ['Music', '/music'],
+                ['Games', '/games'],
                 ['Explore', '#categories'],
                 ['Features', '#why'],
                 ['About', '#about'],

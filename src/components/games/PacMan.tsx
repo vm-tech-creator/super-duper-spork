@@ -179,18 +179,19 @@ export default function PacMan({ onClose }: { onClose: () => void }) {
         })
       );
 
-      setPacmanPos((prev) => {
-        if (pelletsRef.current[prev.y]?.[prev.x]) {
-          pelletsRef.current[prev.y][prev.x] = false;
-          setScore((s) => s + 10);
-          setPelletsLeft((p) => p - 1);
-        }
-        return prev;
-      });
     }, 200);
 
     return () => clearInterval(gameInterval);
   }, [nextDir, pacmanDir, gameOver, won, maze]);
+
+  // Eat pellets when Pac-Man enters a space
+  useEffect(() => {
+    if (pelletsRef.current[pacmanPos.y]?.[pacmanPos.x]) {
+      pelletsRef.current[pacmanPos.y][pacmanPos.x] = false;
+      setScore((s) => s + 10);
+      setPelletsLeft((p) => p - 1);
+    }
+  }, [pacmanPos]);
 
   // Check collision
   useEffect(() => {
@@ -200,6 +201,13 @@ export default function PacMan({ onClose }: { onClose: () => void }) {
       }
     });
   }, [pacmanPos, ghosts]);
+
+  // Win when all pellets are collected
+  useEffect(() => {
+    if (pelletsLeft <= 0 && !gameOver) {
+      setWon(true);
+    }
+  }, [pelletsLeft, gameOver]);
 
   // Award coins when game ends
   useEffect(() => {

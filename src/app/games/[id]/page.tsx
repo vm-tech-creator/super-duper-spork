@@ -14,6 +14,7 @@ import WeirdBooks from '@/components/games/WeirdBooks';
 import PacMan from '@/components/games/PacMan';
 import NeonFlames from '@/components/games/NeonFlames';
 import SuperstarRacing from '@/components/games/SuperstarRacing';
+import Blobmixer from '@/components/games/Blobmixer';
 import SiteHeader from '@/components/SiteHeader';
 
 const GAMES_DATA: Record<number, any> = {
@@ -173,6 +174,19 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Superstar Studios',
     features: ['Hill Climb Physics', 'Fuel Management', 'Coin Collection', 'Tilt Control'],
   },
+  15: {
+    id: 15,
+    title: 'Blobmixer',
+    description: 'A dreamy 3D blob playground where you can tap, squish, and shape floating liquid forms in mid-air.',
+    fullDescription: 'Step into Blobmixer, a calm 3D playground where translucent blobs float in space and respond to your pointer. Click and drag to squish, stretch, and bounce each blob while soft lighting and slow motion create a relaxing sensory experience.',
+    imageUrl: 'https://images.unsplash.com/photo-1612831205498-89a5d8c7f3a6?w=800&h=600&fit=crop',
+    genre: '3D Playground',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'May 2026',
+    developer: 'PlayLab Studio',
+    features: ['Interactive 3D Blobs', 'Drag-to-Squish', 'Soft Lighting', 'Relaxing Physics'],
+  },
 };
 
 export default function GameDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -216,6 +230,8 @@ export default function GameDetailPage({ params }: { params: Promise<{ id: strin
         return <NeonFlames onClose={() => setIsPlaying(false)} />;
       case 14:
         return <SuperstarRacing onClose={() => setIsPlaying(false)} />;
+      case 15:
+        return <Blobmixer onClose={() => setIsPlaying(false)} />;
       default:
         return null;
     }
