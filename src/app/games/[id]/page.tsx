@@ -212,40 +212,6 @@ export default function GameDetailPage({ params }: { params: Promise<{ id: strin
     }
   }, [searchParams]);
 
-  const renderGame = () => {
-    switch (gameId) {
-      case 1:
-        return <ThePointingPointer onClose={() => setIsPlaying(false)} />;
-      case 2:
-        return <EndlessHorse onClose={() => setIsPlaying(false)} />;
-      case 3:
-        return <FindTheInvisibleCow onClose={() => setIsPlaying(false)} />;
-      case 4:
-        return <PasswordTester onClose={() => setIsPlaying(false)} />;
-      case 5:
-        return <CatBounce onClose={() => setIsPlaying(false)} />;
-      case 6:
-        return <HackerTyper onClose={() => setIsPlaying(false)} />;
-      case 7:
-        return <ElonFortune onClose={() => setIsPlaying(false)} />;
-      case 8:
-        return <MusicQuiz onClose={() => setIsPlaying(false)} />;
-      case 9:
-        return <WeirdBooks onClose={() => setIsPlaying(false)} />;
-      case 12:
-        return <PacMan onClose={() => setIsPlaying(false)} />;
-      case 13:
-        return <NeonFlames onClose={() => setIsPlaying(false)} />;
-      case 14:
-        return <SuperstarRacing onClose={() => setIsPlaying(false)} />;
-      default:
-        return null;
-    }
-  };
-
-  if (isPlaying) {
-    return renderGame();
-  }
 
   const renderGame = () => {
     switch (gameId) {
