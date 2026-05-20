@@ -1,9 +1,0 @@
-<svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
-  <rect width="400" height="600" fill="#bf360c"/>
-  <circle cx="200" cy="150" r="60" fill="#ff5722" opacity="0.8"/><polygon points="200,90 190,130 210,130" fill="#ffb74d"/><polygon points="200,90 210,130 190,130" fill="#ff9800"/>
-  <ellipse cx="200" cy="300" rx="100" ry="120" fill="#e64a19" opacity="0.6"/>
-  <polygon points="80,400 200,500 320,400" fill="#ff5722" opacity="0.7"/>
-  <rect x="50" y="480" width="300" height="110" fill="#000" opacity="0.85" rx="10"/>
-  <text x="200" y="528" font-size="42" font-weight="bold" text-anchor="middle" fill="#ffb74d" font-family="Arial">Wildfire Soul</text>
-  <text x="200" y="563" font-size="16" text-anchor="middle" fill="#fff" font-family="Arial">Burning with Purpose</text>
-</svg>

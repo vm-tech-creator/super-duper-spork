@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import Link from 'next/link';
 
 interface QuizQuestion {
   question: string;
@@ -20,7 +21,6 @@ export default function MusicQuiz({ onClose }: { onClose: () => void }) {
   const raycasterRef = useRef(new THREE.Raycaster());
   const mouseRef = useRef(new THREE.Vector2());
   const buttonMeshesRef = useRef<Map<THREE.Mesh, number>>(new Map());
-  const animationIdRef = useRef<number | null>(null);
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [scores, setScores] = useState({
@@ -264,9 +264,8 @@ export default function MusicQuiz({ onClose }: { onClose: () => void }) {
     window.addEventListener('resize', handleResize);
 
     const animate = () => {
-      animationIdRef.current = requestAnimationFrame(animate);
+      requestAnimationFrame(animate);
 
-      uiTexture.dispose();
       uiTexture = new THREE.CanvasTexture(updateCanvas());
       uiMaterial.map = uiTexture;
       uiMaterial.needsUpdate = true;
@@ -279,11 +278,6 @@ export default function MusicQuiz({ onClose }: { onClose: () => void }) {
     return () => {
       window.removeEventListener('click', handleMouseClick);
       window.removeEventListener('resize', handleResize);
-      
-      if (animationIdRef.current) {
-        cancelAnimationFrame(animationIdRef.current);
-      }
-      
       renderer.dispose();
       uiTexture.dispose();
       uiMaterial.dispose();
@@ -299,12 +293,11 @@ export default function MusicQuiz({ onClose }: { onClose: () => void }) {
       <div ref={containerRef} className="w-full h-full" />
 
       {/* Back button overlay */}
-      <button
-        onClick={onClose}
-        className="absolute top-4 right-4 bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a] transition-colors"
-      >
-        ← Back
-      </button>
+      <Link href="/games">
+        <button className="absolute top-4 right-4 bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a]">
+          ← Back
+        </button>
+      </Link>
 
       <div className="absolute bottom-4 left-4 text-[#7a93b4] text-sm">
         <p>Click on answers to proceed...</p>

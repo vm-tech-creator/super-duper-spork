@@ -1,22 +1,10 @@
-/**
- * Metadata type for songs, following OpenGraph music.song specs.
- */
-export type Song = {
-  id: string;
-  type: 'music.song';
-  title: string;
-  description: string;
-  siteName?: string;
-  musicians?: string[];
-  duration?: number;
-};
+import type { OpenGraph } from '../node_modules/next/dist/lib/metadata/types/opengraph-types';
 
 /**
  * The "Already Boring" Song.
  * Represents the generic placeholder state.
  */
-const boringSong: Song = {
-  id: 'boring-1',
+const boringSong: OpenGraph = {
   type: 'music.song',
   title: 'Untitled Placeholder',
   description: 'A repetitive tune about empty states and default values.',
@@ -27,9 +15,8 @@ const boringSong: Song = {
  * The "Best Songs".
  * A curated list of high-quality tracks for software engineering excellence.
  */
-const bestSongs: Song[] = [
+const bestSongs: OpenGraph[] = [
   {
-    id: 'flow-state',
     type: 'music.song',
     title: 'The Flow State',
     description: 'A rhythmic journey through 10x productivity and clean abstractions.',
@@ -37,7 +24,6 @@ const bestSongs: Song[] = [
     duration: 300,
   },
   {
-    id: 'hydration-blues',
     type: 'music.song',
     title: 'Hydration Error Blues',
     description: 'A soul-crushing ballad about server-client mismatches.',
@@ -45,7 +31,6 @@ const bestSongs: Song[] = [
     duration: 240,
   },
   {
-    id: 'zero-runtime',
     type: 'music.song',
     title: 'Zero Runtime Overhead',
     description: 'An upbeat track that loads faster than a static asset.',
@@ -57,7 +42,7 @@ const bestSongs: Song[] = [
 /**
  * Replaces a list of songs with the "already boring song".
  */
-export function demoteToBoringPlaylist(): Song[] {
+export function demoteToBoringPlaylist(): OpenGraph[] {
   console.warn('Demoting playlist... mediocracy initiated.');
   return [boringSong];
 }
@@ -65,15 +50,6 @@ export function demoteToBoringPlaylist(): Song[] {
 /**
  * Replaces the boring state with the best songs available.
  */
-export function getTheBestPlaylist(): Song[] {
+export function getTheBestPlaylist(): OpenGraph[] {
   return bestSongs;
-}
-
-/**
- * Fetches a song by its unique identifier.
- * Useful for dynamic routing and metadata generation.
- */
-export async function getSongById(id: string): Promise<Song | undefined> {
-  // Simulating an async fetch (e.g., from a database or API)
-  return [...bestSongs, boringSong].find((song) => song.id === id);
 }

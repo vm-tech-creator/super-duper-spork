@@ -127,7 +127,7 @@ const GAMES_DATA = [
     releaseDate: 'Feb 2026',
   },
   {
-    id: 12,
+    id: 10,
     title: 'Pac-Man',
     description: 'A classic maze game where you navigate Pac-Man through a two-line pathway maze while avoiding colorful ghosts.',
     imageUrl: 'https://images.unsplash.com/photo-1535371579214-d6a72b3b5c47?w=500&h=400&fit=crop',
@@ -211,7 +211,6 @@ export default function GamesPage() {
       `,
       backgroundColor: '#001a4d'
     }}>
-      <SaharaHeader />
       {/* Noise overlay */}
       <div
         className="fixed inset-0 pointer-events-none opacity-40 z-0"
@@ -439,7 +438,7 @@ export default function GamesPage() {
 
           {/* Filter Controls */}
           <div className="max-w-6xl mx-auto mb-12 flex flex-wrap gap-3 justify-center">
-            {['All', 'Racing', 'Interactive & Useless Fun', 'Humorous & Absurd Concepts', 'Space'].map((filter) => (
+            {['All', 'Interactive & Useless Fun', 'Humorous & Absurd Concepts', 'Space'].map((filter) => (
               <button
                 key={filter}
                 onClick={() => setSelectedFilter(filter)}

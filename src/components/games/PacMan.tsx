@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { addSandDollars, calculatePacManCoins } from '@/utils/sandDollars';
 
 interface Position {
   x: number;
@@ -227,7 +226,7 @@ export default function PacMan({ onClose }: { onClose: () => void }) {
         }
       }, 3000);
     }
-  }, [gameOver, won, score]);
+  }, [pelletsLeft]);
 
   const drawGameToCanvas = () => {
     const canvas = document.createElement('canvas');
@@ -399,16 +398,13 @@ export default function PacMan({ onClose }: { onClose: () => void }) {
 
     window.addEventListener('resize', handleResize);
 
-    let animationId: number | null = null;
     const animate = () => {
-      animationId = requestAnimationFrame(animate);
+      requestAnimationFrame(animate);
 
-      gameTexture.dispose();
       gameTexture = new THREE.CanvasTexture(drawGameToCanvas());
       gameMaterial.map = gameTexture;
       gameMaterial.needsUpdate = true;
 
-      uiTexture.dispose();
       uiTexture = new THREE.CanvasTexture(createUICanvas());
       uiMaterial.map = uiTexture;
       uiMaterial.needsUpdate = true;
@@ -420,7 +416,6 @@ export default function PacMan({ onClose }: { onClose: () => void }) {
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      if (animationId) cancelAnimationFrame(animationId);
       renderer.dispose();
       gameTexture.dispose();
       uiTexture.dispose();

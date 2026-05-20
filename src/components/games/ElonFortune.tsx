@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import Link from 'next/link';
-import { addSandDollars, calculateElonFortuneCoins } from '@/utils/sandDollars';
 
 interface Item {
   name: string;
@@ -18,11 +17,9 @@ export default function ElonFortune({ onClose }: { onClose: () => void }) {
   const raycasterRef = useRef(new THREE.Raycaster());
   const mouseRef = useRef(new THREE.Vector2());
   const itemButtonsRef = useRef<Map<THREE.Mesh, Item>>(new Map());
-  const animationIdRef = useRef<number | null>(null);
 
   const [balance, setBalance] = useState(250000000000);
   const [purchases, setPurchases] = useState<{ name: string; count: number }[]>([]);
-  const [totalPurchases, setTotalPurchases] = useState(0);
 
   const items: Item[] = [
     { name: 'Diamond-Encrusted Toilet Seat', cost: 500000, emoji: '🚽' },
@@ -53,7 +50,6 @@ export default function ElonFortune({ onClose }: { onClose: () => void }) {
         } else {
           setPurchases([...purchases, { name: item.name, count: 1 }]);
         }
-        setTotalPurchases(prev => prev + 1);
         return newBalance;
       }
       return prev;
@@ -210,7 +206,7 @@ export default function ElonFortune({ onClose }: { onClose: () => void }) {
 
     let lastBalance = balance;
     const animate = () => {
-      animationIdRef.current = requestAnimationFrame(animate);
+      requestAnimationFrame(animate);
 
       if (lastBalance !== balance) {
         itemTexture.image = createItemCanvas();
@@ -229,11 +225,6 @@ export default function ElonFortune({ onClose }: { onClose: () => void }) {
     return () => {
       window.removeEventListener('click', handleMouseClick);
       window.removeEventListener('resize', handleResize);
-      
-      if (animationIdRef.current) {
-        cancelAnimationFrame(animationIdRef.current);
-      }
-      
       renderer.dispose();
       itemTexture.dispose();
       purchasesMaterial.dispose();
@@ -242,24 +233,6 @@ export default function ElonFortune({ onClose }: { onClose: () => void }) {
       itemGeometry.dispose();
       if (containerRef.current && renderer.domElement.parentNode === containerRef.current) {
         containerRef.current.removeChild(renderer.domElement);
-      }
-
-      // Award coins based on purchases made
-      const coins = calculateElonFortuneCoins(totalPurchases, items.length);
-      if (coins > 0) {
-        addSandDollars(coins);
-
-        // Show notification
-        const notification = document.createElement('div');
-        notification.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg font-bold z-50 shadow-lg';
-        notification.textContent = `+${coins} Sand Dollars!`;
-        document.body.appendChild(notification);
-
-        setTimeout(() => {
-          if (document.body.contains(notification)) {
-            document.body.removeChild(notification);
-          }
-        }, 3000);
       }
     };
   }, []);
@@ -272,14 +245,13 @@ export default function ElonFortune({ onClose }: { onClose: () => void }) {
       <div className="absolute top-0 left-0 right-0 border-b border-[rgba(73,122,182,.2)] px-6 py-4 flex items-center justify-between bg-gradient-to-r from-[rgba(255,193,5,.1)] to-[rgba(73,122,182,.1)]">
         <div>
           <h1 className="text-[#ffc105] font-bold text-2xl">💰 Elon Musk's Fortune</h1>
-          <p className="text-[#497ab6] text-sm">Try to spend $250 billion on ridiculous items! Purchases: {totalPurchases}</p>
+          <p className="text-[#497ab6] text-sm">Try to spend $250 billion on ridiculous items!</p>
         </div>
-        <button
-          onClick={onClose}
-          className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a] transition-colors"
-        >
-          ← Back to Games
-        </button>
+        <Link href="/games">
+          <button className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a]">
+            ← Back to Games
+          </button>
+        </Link>
       </div>
 
       <div className="absolute top-24 left-0 right-0 bottom-0 text-center text-[#7a93b4] flex items-center justify-center">
