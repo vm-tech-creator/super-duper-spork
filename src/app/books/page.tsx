@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react';
 import { useEffect } from 'react';
 import { BookOpen, Search, ChevronUp, ChevronDown, Bookmark } from 'lucide-react';
-import SaharaHeader from '@/components/SaharaHeader';
+import Header from '@/components/Header';
 import BookCard from '@/components/BookCard';
 import type { BookData } from '@/lib/books';
 
@@ -108,16 +108,15 @@ export default function BooksPage() {
     setCurrentPage(1);
   }, [searchQuery, selectedCategory, sortOrder]);
 
-  const getCategoryStats = () => {
+  const stats = useMemo(() => {
     return {
       preteen: books.filter(b => b.category === 'preteen').length,
       teen: books.filter(b => b.category === 'teen').length,
       adult: books.filter(b => b.category === 'adult').length,
       bookmarked: books.filter(b => bookmarkedIds.includes(b.id)).length,
     };
-  };
+  }, [books, bookmarkedIds]);
 
-  const stats = getCategoryStats();
   const categoryColors: Record<CategoryFilter, string> = {
     preteen: 'from-blue-400 to-cyan-300',
     teen: 'from-purple-400 to-pink-300',
