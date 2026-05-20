@@ -1,145 +1,81 @@
 'use client';
 
 import Link from 'next/link';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Header() {
-  const [mobileNav, setMobileNav] = useState(false);
-  const [siteMode, setSiteMode] = useState<'classic' | 'fancy' | 'neon' | 'minimal' | 'dark' | 'vibrant' | 'glassmorphism'>('classic');
-  const [scrolled, setScrolled] = useState(false);
-
-  // Get header styling based on scroll state
-  const headerClass = scrolled
-    ? 'border-[#88a9d8]/18 bg-[#080f1c]/88 backdrop-blur-2xl'
-    : 'border-white/[0.07] bg-[#080f1c]/50 backdrop-blur-xl';
-
-  const modeSelectClass =
-    siteMode === 'neon'
-      ? 'border-[#00ff88]/50 bg-black/80 text-[#00ff88]'
-      : siteMode === 'fancy'
-      ? 'border-[#ffc105]/40 bg-gradient-to-r from-[#ffc105]/15 to-[#497ab6]/15 text-[#f0f4fa]'
-      : siteMode === 'vibrant'
-      ? 'border-[#e94560]/50 bg-[#1a1528]/90 text-[#ffb8c8]'
-      : siteMode === 'dark'
-      ? 'border-[#4a6f9f]/40 bg-[#0f1620]/95 text-[#d0d8e8]'
-      : siteMode === 'minimal'
-      ? 'border-[#7a93b4]/30 bg-transparent text-[#8ba3c4]'
-      : siteMode === 'glassmorphism'
-      ? 'border-white/20 bg-white/5 text-white'
-      : 'border-[#88a9d8]/25 bg-[#0c1829]/90 text-[#e8edf5]';
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-[100] px-3 pt-3 sm:px-5 sm:pt-4">
-      <nav
-        className={`mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-2xl border px-3 py-2.5 pl-4 shadow-lg shadow-black/10 transition-[background,border-color,box-shadow] duration-300 sm:px-5 sm:py-3 ${headerClass}`}
-      >
-        <Link href="/" className="flex items-center gap-3 no-underline">
-          <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#ffc105] to-[#d9a004] font-['Bebas_Neue'] text-xl text-[#0a0f18] shadow-[0_4px_20px_rgba(255,193,5,0.22)]">
-            S
-          </div>
-          <div className="leading-tight">
-            <div className="font-['Barlow_Condensed'] text-[0.7rem] font-bold uppercase tracking-[0.2em] text-[#88a9d8]">
-              Supersite
-            </div>
-            <div className="font-['Barlow_Condensed'] text-lg font-extrabold uppercase tracking-wide text-[#f0f4fa]">
-              Sahara
-            </div>
-          </div>
-        </Link>
+    <header className="bg-gray-900 border-b border-gray-800 sticky top-0 z-50">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 text-white font-bold text-xl hover:text-yellow-400 transition-colors">
+            <div className="w-8 h-8 bg-yellow-400 rounded flex items-center justify-center text-gray-900 font-bold">S</div>
+            <span>SAHARA</span>
+          </Link>
 
-        <ul className="hidden list-none items-center gap-1 md:flex">
-          {[
-            ['Videos', '/videos'],
-            ['Books', '/books'],
-            ['Explore', '/'],
-            ['Features', '/'],
-            ['About', '/'],
-          ].map(([label, href]) => (
-            <li key={label}>
-              <Link
-                href={href}
-                className="rounded-lg px-3 py-2 text-sm font-medium text-[#8ba3c4] no-underline transition-colors hover:bg-white/[0.04] hover:text-[#ffc105]"
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
-          <li>
-            <a
-              href="#"
-              className="rounded-lg px-3 py-2 text-sm font-medium text-[#8ba3c4] no-underline transition-colors hover:bg-white/[0.04] hover:text-[#ffc105]"
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-8">
+            <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors font-semibold text-sm uppercase tracking-wide">
+              Explore
+            </Link>
+            <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors font-semibold text-sm uppercase tracking-wide">
+              Features
+            </Link>
+            <Link href="/books" className="text-gray-300 hover:text-yellow-400 transition-colors font-semibold text-sm uppercase tracking-wide">
+              Books
+            </Link>
+            <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors font-semibold text-sm uppercase tracking-wide">
+              About
+            </Link>
+            <Link href="/" className="text-gray-300 hover:text-yellow-400 transition-colors font-semibold text-sm uppercase tracking-wide">
+              Sign In
+            </Link>
+          </div>
+
+          {/* Explore Now Button + Mobile Menu Toggle */}
+          <div className="flex items-center gap-4">
+            <Link href="/books" className="hidden sm:block px-6 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold text-sm rounded transition-colors uppercase tracking-wide">
+              Explore Now
+            </Link>
+            
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden text-gray-300 hover:text-yellow-400 transition-colors"
             >
-              Sign in
-            </a>
-          </li>
-        </ul>
-
-        <div className="flex items-center gap-2 sm:gap-3">
-          <select
-            value={siteMode}
-            onChange={(e) => setSiteMode(e.target.value as typeof siteMode)}
-            aria-label="Visual theme"
-            className={`max-w-[7.5rem] cursor-pointer rounded-xl border py-2 pl-3 pr-8 text-[0.7rem] font-semibold uppercase tracking-wide sm:max-w-none sm:text-xs ${modeSelectClass}`}
-          >
-            <option value="classic">Classic</option>
-            <option value="fancy">Fancy</option>
-            <option value="neon">Neon</option>
-            <option value="minimal">Minimal</option>
-            <option value="dark">Dark</option>
-            <option value="vibrant">Vibrant</option>
-            <option value="glassmorphism">Glass</option>
-          </select>
-
-          <Link
-            href="/videos"
-            className="hidden items-center gap-2 rounded-xl bg-[#ffc105] px-4 py-2 text-sm font-semibold text-[#0a0f18] no-underline shadow-[0_4px_24px_rgba(255,193,5,0.28)] transition hover:bg-[#ffcf3a] sm:inline-flex"
-          >
-            Watch
-            <ArrowRight className="h-4 w-4" aria-hidden />
-          </Link>
-
-          <button
-            type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#88a9d8]/20 bg-white/[0.03] text-[#e8edf5] md:hidden"
-            aria-label={mobileNav ? 'Close menu' : 'Open menu'}
-            onClick={() => setMobileNav((o) => !o)}
-          >
-            {mobileNav ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden pb-4 border-t border-gray-800">
+            <Link href="/" className="block py-2 text-gray-300 hover:text-yellow-400 transition-colors font-semibold text-sm uppercase tracking-wide">
+              Explore
+            </Link>
+            <Link href="/" className="block py-2 text-gray-300 hover:text-yellow-400 transition-colors font-semibold text-sm uppercase tracking-wide">
+              Features
+            </Link>
+            <Link href="/books" className="block py-2 text-gray-300 hover:text-yellow-400 transition-colors font-semibold text-sm uppercase tracking-wide">
+              Books
+            </Link>
+            <Link href="/" className="block py-2 text-gray-300 hover:text-yellow-400 transition-colors font-semibold text-sm uppercase tracking-wide">
+              About
+            </Link>
+            <Link href="/" className="block py-2 text-gray-300 hover:text-yellow-400 transition-colors font-semibold text-sm uppercase tracking-wide">
+              Sign In
+            </Link>
+            <Link href="/books" className="block mt-4 px-6 py-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold text-sm rounded transition-colors uppercase tracking-wide text-center">
+              Explore Now
+            </Link>
+          </div>
+        )}
       </nav>
-
-      {mobileNav && (
-        <div className="mx-auto mt-2 max-w-6xl rounded-2xl border border-[#88a9d8]/15 bg-[#080f1c]/95 p-4 shadow-xl backdrop-blur-2xl md:hidden">
-          <ul className="m-0 flex list-none flex-col gap-1 p-0">
-            {[
-              ['Videos', '/videos'],
-              ['Books', '/books'],
-              ['Explore', '/'],
-              ['Features', '/'],
-              ['About', '/'],
-              ['Sign in', '#'],
-            ].map(([label, href]) => (
-              <li key={label}>
-                <Link
-                  href={href}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-[#8ba3c4] no-underline transition-colors hover:bg-white/[0.04] hover:text-[#ffc105]"
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <Link
-            href="/videos"
-            className="mt-3 inline-flex items-center gap-2 rounded-xl bg-[#ffc105] px-4 py-2 text-sm font-semibold text-[#0a0f18] no-underline shadow-[0_4px_24px_rgba(255,193,5,0.28)] transition hover:bg-[#ffcf3a]"
-          >
-            Watch
-            <ArrowRight className="h-4 w-4" aria-hidden />
-          </Link>
-        </div>
-      )}
     </header>
   );
 }

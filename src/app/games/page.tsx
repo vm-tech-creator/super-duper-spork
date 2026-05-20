@@ -128,7 +128,7 @@ const GAMES_DATA = [
     releaseDate: 'Feb 2026',
   },
   {
-    id: 12,
+    id: 10,
     title: 'Pac-Man',
     description: 'A classic maze game where you navigate Pac-Man through a two-line pathway maze while avoiding colorful ghosts.',
     imageUrl: 'https://images.unsplash.com/photo-1535371579214-d6a72b3b5c47?w=500&h=400&fit=crop',
@@ -136,26 +136,6 @@ const GAMES_DATA = [
     rating: 4.9,
     players: 'Solo',
     releaseDate: 'Apr 2026',
-  },
-  {
-    id: 13,
-    title: 'Neon Flames',
-    description: 'Paint your own nebula with glowing cosmic trails while a slow space background drifts behind you.',
-    imageUrl: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=500&h=400&fit=crop',
-    genre: 'Interactive & Useless Fun',
-    rating: 4.9,
-    players: 'Solo',
-    releaseDate: 'May 2026',
-  },
-  {
-    id: 14,
-    title: 'Superstar Racing',
-    description: 'A hill climb-style racing adventure with hills, coins, fuel, and physics-driven controls.',
-    imageUrl: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=800&h=600&fit=crop',
-    genre: 'Racing',
-    rating: 4.9,
-    players: 'Solo',
-    releaseDate: 'May 2026',
   },
 ];
 
@@ -202,7 +182,6 @@ export default function GamesPage() {
       `,
       backgroundColor: '#001a4d'
     }}>
-      <SaharaHeader />
       {/* Noise overlay */}
       <div
         className="fixed inset-0 pointer-events-none opacity-40 z-0"
@@ -446,7 +425,7 @@ export default function GamesPage() {
 
           {/* Filter Controls */}
           <div className="max-w-6xl mx-auto mb-12 flex flex-wrap gap-3 justify-center">
-            {['All', 'Racing', 'Interactive & Useless Fun', 'Humorous & Absurd Concepts', 'Space'].map((filter) => (
+            {['All', 'Interactive & Useless Fun', 'Humorous & Absurd Concepts', 'Space'].map((filter) => (
               <button
                 key={filter}
                 onClick={() => setSelectedFilter(filter)}

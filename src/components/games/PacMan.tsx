@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { addSandDollars, calculatePacManCoins } from '@/utils/sandDollars';
 
 interface Position {
   x: number;
@@ -201,25 +200,12 @@ export default function PacMan({ onClose }: { onClose: () => void }) {
     });
   }, [pacmanPos, ghosts]);
 
-  // Award coins when game ends
+  // Check win
   useEffect(() => {
-    if (gameOver || won) {
-      const coins = calculatePacManCoins(score, won);
-      addSandDollars(coins);
-
-      // Show notification
-      const notification = document.createElement('div');
-      notification.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg font-bold z-50 shadow-lg';
-      notification.textContent = `+${coins} Sand Dollars!`;
-      document.body.appendChild(notification);
-
-      setTimeout(() => {
-        if (document.body.contains(notification)) {
-          document.body.removeChild(notification);
-        }
-      }, 3000);
+    if (pelletsLeft === 0 && pelletsLeft !== undefined) {
+      setWon(true);
     }
-  }, [gameOver, won, score]);
+  }, [pelletsLeft]);
 
   const drawGameToCanvas = () => {
     const canvas = document.createElement('canvas');
@@ -391,16 +377,13 @@ export default function PacMan({ onClose }: { onClose: () => void }) {
 
     window.addEventListener('resize', handleResize);
 
-    let animationId: number | null = null;
     const animate = () => {
-      animationId = requestAnimationFrame(animate);
+      requestAnimationFrame(animate);
 
-      gameTexture.dispose();
       gameTexture = new THREE.CanvasTexture(drawGameToCanvas());
       gameMaterial.map = gameTexture;
       gameMaterial.needsUpdate = true;
 
-      uiTexture.dispose();
       uiTexture = new THREE.CanvasTexture(createUICanvas());
       uiMaterial.map = uiTexture;
       uiMaterial.needsUpdate = true;
@@ -412,7 +395,6 @@ export default function PacMan({ onClose }: { onClose: () => void }) {
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      if (animationId) cancelAnimationFrame(animationId);
       renderer.dispose();
       gameTexture.dispose();
       uiTexture.dispose();
