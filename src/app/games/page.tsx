@@ -170,6 +170,16 @@ const GAMES_DATA = [
     releaseDate: 'May 2026',
   },
   {
+    id: 15,
+    title: 'Blobmixer',
+    description: 'A dreamy 3D blob playground where you can tap, squish, and shape floating liquid forms in mid-air.',
+    imageUrl: 'https://images.unsplash.com/photo-1612831205498-89a5d8c7f3a6?w=500&h=400&fit=crop',
+    genre: '3D Playground',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'May 2026',
+  },
+  {
     id: 14,
     title: 'Superstar Racing',
     description: 'A hill climb-style racing adventure with hills, coins, fuel, and physics-driven controls.',
@@ -224,7 +234,6 @@ export default function GamesPage() {
       `,
       backgroundColor: '#001a4d'
     }}>
-      <SaharaHeader />
       {/* Noise overlay */}
       <div
         className="fixed inset-0 pointer-events-none opacity-40 z-0"
@@ -468,7 +477,7 @@ export default function GamesPage() {
 
           {/* Filter Controls */}
           <div className="max-w-6xl mx-auto mb-12 flex flex-wrap gap-3 justify-center">
-            {['All', 'Racing', 'Interactive & Useless Fun', 'Humorous & Absurd Concepts', 'Space'].map((filter) => (
+            {['All', 'Interactive & Useless Fun', 'Humorous & Absurd Concepts', 'Space'].map((filter) => (
               <button
                 key={filter}
                 onClick={() => setSelectedFilter(filter)}

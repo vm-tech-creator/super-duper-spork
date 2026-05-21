@@ -1,238 +1,143 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-
-interface Milestone {
-  distance: number;
-  label: string;
-  achieved: boolean;
-}
-
-const MILESTONES: Milestone[] = [
-  { distance: 0.1, label: '0.1 mi', achieved: false },
-  { distance: 0.5, label: '0.5 mi', achieved: false },
-  { distance: 1, label: '1 mi', achieved: false },
-  { distance: 5, label: '5 mi', achieved: false },
-  { distance: 10, label: '10 mi', achieved: false },
-  { distance: 50, label: '50 mi', achieved: false },
-  { distance: 100, label: '100 mi', achieved: false },
-];
-
-const PIXELS_PER_MILE = 5280;
-const TOKEN_VALUE = 0.01;
+import * as THREE from 'three';
 
 export default function EndlessHorse({ onClose }: { onClose: () => void }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [legLength, setLegLength] = useState(100);
-  const [tokens, setTokens] = useState(0);
-  const [milestones, setMilestones] = useState<Milestone[]>(MILESTONES);
-  const [distance, setDistance] = useState(0);
-  const animationRef = useRef<number>();
-  const scrollRef = useRef(0);
-  const [horseColor, setHorseColor] = useState('#8B4513');
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scrollHeight, setScrollHeight] = useState(0);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const legsRef = useRef<THREE.Mesh[]>([]);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!containerRef.current) return;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    // Setup Three.js
+    const scene = new THREE.Scene();
+    const camera = new THREE.OrthographicCamera(
+      window.innerWidth / -2,
+      window.innerWidth / 2,
+      window.innerHeight / 2,
+      window.innerHeight / -2,
+      0.1,
+      1000
+    );
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
-    const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x080f1c);
+    containerRef.current.appendChild(renderer.domElement);
 
-    const drawHorse = (x: number, y: number, legLen: number) => {
-      ctx.fillStyle = '#f5f5dc';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    sceneRef.current = scene;
+    rendererRef.current = renderer;
 
-      const pixelSize = 8;
-      const scale = (size: number) => Math.round(size / pixelSize) * pixelSize;
+    // Create horse body
+    const bodyGeometry = new THREE.BoxGeometry(100, 80, 1);
+    const bodyMaterial = new THREE.MeshBasicMaterial({ color: 0xffc105 });
+    const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+    body.position.set(-200, 0, 0);
+    scene.add(body);
 
-      const drawPixelRect = (px: number, py: number, pw: number, ph: number, color: string) => {
-        ctx.fillStyle = color;
-        ctx.fillRect(px, py, pw, ph);
-      };
+    // Create horse head
+    const headGeometry = new THREE.BoxGeometry(60, 40, 1);
+    const head = new THREE.Mesh(headGeometry, bodyMaterial);
+    head.position.set(-100, 30, 0);
+    scene.add(head);
 
-      // Draw body
-      drawPixelRect(x, y, scale(100), scale(60), horseColor);
+    // Create ears
+    const earGeometry = new THREE.BoxGeometry(16, 20, 1);
+    const leftEar = new THREE.Mesh(earGeometry, bodyMaterial);
+    leftEar.position.set(-125, 60, 0);
+    scene.add(leftEar);
 
-      // Draw head
-      drawPixelRect(x - scale(80), y - scale(40), scale(60), scale(50), horseColor);
+    const rightEar = new THREE.Mesh(earGeometry, bodyMaterial);
+    rightEar.position.set(-75, 60, 0);
+    scene.add(rightEar);
 
-      // Draw mane
-      drawPixelRect(x - scale(60), y - scale(60), scale(20), scale(30), '#000000');
-      drawPixelRect(x - scale(40), y - scale(55), scale(20), scale(25), '#000000');
-      drawPixelRect(x - scale(20), y - scale(50), scale(20), scale(20), '#000000');
+    // Create legs (will be updated based on scroll)
+    const createLegs = (length: number) => {
+      // Clear old legs
+      legsRef.current.forEach((leg) => scene.remove(leg));
+      legsRef.current = [];
 
-      // Draw ear
-      drawPixelRect(x - scale(90), y - scale(100), scale(12), scale(30), horseColor);
-
-      // Draw snout
-      drawPixelRect(x - scale(100), y - scale(20), scale(25), scale(20), '#A0522D');
-
-      // Draw eye
-      drawPixelRect(x - scale(95), y - scale(45), scale(4), scale(4), '#000000');
-
-      // Draw front legs
-      const frontLegX1 = x + scale(15);
-      const frontLegX2 = x + scale(50);
-      const legBottomY = y + scale(60);
-
-      drawPixelRect(frontLegX1, legBottomY, scale(12), legLen, '#A0522D');
-      drawPixelRect(frontLegX2, legBottomY, scale(12), legLen, '#A0522D');
-
-      // Draw back legs
-      const backLegX1 = x - scale(50);
-      const backLegX2 = x - scale(15);
-
-      drawPixelRect(backLegX1, legBottomY, scale(12), legLen, '#A0522D');
-      drawPixelRect(backLegX2, legBottomY, scale(12), legLen, '#A0522D');
-
-      // Draw tail
-      const tailStartX = x - scale(100);
-      const tailStartY = y + scale(20);
-      for (let i = 0; i < Math.min(legLen, 200); i += 8) {
-        drawPixelRect(
-          tailStartX + Math.sin(i / 20) * scale(10),
-          tailStartY + i,
-          scale(8),
-          scale(8),
-          '#000000'
-        );
-      }
-
-      // Draw hooves
-      const hoofSize = scale(8);
-      drawPixelRect(frontLegX1, legBottomY + legLen - hoofSize, scale(12), hoofSize, '#000000');
-      drawPixelRect(frontLegX2, legBottomY + legLen - hoofSize, scale(12), hoofSize, '#000000');
-      drawPixelRect(backLegX1, legBottomY + legLen - hoofSize, scale(12), hoofSize, '#000000');
-      drawPixelRect(backLegX2, legBottomY + legLen - hoofSize, scale(12), hoofSize, '#000000');
+      const legPositions = [-150, -100, 100, 150];
+      legPositions.forEach((x) => {
+        const legGeometry = new THREE.BoxGeometry(16, length, 1);
+        const leg = new THREE.Mesh(legGeometry, bodyMaterial);
+        leg.position.set(x - 200, -(length / 2 + 40), 0);
+        scene.add(leg);
+        legsRef.current.push(leg);
+      });
     };
 
-    const handleWheel = (e: WheelEvent) => {
+    createLegs(400);
+
+    // Handle scroll
+    const handleScroll = (e: WheelEvent) => {
       e.preventDefault();
-      scrollRef.current += e.deltaY;
-      const newDistance = Math.max(0, scrollRef.current / PIXELS_PER_MILE);
-      setDistance(newDistance);
-
-      const newLegLength = 100 + scrollRef.current / 10;
-      setLegLength(newLegLength);
-
-      const newTokens = Math.floor(newDistance / TOKEN_VALUE);
-      setTokens(newTokens);
-
-      // Change horse color based on distance
-      const colors = ['#8B4513', '#A0522D', '#CD853F', '#DEB887', '#F4A460', '#D2691E'];
-      setHorseColor(colors[Math.min(Math.floor(newDistance / 10), colors.length - 1)]);
-
-      setMilestones((prev) =>
-        prev.map((m) => ({
-          ...m,
-          achieved: newDistance >= m.distance || m.achieved,
-        }))
-      );
+      setScrollHeight((prev) => Math.max(0, prev + e.deltaY));
     };
 
-    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('wheel', handleScroll, { passive: false });
 
+    // Animation loop
     const animate = () => {
-      drawHorse(canvas.width / 2, canvas.height / 3, legLength);
-      animationRef.current = requestAnimationFrame(animate);
+      requestAnimationFrame(animate);
+      createLegs(Math.max(400, scrollHeight + 400));
+      renderer.render(scene, camera);
     };
     animate();
 
-    return () => {
-      window.removeEventListener('wheel', handleWheel);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      window.removeEventListener('resize', resizeCanvas);
+    // Handle resize
+    const handleResize = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      (camera as THREE.OrthographicCamera).left = width / -2;
+      (camera as THREE.OrthographicCamera).right = width / 2;
+      (camera as THREE.OrthographicCamera).top = height / 2;
+      (camera as THREE.OrthographicCamera).bottom = height / -2;
+      (camera as THREE.OrthographicCamera).updateProjectionMatrix();
+      renderer.setSize(width, height);
     };
-  }, []);
 
-  const newMilestones = milestones.filter((m) => m.achieved);
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('wheel', handleScroll);
+      window.removeEventListener('resize', handleResize);
+      if (containerRef.current) {
+        try {
+          containerRef.current.removeChild(renderer.domElement);
+        } catch (e) {}
+      }
+      renderer.dispose();
+    };
+  }, [scrollHeight]);
 
   return (
     <div className="fixed inset-0 overflow-hidden">
-      <canvas
-        ref={canvasRef}
-        className="w-full h-full"
-        style={{ display: 'block' }}
-      />
+      <div ref={containerRef} className="w-full h-full" />
 
-      {/* Header with Navigation */}
-      <div className="absolute top-4 left-4 z-10">
-        <h1 className="text-[#8B4513] font-bold text-3xl drop-shadow-lg">
-          🐴 Endless Horse
-        </h1>
-        <p className="text-[#A0522D] text-sm mt-2">Scroll to stretch those legs!</p>
-        <div className="flex gap-2 mt-3">
-          <button
-            onClick={() => window.location.href = '/games'}
-            className="bg-[#497ab6] text-[#e8edf5] border-none px-4 py-1 rounded text-sm font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#2b4c7d] transition-all"
-          >
-            ← Games
-          </button>
-          <button
-            onClick={() => window.location.href = '/'}
-            className="bg-[#497ab6] text-[#e8edf5] border-none px-4 py-1 rounded text-sm font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#2b4c7d] transition-all"
-          >
-            🏠 Home
-          </button>
-        </div>
-      </div>
-
-      {/* Stats */}
-      <div className="absolute top-4 right-4 z-10 bg-black/40 px-6 py-4 rounded-lg backdrop-blur">
-        <div className="text-[#f5f5dc] font-bold text-lg">
-          Tokens: <span className="text-yellow-400">{tokens}</span>
-        </div>
-        <div className="text-[#f5f5dc] text-sm mt-2">
-          Distance: <span className="text-yellow-400">{distance.toFixed(2)} mi</span>
-        </div>
-        <div className="text-[#f5f5dc] text-sm mt-1">
-          Leg Length: <span className="text-yellow-400">{Math.round(legLength)}px</span>
-        </div>
-        <div className="text-[#f5f5dc] text-sm mt-1">
-          Horse Color: <span className="inline-block w-4 h-4 rounded ml-1" style={{ backgroundColor: horseColor }}></span>
-        </div>
-      </div>
-
-      {/* Milestones */}
-      <div className="absolute bottom-4 right-4 z-10 bg-black/40 px-6 py-4 rounded-lg backdrop-blur max-h-96 overflow-y-auto">
-        <div className="text-[#f5f5dc] font-bold mb-2">Milestones Achieved:</div>
-        {newMilestones.length === 0 ? (
-          <div className="text-[#A0522D] text-sm">Keep scrolling...</div>
-        ) : (
-          <div className="space-y-1">
-            {newMilestones.map((m) => (
-              <div key={m.label} className="text-yellow-400 text-sm">
-                ✓ {m.label}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Instructions */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10 bg-black/40 px-6 py-3 rounded-lg backdrop-blur text-center">
-        <p className="text-[#f5f5dc] text-sm">
-          🖱️ Scroll down to stretch the horse's legs!
-        </p>
+      {/* Header */}
+      <div className="absolute top-4 left-4">
+        <h1 className="text-[#ffc105] font-bold text-2xl">🐴 Endless Horse</h1>
       </div>
 
       {/* Controls */}
-      <div className="absolute bottom-4 left-4 z-10">
+      <div className="absolute top-4 right-4 z-50">
         <button
           onClick={onClose}
-          className="bg-[#8B4513] text-[#f5f5dc] border-2 border-[#f5f5dc] px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#A0522D] transition-colors"
+          className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a]"
         >
-          ← Back
+          ← Back to Games
         </button>
+      </div>
+
+      {/* Instructions */}
+      <div className="absolute bottom-4 left-4 bg-black/50 px-4 py-2 rounded text-[#7a93b4] text-sm">
+        Scroll to make the horse's legs grow infinitely... 🐴
       </div>
     </div>
   );

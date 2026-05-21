@@ -1,11 +1,10 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
+import SaharaHeader from '@/components/SaharaHeader';
 
 export default function Synthesizer() {
-  const router = useRouter();
   const [frequency, setFrequency] = useState(440);
   const [waveform, setWaveform] = useState('sine');
   const [tempo, setTempo] = useState(120);
@@ -145,13 +144,9 @@ export default function Synthesizer() {
           <Link href="/" className="text-2xl font-bebas-neue font-bold text-yellow-400 hover:text-yellow-300 transition-colors">
             🌍 Sahara Supersite
           </Link>
-          <button
-            onClick={() => router.back()}
-            className="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-barlow font-semibold transition-all transform hover:scale-105"
-          >
-            ← Back
-          </button>
         </nav>
+      </div>
+      <div className="max-w-7xl mx-auto">
 
         {/* Hero Section */}
         <section className="py-16 px-4">

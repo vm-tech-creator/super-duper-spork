@@ -116,6 +116,7 @@ export default function BookDetailPage() {
   const contentRef = useRef<HTMLDivElement>(null);
   const [bookmarkedPage, setBookmarkedPage] = useState<number | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [flipDirection, setFlipDirection] = useState<'next' | 'prev' | null>(null);
 
   useEffect(() => {
     if (!bookId) return;
@@ -197,6 +198,7 @@ export default function BookDetailPage() {
   const handlePageChange = useCallback((direction: 'next' | 'prev') => {
     if (isTransitioning) return;
 
+    setFlipDirection(direction);
     setCurrentPage((prev) => {
       const next = direction === 'next' ? prev + 1 : prev - 1;
       if (next < 1 || next > pages.length) return prev;
@@ -211,7 +213,10 @@ export default function BookDetailPage() {
     setIsTransitioning(true);
     contentRef.current?.scrollTo({ top: 0, behavior: 'instant' });
     
-    const timer = setTimeout(() => setIsTransitioning(false), 250);
+    const timer = setTimeout(() => {
+      setIsTransitioning(false);
+      setFlipDirection(null);
+    }, 600);
     return () => clearTimeout(timer);
   }, [currentPage, pages.length]);
 
@@ -230,42 +235,38 @@ export default function BookDetailPage() {
 
   if (loading) {
     return (
-      <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-        <Header />
-        <div className="relative z-10 pt-24 flex items-center justify-center min-h-screen">
+      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+        <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto mb-4"></div>
             <p className="text-gray-300">Loading book...</p>
           </div>
         </div>
-      </div>
+      </main>
     );
   }
 
   if (error || !book) {
     return (
-      <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-        <Header />
-        <div className="relative z-10 pt-24 px-4">
-          <div className="max-w-4xl mx-auto">
-            <Link
-              href="/books"
-              className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mb-8 transition-colors"
-            >
-              <ChevronLeft className="w-5 h-5" />
-              Back to Books
-            </Link>
-            <div className="bg-red-900/30 border border-red-500 rounded-lg p-6 text-red-300">
-              <p>⚠️ {error || 'Book not found'}</p>
-            </div>
+      <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-12 px-4">
+        <div className="max-w-4xl mx-auto">
+          <Link
+            href="/books"
+            className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mb-8 transition-colors"
+          >
+            <ChevronLeft className="w-5 h-5" />
+            Back to Books
+          </Link>
+          <div className="bg-red-900/30 border border-red-500 rounded-lg p-6 text-red-300">
+            <p>⚠️ {error || 'Book not found'}</p>
           </div>
         </div>
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <main className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
       <Header />
       <main className="relative z-10 pt-24 px-4">
         <div className="py-8">
@@ -276,8 +277,21 @@ export default function BookDetailPage() {
           </Link>
 
           {/* Book Container - Open Book Style */}
-          <div className="relative mb-12">
-            <div className="bg-gray-900/80 backdrop-blur-sm rounded-3xl overflow-hidden shadow-2xl border border-gray-700 h-[75vh]">
+          <div className="relative mb-12" style={{ perspective: '2000px' }}>
+            <div className={`bg-gray-900/80 backdrop-blur-sm rounded-3xl overflow-hidden shadow-2xl border border-gray-700 h-[75vh]`}
+            style={{
+              transformStyle: 'preserve-3d',
+              transform: isTransitioning
+                ? flipDirection === 'next'
+                  ? 'rotateY(100deg) rotateX(8deg) scale(0.95)'
+                  : 'rotateY(-100deg) rotateX(8deg) scale(0.95)'
+                : 'rotateY(0deg) rotateX(0deg) scale(1)',
+              transition: 'all 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+              boxShadow: isTransitioning 
+                ? '0 0 80px rgba(59, 130, 246, 1), 0 20px 60px rgba(0, 0, 0, 0.8)'
+                : '0 10px 40px rgba(0, 0, 0, 0.3)',
+            }}
+            >
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 h-full">
                 {/* LEFT PAGE - Cover */}
                 <div className="relative bg-gradient-to-br from-amber-50 to-yellow-50 p-12 shadow-inner border-r-2 border-gray-400 overflow-hidden">
@@ -306,11 +320,11 @@ export default function BookDetailPage() {
                 </div>
 
                 {/* RIGHT PAGE - Content */}
-                <div className="relative bg-gradient-to-br from-amber-50 to-yellow-50 p-12 shadow-inner overflow-hidden flex flex-col">
+                <div className="relative bg-gradient-to-br from-amber-50 to-yellow-50 p-12 shadow-inner overflow-hidden flex flex-col" style={{ perspective: '1200px' }}>
                   <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml,%3Csvg%20viewBox=%220%200%20100%20100%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter%20id=%22noise%22%3E%3CfeTurbulence%20type=%22fractalNoise%22%20baseFrequency=%220.9%22%20numOctaves=%224%22/%3E%3C/filter%3E%3Crect%20width=%22100%22%20height=%22100%22%20filter=%22url(%23noise)%22/%3E%3C/svg%3E')]"></div>
                   <div className="absolute top-0 left-0 w-8 h-8 bg-gradient-to-br from-gray-300 to-gray-200 transform skew-y-12 rounded-full opacity-30"></div>
 
-                  <div className="relative z-10 w-full h-full flex flex-col">
+                  <div className="relative z-10 w-full h-full flex flex-col" style={{ transformStyle: 'preserve-3d' }}>
                     <div className="pb-6 border-b-2 border-gray-300 flex-shrink-0 flex justify-between items-start">
                       <div>
                         <h1 className="text-3xl font-bebas-neue font-bold text-gray-900 font-serif leading-tight mb-2">{book.title}</h1>
@@ -330,12 +344,14 @@ export default function BookDetailPage() {
                       </button>
                     </div>
 
-                    {/* Book Content - Scrollable FULL STORY */}
-                    <div ref={contentRef} className="flex-1 overflow-y-scroll pr-4 custom-scrollbar my-2">
+                    {/* Book Content - Scrollable with DRAMATIC FLIP */}
+                    <div ref={contentRef} className="flex-1 overflow-y-auto pr-4 custom-scrollbar my-2 relative">
                       <div 
-                        className={`text-gray-800 font-serif text-base leading-relaxed space-y-4 pb-8 transition-all duration-300 transform ${
-                          isTransitioning ? 'opacity-0 scale-95 blur-sm translate-x-4' : 'opacity-100 scale-100 blur-0 translate-x-0'
-                        }`}
+                        style={{
+                          opacity: isTransitioning ? 0 : 1,
+                          transition: 'opacity 0.35s ease-out',
+                        }}
+                        className="text-gray-800 font-serif text-base leading-relaxed space-y-4 pb-8 h-full"
                       >
                         {pages.length > 0 ? (
                           <MarkdownRenderer content={content} currentPage={currentPage - 1} pages={pages} />
@@ -363,7 +379,8 @@ export default function BookDetailPage() {
               className="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all font-barlow font-semibold disabled:opacity-50"
               disabled={currentPage === 1 || isTransitioning}
             >
-              ← Previous Page
+              <span>📖</span>
+              ← FLIP BACK
             </button>
             <Link
               href="/books"
@@ -376,15 +393,15 @@ export default function BookDetailPage() {
               className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all font-barlow font-semibold disabled:opacity-50"
               disabled={currentPage === pages.length || isTransitioning}
             >
-              Next Page →
+              FLIP NEXT
+              <span>📖</span>
             </button>
           </div>
 
           {/* Recommendations Section */}
           <RecommendationsSection currentBook={book} />
-          </div>
         </div>
-      </main>
+      </div>
 
       <style>{`
         .custom-scrollbar::-webkit-scrollbar {
@@ -400,7 +417,57 @@ export default function BookDetailPage() {
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
           background: rgba(107, 114, 128, 0.8);
         }
+
+        @keyframes bookFlip {
+          0% {
+            transform: rotateY(0deg) rotateX(0deg);
+          }
+          50% {
+            transform: rotateY(90deg) rotateX(5deg) scale(1.05);
+          }
+          100% {
+            transform: rotateY(0deg) rotateX(0deg);
+          }
+        }
+
+        @keyframes pageFlipForward {
+          0% {
+            transform: rotateY(0deg);
+            opacity: 1;
+          }
+          45% {
+            transform: rotateY(90deg);
+            opacity: 0;
+          }
+          55% {
+            transform: rotateY(-90deg);
+            opacity: 0;
+          }
+          100% {
+            transform: rotateY(0deg);
+            opacity: 1;
+          }
+        }
+
+        @keyframes pageFlipBackward {
+          0% {
+            transform: rotateY(0deg);
+            opacity: 1;
+          }
+          45% {
+            transform: rotateY(-90deg);
+            opacity: 0;
+          }
+          55% {
+            transform: rotateY(90deg);
+            opacity: 0;
+          }
+          100% {
+            transform: rotateY(0deg);
+            opacity: 1;
+          }
+        }
       `}</style>
-    </div>
+    </main>
   );
 }

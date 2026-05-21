@@ -12,7 +12,6 @@ export default function FindTheInvisibleCow({ onClose }: { onClose: () => void }
   const mouseRef = useRef({ x: 0, y: 0 });
   const distanceRef = useRef(0);
   const foundRef = useRef(false);
-  const animationIdRef = useRef<number | null>(null);
 
   const [distance, setDistance] = useState(0);
   const [found, setFound] = useState(false);
@@ -171,7 +170,7 @@ export default function FindTheInvisibleCow({ onClose }: { onClose: () => void }
     window.addEventListener('resize', handleResize);
 
     const animate = () => {
-      animationIdRef.current = requestAnimationFrame(animate);
+      requestAnimationFrame(animate);
 
       const volume = Math.max(0, 1 - distanceRef.current / 500);
       indicatorCircle.material.color.setHex(volume > 0.7 ? 0x00ff00 : volume > 0.4 ? 0xffff00 : 0xff0000);
@@ -189,11 +188,6 @@ export default function FindTheInvisibleCow({ onClose }: { onClose: () => void }
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
-      
-      if (animationIdRef.current) {
-        cancelAnimationFrame(animationIdRef.current);
-      }
-      
       renderer.dispose();
       uiTexture.dispose();
       uiMaterial.dispose();
@@ -204,7 +198,6 @@ export default function FindTheInvisibleCow({ onClose }: { onClose: () => void }
         ring.geometry.dispose();
         (ring.material as THREE.Material).dispose();
       });
-      
       if (containerRef.current && renderer.domElement.parentNode === containerRef.current) {
         containerRef.current.removeChild(renderer.domElement);
       }
