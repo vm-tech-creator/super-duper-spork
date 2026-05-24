@@ -112,6 +112,46 @@ const LIBRARY: VideoItem[] = [
     tags: ['Music', 'Silly'],
     quote: 'A lemonade-stand earworm—absurd in the best way for all ages.',
   },
+  {
+    id: 'ka8Z08yz7Oo',
+    title: 'Bad Lip Reading: NFL 2024',
+    channel: 'Bad Lip Reading',
+    duration: '5:21',
+    tags: ['Comedy', 'Sports', 'Family'],
+    quote: 'Silly dubbed commentary that turns touchdowns into goofy sketches.',
+  },
+  {
+    id: 'fC_q9KPZyqw',
+    title: 'Baby Shark Dance',
+    channel: 'Pinkfong',
+    duration: '2:24',
+    tags: ['Kids', 'Music', 'Funny'],
+    quote: 'A ridiculous earworm for tiny fans and everyone who wants a smile.',
+  },
+  {
+    id: '7sKJ8kdqqgc',
+    title: 'Funny Animals Compilation',
+    channel: 'Top Funny',
+    duration: '6:02',
+    tags: ['Animals', 'Funny', 'Wholesome'],
+    quote: 'A fast-paced mix of pets, kids, and gentle pratfalls.',
+  },
+  {
+    id: 'sZ3XwnK7j1I',
+    title: 'Silly Snack Time with Pancake',
+    channel: 'Kid Friendly Fun',
+    duration: '4:48',
+    tags: ['Comedy', 'Food', 'Family'],
+    quote: 'Small kitchen chaos with a big goofy heart.',
+  },
+  {
+    id: 'LLAFy3JPR8w',
+    title: "Mr. Bean's Holiday - Beach Sand Surprise",
+    channel: 'Mr Bean',
+    duration: '3:14',
+    tags: ['Classic', 'Slapstick', 'Family'],
+    quote: 'Timeless physical comedy that skips language and lands every time.',
+  },
 ];
 
 function thumbUrl(id: string) {
@@ -148,7 +188,13 @@ export default function VideosHub() {
   const [checks, setChecks] = useState({ hd: true, cc: false, kids: true });
   const [radioTheme, setRadioTheme] = useState('cinema');
   const [sortSelect, setSortSelect] = useState('trending');
+  const [selectedVideoId, setSelectedVideoId] = useState(LIBRARY[0].id);
   const rteRef = useRef<HTMLDivElement>(null);
+
+  const selectedVideo = useMemo(
+    () => LIBRARY.find((v) => v.id === selectedVideoId) ?? LIBRARY[0],
+    [selectedVideoId],
+  );
 
   const filtered = useMemo(() => {
     let list = LIBRARY.filter(
@@ -426,7 +472,7 @@ export default function VideosHub() {
         <div>
           <strong className="font-['Barlow_Condensed'] uppercase tracking-wide text-[#fff]">LaughTube beta</strong>
           <p className="m-0 mt-1 opacity-90">
-            Links open YouTube in a new tab. Parents: preview anything new—humor varies by household.
+            Watch any clip inside the hub using the site player. Parents: preview anything new—humor varies by household.
           </p>
         </div>
       </div>
@@ -532,6 +578,56 @@ export default function VideosHub() {
               <h2 className="font-['Barlow_Condensed'] text-xl font-bold uppercase tracking-wide m-0">Main feed</h2>
             </div>
 
+            <div className="rounded-2xl border overflow-hidden mb-8" style={{ borderColor: `${C.mid}44`, background: `${C.deep}44` }}>
+              <div className="p-5">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.22em] font-bold mb-2" style={{ color: C.soft }}>
+                      Now playing
+                    </p>
+                    <h2 className="text-2xl font-bold m-0">{selectedVideo.title}</h2>
+                    <p className="mt-1 text-sm m-0" style={{ color: C.soft }}>
+                      {selectedVideo.channel} · {selectedVideo.duration}
+                    </p>
+                  </div>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    <button
+                      type="button"
+                      onClick={() => showToast(`Playing in site: ${selectedVideo.title}`)}
+                      className="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-bold"
+                      style={{ background: C.gold, color: C.ink }}
+                    >
+                      <Play className="w-4 h-4" />
+                      In-site player
+                    </button>
+                    <a
+                      href={ytWatch(selectedVideo.id)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-bold no-underline"
+                      style={{ background: `${C.mid}44`, color: '#fff' }}
+                    >
+                      Open on YouTube ↗
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div className="relative aspect-video border-t" style={{ borderColor: `${C.mid}44` }}>
+                <iframe
+                  title={`Now playing ${selectedVideo.title}`}
+                  className="absolute inset-0 w-full h-full"
+                  src={`https://www.youtube.com/embed/${selectedVideo.id}?rel=0`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+              <div className="p-5 border-t" style={{ borderColor: `${C.mid}44` }}>
+                <p className="text-sm m-0" style={{ color: C.soft }}>
+                  {selectedVideo.quote}
+                </p>
+              </div>
+            </div>
+
             {loadingDemo ? (
               <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4" aria-busy="true">
                 {[1, 2, 3].map((i) => (
@@ -572,7 +668,12 @@ export default function VideosHub() {
                     className="rounded-2xl border overflow-hidden flex flex-col shadow-lg transition-transform hover:-translate-y-0.5"
                     style={{ borderColor: `${C.mid}44`, background: `${C.ink}ee` }}
                   >
-                    <a href={ytWatch(v.id)} target="_blank" rel="noopener noreferrer" className="block relative group">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedVideoId(v.id)}
+                      className="block relative group"
+                      aria-label={`Play ${v.title} in site`}
+                    >
                       <img src={thumbUrl(v.id)} alt="" className="w-full aspect-video object-cover" />
                       <span
                         className="absolute bottom-2 right-2 text-[10px] font-bold px-1.5 py-0.5 rounded"
@@ -583,7 +684,7 @@ export default function VideosHub() {
                       <span className="absolute inset-0 grid place-items-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/40">
                         <Play className="w-14 h-14 text-white drop-shadow-lg" fill="white" />
                       </span>
-                    </a>
+                    </button>
                     <div className="p-4 flex flex-col gap-3 flex-1">
                       <div className="flex gap-3">
                         <div
@@ -595,9 +696,14 @@ export default function VideosHub() {
                         </div>
                         <div className="min-w-0">
                           <h3 className="m-0 text-base font-bold leading-snug">
-                            <a href={ytWatch(v.id)} target="_blank" rel="noopener noreferrer" className="text-inherit no-underline hover:underline">
+                            <button
+                              type="button"
+                              onClick={() => setSelectedVideoId(v.id)}
+                              className="text-left text-inherit w-full text-base font-bold leading-snug"
+                              style={{ background: 'transparent', border: 'none', padding: 0, cursor: 'pointer' }}
+                            >
                               {v.title}
-                            </a>
+                            </button>
                           </h3>
                           <p className="m-0 mt-1 text-xs" style={{ color: C.soft }}>
                             {v.channel}
@@ -621,26 +727,24 @@ export default function VideosHub() {
                       >
                         {v.quote}
                       </blockquote>
-                      <div className="flex items-center gap-2 mt-auto pt-2">
+                      <div className="flex flex-wrap items-center gap-2 mt-auto pt-2">
                         <button
                           type="button"
                           className="inline-flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-md"
                           style={{ background: `${C.mid}44`, color: '#fff' }}
-                          onClick={() => showToast(`Queued: ${v.title}`)}
+                          onClick={() => setSelectedVideoId(v.id)}
                         >
-                          <ThumbsUp className="w-3.5 h-3.5" />
-                          Queue
+                          <Play className="w-3.5 h-3.5" />
+                          Play in site
                         </button>
-                        <a
-                          href={ytWatch(v.id)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs font-bold no-underline"
-                          style={{ color: C.gold }}
-                          title="Opens YouTube in a new tab"
+                        <button
+                          type="button"
+                          className="inline-flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-md"
+                          style={{ background: `${C.soft}18`, color: C.gold, border: `1px solid ${C.gold}55` }}
+                          onClick={() => window.open(ytWatch(v.id), '_blank', 'noopener')}
                         >
                           Open on YouTube ↗
-                        </a>
+                        </button>
                       </div>
                     </div>
                   </article>
@@ -1018,8 +1122,8 @@ export default function VideosHub() {
                     </button>
                     {accordionOpen === i && (
                       <div className="px-4 py-3 text-sm" style={{ background: `${C.ink}cc`, color: C.soft }}>
-                        {i === 0 && 'LaughTube wraps YouTube with calmer hierarchy, queues, and classroom-minded defaults.'}
-                        {i === 1 && 'Yes—each card links to the original free watch page on YouTube.'}
+                        {i === 0 && 'LaughTube wraps YouTube with calmer hierarchy, queues, and classroom-minded defaults, plus an in-site embed for every clip.'}
+                        {i === 1 && 'Yes—each card can also still open the original free watch page on YouTube if you need it.'}
                         {i === 2 && 'Use the feedback items in the ⋮ menu; this demo stores nothing on a server.'}
                       </div>
                     )}
