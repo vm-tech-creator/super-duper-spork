@@ -16,6 +16,10 @@ import ElonFortune from '@/components/games/ElonFortune';
 import MusicQuiz from '@/components/games/MusicQuiz';
 import WeirdBooks from '@/components/games/WeirdBooks';
 import PacMan from '@/components/games/PacMan';
+import NeonFlames from '@/components/games/NeonFlames';
+import SuperstarRacing from '@/components/games/SuperstarRacing';
+import Blobmixer from '@/components/games/Blobmixer';
+import SiteHeader from '@/components/SiteHeader';
 
 const GAMES_DATA: Record<number, any> = {
   1: {
@@ -187,6 +191,45 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Arcade Legends',
     features: ['Maze Navigation', 'AI Ghosts', 'Pellet Collection', 'Arcade Classic'],
   },
+  13: {
+    id: 13,
+    title: 'Neon Flames',
+    description: 'A paint-your-own-nebula experience where your cursor leaves glowing, cosmic trails in a drifting starfield.',
+    fullDescription: 'Step into a cosmic studio and paint a neon nebula with a trail of glowing particles. Your cursor leaves shimmering space dust and bright auroras while a slowly moving starfield shimmers behind the scene. The result is a meditative interactive art piece with vivid color and cosmic motion.',
+    imageUrl: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&h=600&fit=crop',
+    genre: 'Interactive & Useless Fun',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'May 2026',
+    developer: 'Cosmic Canvas',
+    features: ['Neon Trail Painting', 'Cosmic Space Background', 'Glowing Particle Effects', 'Interactive Nebula Art'],
+  },
+  14: {
+    id: 14,
+    title: 'Superstar Racing',
+    description: 'A hill climb-style racing adventure with hills, coins, fuel, and physics-driven controls.',
+    fullDescription: 'Rev up your engine and conquer twisting hills in Superstar Racing. Use acceleration, braking, and tilt control to keep the car balanced, collect coins, and stay fueled while climbing to new distance records.',
+    imageUrl: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=800&h=600&fit=crop',
+    genre: 'Racing',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'May 2026',
+    developer: 'Superstar Studios',
+    features: ['Hill Climb Physics', 'Fuel Management', 'Coin Collection', 'Tilt Control'],
+  },
+  15: {
+    id: 15,
+    title: 'Blobmixer',
+    description: 'A dreamy 3D blob playground where you can tap, squish, and shape floating liquid forms in mid-air.',
+    fullDescription: 'Step into Blobmixer, a calm 3D playground where translucent blobs float in space and respond to your pointer. Click and drag to squish, stretch, and bounce each blob while soft lighting and slow motion create a relaxing sensory experience.',
+    imageUrl: 'https://images.unsplash.com/photo-1612831205498-89a5d8c7f3a6?w=800&h=600&fit=crop',
+    genre: '3D Playground',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'May 2026',
+    developer: 'PlayLab Studio',
+    features: ['Interactive 3D Blobs', 'Drag-to-Squish', 'Soft Lighting', 'Relaxing Physics'],
+  },
 };
 
 export default function GameDetailPage({ params }: { params: Promise<{ id: string }> }) {
@@ -235,6 +278,12 @@ export default function GameDetailPage({ params }: { params: Promise<{ id: strin
         return <WeirdBooks onClose={() => setIsPlaying(false)} />;
       case 10:
         return <PacMan onClose={() => setIsPlaying(false)} />;
+      case 13:
+        return <NeonFlames onClose={() => setIsPlaying(false)} />;
+      case 14:
+        return <SuperstarRacing onClose={() => setIsPlaying(false)} />;
+      case 15:
+        return <Blobmixer onClose={() => setIsPlaying(false)} />;
       default:
         return null;
     }

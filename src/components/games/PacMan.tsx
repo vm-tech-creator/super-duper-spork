@@ -178,18 +178,19 @@ export default function PacMan({ onClose }: { onClose: () => void }) {
         })
       );
 
-      setPacmanPos((prev) => {
-        if (pelletsRef.current[prev.y]?.[prev.x]) {
-          pelletsRef.current[prev.y][prev.x] = false;
-          setScore((s) => s + 10);
-          setPelletsLeft((p) => p - 1);
-        }
-        return prev;
-      });
     }, 200);
 
     return () => clearInterval(gameInterval);
   }, [nextDir, pacmanDir, gameOver, won, maze]);
+
+  // Eat pellets when Pac-Man enters a space
+  useEffect(() => {
+    if (pelletsRef.current[pacmanPos.y]?.[pacmanPos.x]) {
+      pelletsRef.current[pacmanPos.y][pacmanPos.x] = false;
+      setScore((s) => s + 10);
+      setPelletsLeft((p) => p - 1);
+    }
+  }, [pacmanPos]);
 
   // Check collision
   useEffect(() => {
@@ -200,10 +201,30 @@ export default function PacMan({ onClose }: { onClose: () => void }) {
     });
   }, [pacmanPos, ghosts]);
 
-  // Check win
+  // Win when all pellets are collected
   useEffect(() => {
-    if (pelletsLeft === 0 && pelletsLeft !== undefined) {
+    if (pelletsLeft <= 0 && !gameOver) {
       setWon(true);
+    }
+  }, [pelletsLeft, gameOver]);
+
+  // Award coins when game ends
+  useEffect(() => {
+    if (gameOver || won) {
+      const coins = calculatePacManCoins(score, won);
+      addSandDollars(coins);
+
+      // Show notification
+      const notification = document.createElement('div');
+      notification.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg font-bold z-50 shadow-lg';
+      notification.textContent = `+${coins} Sand Dollars!`;
+      document.body.appendChild(notification);
+
+      setTimeout(() => {
+        if (document.body.contains(notification)) {
+          document.body.removeChild(notification);
+        }
+      }, 3000);
     }
   }, [pelletsLeft]);
 

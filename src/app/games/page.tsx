@@ -14,7 +14,6 @@ import ElonFortune from '@/components/games/ElonFortune';
 import MusicQuiz from '@/components/games/MusicQuiz';
 import WeirdBooks from '@/components/games/WeirdBooks';
 import SuperstarRacing from '@/components/games/SuperstarRacing';
-import SiteHeader from '@/components/SiteHeader';
 
 const GAMES_DATA = [
   {
@@ -137,6 +136,36 @@ const GAMES_DATA = [
     players: 'Solo',
     releaseDate: 'Apr 2026',
   },
+  {
+    id: 13,
+    title: 'Neon Flames',
+    description: 'Paint your own nebula with glowing cosmic trails while a slow space background drifts behind you.',
+    imageUrl: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=500&h=400&fit=crop',
+    genre: 'Interactive & Useless Fun',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'May 2026',
+  },
+  {
+    id: 15,
+    title: 'Blobmixer',
+    description: 'A dreamy 3D blob playground where you can tap, squish, and shape floating liquid forms in mid-air.',
+    imageUrl: 'https://images.unsplash.com/photo-1612831205498-89a5d8c7f3a6?w=500&h=400&fit=crop',
+    genre: '3D Playground',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'May 2026',
+  },
+  {
+    id: 14,
+    title: 'Superstar Racing',
+    description: 'A hill climb-style racing adventure with hills, coins, fuel, and physics-driven controls.',
+    imageUrl: 'https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=800&h=600&fit=crop',
+    genre: 'Racing',
+    rating: 4.9,
+    players: 'Solo',
+    releaseDate: 'May 2026',
+  },
 ];
 
 export default function GamesPage() {
@@ -188,22 +217,6 @@ export default function GamesPage() {
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E")`,
         }}
-      />
-
-      {/* Nav */}
-      <SiteHeader
-        links={[
-          { label: 'Home', href: '/' },
-          { label: 'Games', href: '/games' },
-        ]}
-        rightSlot={
-          <button
-            onClick={() => window.location.href = '/games/avatar'}
-            className="bg-[#4a90e2] text-white border-none px-4 py-2 rounded transition-all hover:bg-[#357abd] hover:translate-y-[-1px] hover:shadow-[0_4px_16px_rgba(74,144,226,.3)] font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] text-[.85rem] cursor-pointer"
-          >
-            Avatar
-          </button>
-        }
       />
 
       {/* Main Content */}
