@@ -127,10 +127,11 @@ export default function BooksPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       <Header />
-      <div className="py-12 px-4">
-        <div className="max-w-7xl mx-auto">
+      <main className="relative z-10 pt-24 px-4">
+        <div className="py-12">
+          <div className="max-w-7xl mx-auto">
           {/* Header Section */}
           <div className="text-center mb-12">
             <div className="flex items-center justify-center gap-3 mb-4">
