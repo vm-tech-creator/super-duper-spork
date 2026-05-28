@@ -19,7 +19,6 @@ import PacMan from '@/components/games/PacMan';
 import NeonFlames from '@/components/games/NeonFlames';
 import SuperstarRacing from '@/components/games/SuperstarRacing';
 import Blobmixer from '@/components/games/Blobmixer';
-import SiteHeader from '@/components/SiteHeader';
 
 const GAMES_DATA: Record<number, any> = {
   1: {
@@ -311,7 +310,7 @@ export default function GameDetailPage({ params }: { params: Promise<{ id: strin
   }
 
   return (
-    <div className="relative min-h-screen bg-[#080f1c] text-[#e8edf5] overflow-x-hidden">
+    <div className="relative min-h-screen overflow-x-hidden text-[var(--text)]">
       {/* Noise overlay */}
       <div
         className="fixed inset-0 pointer-events-none opacity-40 z-0"
@@ -321,17 +320,10 @@ export default function GameDetailPage({ params }: { params: Promise<{ id: strin
       />
 
       {/* Nav */}
-      <SiteHeader
-        links={[
-          { label: 'Home', href: '/' },
-          { label: 'Games', href: '/games' },
-        ]}
-      />
-
       {/* Main Content */}
       <main className="relative z-10">
         {/* Hero Section */}
-        <section className="relative pt-[120px] pb-12">
+        <section className="relative pb-12 pt-4">
           <div className="absolute inset-0 h-[500px] overflow-hidden">
             <img
               src={game.imageUrl}

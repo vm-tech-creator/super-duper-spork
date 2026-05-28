@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
-import SaharaHeader from '@/components/SaharaHeader';
 
 export default function Synthesizer() {
   const [frequency, setFrequency] = useState(440);
@@ -137,30 +136,23 @@ export default function Synthesizer() {
   }, []);
 
   return (
-    <main className="min-h-screen pt-[120px] bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white">
-      <SaharaHeader
-        rightSlot={
-          <Link
-            href="/music"
-            className="hidden rounded-xl bg-[#ffc105] px-4 py-2 text-sm font-semibold text-[#0a0f18] no-underline shadow-[0_4px_24px_rgba(255,193,5,0.28)] transition hover:bg-[#ffcf3a] sm:inline-flex"
-          >
-            Back to Music
-          </Link>
-        }
-      />
-      <div className="max-w-7xl mx-auto">
+    <main className="min-h-screen text-[var(--text)]">
+      <div className="mx-auto max-w-7xl px-4">
+        <Link href="/music" className="t-btn-primary mb-6 inline-flex rounded-xl px-4 py-2 text-sm font-semibold no-underline">
+          Back to Music
+        </Link>
 
         {/* Hero Section */}
         <section className="py-16 px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-sahara-secondary to-sahara-primary bg-clip-text text-transparent">
                 🎹 Synthesizer
               </h1>
               <p className="text-xl text-gray-300">
                 Create custom sounds with oscillators and controls
               </p>
-              <div className="h-1 w-32 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full mx-auto mt-6"></div>
+              <div className="h-1 w-32 bg-gradient-to-r from-sahara-secondary to-sahara-primary rounded-full mx-auto mt-6"></div>
             </div>
           </div>
         </section>

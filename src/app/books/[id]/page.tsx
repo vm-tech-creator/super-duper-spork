@@ -4,7 +4,6 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { ChevronLeft, BookOpen, Bookmark, BookmarkCheck } from 'lucide-react';
-import Header from '@/components/Header';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 import { getCoverDataUrl } from '@/lib/coverGenerator';
 import type { BookData } from '@/lib/books';
@@ -266,9 +265,8 @@ export default function BookDetailPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
-      <Header />
-      <div className="py-8 px-4">
+    <main className="min-h-screen text-[var(--text)]">
+      <div className="px-4 py-8">
         <div className="max-w-7xl mx-auto">
           <Link href="/books" className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 mb-8 transition-colors font-semibold">
             <ChevronLeft className="w-5 h-5" />

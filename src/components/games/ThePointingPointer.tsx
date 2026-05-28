@@ -108,7 +108,7 @@ export default function ThePointingPointer({ onClose }: { onClose: () => void })
       <div ref={containerRef} className="w-full h-full" />
 
       {/* Cursor display */}
-      <div className="absolute top-4 left-4 text-[#ffc105] font-bold text-2xl">👉 The Pointing Pointer</div>
+      <div className="absolute top-4 left-4 text-sahara-gold font-bold text-2xl">👉 The Pointing Pointer</div>
 
       <div
         className="fixed pointer-events-none text-white text-sm bg-black/50 px-3 py-2 rounded"
@@ -124,7 +124,7 @@ export default function ThePointingPointer({ onClose }: { onClose: () => void })
       <div className="absolute top-4 right-4 z-50">
         <button
           onClick={onClose}
-          className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a]"
+          className="bg-sahara-gold text-sahara-bg border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:opacity-90"
         >
           ← Back to Games
         </button>

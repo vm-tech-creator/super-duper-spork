@@ -3,7 +3,6 @@
 import { useState, useMemo } from 'react';
 import { useEffect } from 'react';
 import { BookOpen, Search, ChevronUp, ChevronDown, Bookmark } from 'lucide-react';
-import Header from '@/components/Header';
 import BookCard from '@/components/BookCard';
 import type { BookData } from '@/lib/books';
 
@@ -127,19 +126,18 @@ export default function BooksPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      <Header />
-      <main className="relative z-10 pt-24 px-4">
+    <div className="relative min-h-screen overflow-x-hidden">
+      <main className="relative z-10 px-4">
         <div className="py-12">
           <div className="max-w-7xl mx-auto">
           {/* Header Section */}
           <div className="text-center mb-12">
             <div className="flex items-center justify-center gap-3 mb-4">
               <BookOpen className="w-10 h-10 text-blue-400" />
-              <h1 className="text-4xl md:text-5xl font-bold text-white">My Books Library</h1>
+              <h1 className="text-4xl md:text-5xl font-bold text-[var(--text)]">My Books Library</h1>
               <BookOpen className="w-10 h-10 text-blue-400" />
             </div>
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+            <p className="text-lg max-w-2xl mx-auto text-[var(--muted)]">
               Discover amazing stories across three age categories. Each book includes full chapters and beautiful cover art.
             </p>
           </div>
@@ -338,8 +336,9 @@ export default function BooksPage() {
             </p>
           </div>
         )}
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }

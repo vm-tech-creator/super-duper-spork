@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import SaharaHeader from '@/components/SaharaHeader';
+import { useAudienceFilter } from '@/hooks/useAudienceFilter';
+import type { AudienceTag } from '@/hooks/useAudienceFilter';
+import { useTheme } from '@/context/ThemeContext';
 import GameCard from '@/components/GameCard';
 import PacMan from '@/components/games/PacMan';
 import ThePointingPointer from '@/components/games/ThePointingPointer';
@@ -15,7 +17,19 @@ import MusicQuiz from '@/components/games/MusicQuiz';
 import WeirdBooks from '@/components/games/WeirdBooks';
 import SuperstarRacing from '@/components/games/SuperstarRacing';
 
-const GAMES_DATA = [
+type GameItem = {
+  id: number;
+  title: string;
+  description: string;
+  imageUrl: string;
+  genre: string;
+  rating: number;
+  players: string;
+  releaseDate: string;
+  audience?: AudienceTag;
+};
+
+const GAMES_DATA: GameItem[] = [
   {
     id: 1,
     title: 'The Pointing Pointer',
@@ -75,6 +89,7 @@ const GAMES_DATA = [
     rating: 4.7,
     players: 'Solo',
     releaseDate: 'Mar 2026',
+    audience: 'adult',
   },
   {
     id: 5,
@@ -95,6 +110,7 @@ const GAMES_DATA = [
     rating: 4.4,
     players: 'Solo',
     releaseDate: 'Nov 2025',
+    audience: 'adult',
   },
   {
     id: 7,
@@ -105,6 +121,7 @@ const GAMES_DATA = [
     rating: 4.6,
     players: 'Solo',
     releaseDate: 'Apr 2026',
+    audience: 'adult',
   },
   {
     id: 8,
@@ -170,6 +187,9 @@ const GAMES_DATA = [
 
 export default function GamesPage() {
   const [selectedFilter, setSelectedFilter] = useState('All');
+  const { audience } = useTheme();
+  const audienceGames = useAudienceFilter(GAMES_DATA);
+  const hiddenCount = GAMES_DATA.length - audienceGames.length;
 
   useEffect(() => {
     // Scroll reveal animation
@@ -192,25 +212,7 @@ export default function GamesPage() {
   };
 
   return (
-    <div className="relative min-h-screen text-[#e8edf5] overflow-x-hidden" style={{
-      backgroundImage: `
-        repeating-linear-gradient(
-          0deg,
-          rgba(0, 0, 0, 0.15),
-          rgba(0, 0, 0, 0.15) 2px,
-          transparent 2px,
-          transparent 4px
-        ),
-        repeating-linear-gradient(
-          90deg,
-          rgba(0, 0, 0, 0.15),
-          rgba(0, 0, 0, 0.15) 2px,
-          transparent 2px,
-          transparent 4px
-        )
-      `,
-      backgroundColor: '#001a4d'
-    }}>
+    <div className="relative min-h-screen overflow-x-hidden text-[var(--text)]">
       {/* Noise overlay */}
       <div
         className="fixed inset-0 pointer-events-none opacity-40 z-0"
@@ -220,9 +222,14 @@ export default function GamesPage() {
       />
 
       {/* Main Content */}
-      <main className="relative z-10 pt-[120px]">
+      <main className="relative z-10">
+        {audience === 'kid' && hiddenCount > 0 && (
+          <p className="mx-auto mb-4 max-w-3xl rounded-xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-center text-sm font-medium text-[var(--text)]">
+            Kid mode is on — {hiddenCount} adult-only {hiddenCount === 1 ? 'game is' : 'games are'} hidden. Switch to Adult in the header to see everything.
+          </p>
+        )}
         {/* Hero Section - Arcade Machine */}
-        <section className="px-[5%] py-20 relative overflow-hidden bg-gradient-to-b from-[rgba(0,26,77,.5)] to-[#001a4d]">
+        <section className="relative overflow-hidden bg-gradient-to-b from-[color-mix(in_srgb,var(--primary)_50%,transparent)] to-[var(--bg)] px-[5%] py-20">
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-12">
               {/* Left: Pac-Man Game Scene */}
@@ -231,7 +238,7 @@ export default function GamesPage() {
                   width: '360px',
                   height: '400px',
                   backgroundColor: '#000033',
-                  border: '6px solid #ffc105',
+                  border: '6px solid var(--gold)',
                   borderRadius: '8px',
                   overflow: 'hidden',
                   boxShadow: '0 0 40px rgba(255, 193, 5, 0.4), inset 0 0 20px rgba(0,0,0,0.5)'
@@ -419,16 +426,16 @@ export default function GamesPage() {
                 <div className="space-y-6">
                   <div>
                     <div className="inline-flex items-center justify-center gap-2 mb-3 px-4 py-2 rounded-full bg-[rgba(255,193,5,.15)] border border-[rgba(255,193,5,.3)]">
-                      <span className="text-[#ffc105] font-bold text-xs uppercase tracking-widest">🎮 Gaming Universe</span>
+                      <span className="text-sahara-gold font-bold text-xs uppercase tracking-widest">🎮 Gaming Universe</span>
                     </div>
                   </div>
-                  <h1 className="font-['Barlow_Condensed'] font-black text-5xl uppercase tracking-[.04em] text-[#e8edf5] drop-shadow-[0_0_20px_rgba(255,193,5,.3)] leading-tight">
+                  <h1 className="font-['Barlow_Condensed'] font-black text-5xl uppercase tracking-[.04em] text-sahara-text drop-shadow-[0_0_20px_rgba(255,193,5,.3)] leading-tight">
                     DISCOVER{' '}
-                    <span className="text-[#ffc105] drop-shadow-[0_0_30px_rgba(255,193,5,.5)]">
+                    <span className="text-sahara-gold drop-shadow-[0_0_30px_rgba(255,193,5,.5)]">
                       AMAZING GAMES
                     </span>
                   </h1>
-                  <p className="text-lg text-[#7a93b4] leading-relaxed">
+                  <p className="text-lg text-sahara-muted leading-relaxed">
                     Explore our collection of extraordinary, hilarious, and absolutely pointless games that will waste your time in the best way possible.
                   </p>
                 </div>
@@ -444,8 +451,8 @@ export default function GamesPage() {
                 onClick={() => setSelectedFilter(filter)}
                 className={`px-8 py-3 rounded-lg uppercase font-black tracking-[.08em] text-sm transition-all duration-300 relative overflow-hidden group ${
                   selectedFilter === filter
-                    ? 'bg-gradient-to-r from-[#ffc105] to-[#ffcf3a] text-[#080f1c] shadow-[0_0_30px_rgba(255,193,5,.5)] scale-105'
-                    : 'bg-[rgba(73,122,182,.15)] text-[#7a93b4] hover:bg-[rgba(255,193,5,.15)] hover:text-[#ffc105] border border-[rgba(73,122,182,.3)] hover:border-[#ffc105]'
+                    ? 'scale-105 bg-gradient-to-r from-sahara-gold to-[var(--gold-dim)] text-sahara-bg shadow-[0_0_30px_color-mix(in_srgb,var(--gold)_50%,transparent)]'
+                    : 'border border-sahara-border bg-[var(--surface)] text-sahara-muted hover:border-sahara-gold hover:bg-[color-mix(in_srgb,var(--gold)_15%,transparent)] hover:text-sahara-gold'
                 }`}
               >
                 {selectedFilter === filter && (
@@ -458,7 +465,7 @@ export default function GamesPage() {
 
           {/* Games Grid */}
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-24 relative">
-            {GAMES_DATA.filter(game => selectedFilter === 'All' || game.genre === selectedFilter).map((game, index) => (
+            {audienceGames.filter(game => selectedFilter === 'All' || game.genre === selectedFilter).map((game, index) => (
               <div
                 key={game.id}
                 className="reveal"
@@ -486,12 +493,12 @@ export default function GamesPage() {
             <div className="text-center space-y-4">
               <div className="flex items-center justify-center gap-2 mb-4">
                 <span className="text-3xl animate-bounce" style={{ animationDelay: '0.1s' }}>⭐</span>
-                <h2 className="font-['Bebas_Neue'] text-[clamp(2.4rem,5vw,3.8rem)] leading-none tracking-[.03em] text-[#e8edf5]">
+                <h2 className="font-['Bebas_Neue'] text-[clamp(2.4rem,5vw,3.8rem)] leading-none tracking-[.03em] text-sahara-text">
                   EXPLORE MORE
                 </h2>
                 <span className="text-3xl animate-bounce" style={{ animationDelay: '0.2s' }}>⭐</span>
               </div>
-              <p className="text-[#ffc105] font-black text-[1.5rem] drop-shadow-[0_0_10px_rgba(255,193,5,.3)]">CONTENT CATEGORIES</p>
+              <p className="text-sahara-gold font-black text-[1.5rem] drop-shadow-[0_0_10px_rgba(255,193,5,.3)]">CONTENT CATEGORIES</p>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
@@ -503,7 +510,7 @@ export default function GamesPage() {
               ].map((card, index) => (
                 <div
                   key={card.title}
-                  className="reveal relative overflow-hidden rounded-xl border-2 border-[rgba(255,193,5,.3)] bg-gradient-to-br from-[#101e34] to-[#0a0f1f] p-8 cursor-pointer transition-all duration-300 hover:translate-y-[-8px] hover:shadow-[0_30px_80px_rgba(255,193,5,.3)] hover:border-[#ffc105] group"
+                  className="group reveal relative cursor-pointer overflow-hidden rounded-xl border-2 border-sahara-border bg-gradient-to-br from-sahara-bg2 to-sahara-bg p-8 transition-all duration-300 hover:-translate-y-2 hover:border-sahara-gold hover:shadow-[0_30px_80px_color-mix(in_srgb,var(--gold)_30%,transparent)]"
                   style={{
                     transitionDelay: `${index * 100}ms`,
                   }}
@@ -513,7 +520,7 @@ export default function GamesPage() {
                   
                   {/* Glow effect */}
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-40 bg-[#ffc105] rounded-full blur-3xl opacity-20"></div>
+                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-40 bg-sahara-gold rounded-full blur-3xl opacity-20"></div>
                   </div>
 
                   {/* Icon with animation */}
@@ -525,16 +532,16 @@ export default function GamesPage() {
 
                   {/* Text content */}
                   <div className="relative z-10 space-y-3">
-                    <h3 className="font-['Barlow_Condensed'] font-black text-[1.5rem] uppercase tracking-[.04em] text-[#e8edf5] group-hover:text-[#ffc105] transition-colors">
+                    <h3 className="font-['Barlow_Condensed'] font-black text-[1.5rem] uppercase tracking-[.04em] text-sahara-text group-hover:text-sahara-gold transition-colors">
                       {card.title}
                     </h3>
-                    <p className="text-[.88rem] text-[#7a93b4] leading-[1.65] group-hover:text-[#97b3d4] transition-colors">
+                    <p className="text-[.88rem] text-sahara-muted leading-[1.65] group-hover:text-[#97b3d4] transition-colors">
                       {card.description}
                     </p>
                   </div>
 
                   {/* Arrow indicator on hover */}
-                  <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-[#ffc105] transform translate-x-2 group-hover:translate-x-0 text-2xl">
+                  <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sahara-gold transform translate-x-2 group-hover:translate-x-0 text-2xl">
                     →
                   </div>
                 </div>
@@ -547,7 +554,7 @@ export default function GamesPage() {
         <section className="px-[5%] py-20 relative overflow-hidden bg-gradient-to-r from-[rgba(255,193,5,.08)] via-[rgba(8,15,28,.95)] to-[rgba(73,122,182,.08)] border-y border-[rgba(255,193,5,.2)]">
           {/* Animated background elements */}
           <div className="absolute inset-0 opacity-20 pointer-events-none">
-            <div className="absolute -top-40 -left-40 w-80 h-80 bg-[#ffc105] rounded-full mix-blend-screen filter blur-3xl animate-pulse"></div>
+            <div className="absolute -top-40 -left-40 w-80 h-80 bg-sahara-gold rounded-full mix-blend-screen filter blur-3xl animate-pulse"></div>
             <div className="absolute -bottom-40 -right-40 w-80 h-80 bg-[#497ab6] rounded-full mix-blend-screen filter blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }}></div>
           </div>
 
@@ -555,18 +562,18 @@ export default function GamesPage() {
             <div className="space-y-4">
               <div className="flex items-center justify-center gap-3 mb-4">
                 <span className="text-3xl animate-spin" style={{ animationDuration: '2s' }}>🎯</span>
-                <h2 className="font-['Barlow_Condensed'] font-black text-4xl uppercase tracking-[.04em] text-[#ffc105] drop-shadow-[0_0_20px_rgba(255,193,5,.3)]">
+                <h2 className="font-['Barlow_Condensed'] font-black text-4xl uppercase tracking-[.04em] text-sahara-gold drop-shadow-[0_0_20px_rgba(255,193,5,.3)]">
                   READY TO PLAY?
                 </h2>
                 <span className="text-3xl animate-spin" style={{ animationDuration: '2s', animationDirection: 'reverse' }}>🎯</span>
               </div>
-              <p className="text-lg text-[#7a93b4] leading-relaxed">
+              <p className="text-lg text-sahara-muted leading-relaxed">
                 Create your account and start playing today. Get exclusive rewards and unlock premium content.
               </p>
             </div>
             
-            <button className="relative group px-10 py-4 rounded-lg font-['Barlow_Condensed'] font-black uppercase tracking-[.1em] transition-all duration-300 text-lg overflow-hidden bg-gradient-to-r from-[#ffc105] to-[#ffcf3a] text-[#080f1c] hover:shadow-[0_0_40px_rgba(255,193,5,.5)] hover:translate-y-[-3px] active:translate-y-0 cursor-pointer">
-              <span className="absolute inset-0 bg-gradient-to-r from-[#ffcf3a] to-[#ffc105] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+            <button className="group relative cursor-pointer overflow-hidden rounded-lg bg-gradient-to-r from-sahara-gold to-[var(--gold-dim)] px-10 py-4 font-['Barlow_Condensed'] text-lg font-black uppercase tracking-[.1em] text-sahara-bg transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_40px_color-mix(in_srgb,var(--gold)_50%,transparent)] active:translate-y-0">
+              <span className="absolute inset-0 bg-gradient-to-r from-[var(--gold-dim)] to-sahara-gold opacity-0 transition-opacity duration-300 group-hover:opacity-100"></span>
               <span className="relative z-10 flex items-center justify-center gap-2">
                 <span className="animate-bounce" style={{ animationDelay: '0s' }}>▶</span>
                 Get Started Free
@@ -574,7 +581,7 @@ export default function GamesPage() {
               </span>
             </button>
 
-            <p className="text-sm text-[#497ab6] italic">
+            <p className="text-sm text-sahara-secondary italic">
               🎮 Join thousands of players wasting time productively!
             </p>
           </div>
@@ -586,52 +593,52 @@ export default function GamesPage() {
         {/* Animated background elements */}
         <div className="absolute inset-0 opacity-10 pointer-events-none">
           <div className="absolute -top-40 left-1/3 w-96 h-96 bg-[#497ab6] rounded-full mix-blend-screen filter blur-3xl animate-pulse" style={{ animationDuration: '4s' }}></div>
-          <div className="absolute -bottom-40 right-1/3 w-96 h-96 bg-[#ffc105] rounded-full mix-blend-screen filter blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
+          <div className="absolute -bottom-40 right-1/3 w-96 h-96 bg-sahara-gold rounded-full mix-blend-screen filter blur-3xl animate-pulse" style={{ animationDuration: '5s', animationDelay: '1s' }}></div>
         </div>
 
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
             <div className="group">
-              <h4 className="font-bold text-[#ffc105] mb-4 uppercase tracking-[.08em] text-sm flex items-center gap-2 group-hover:text-[#ffcf3a] transition-colors">
+              <h4 className="font-bold text-sahara-gold mb-4 uppercase tracking-[.08em] text-sm flex items-center gap-2 group-hover:text-[#ffcf3a] transition-colors">
                 <span className="text-lg">🎮</span> Games
               </h4>
-              <ul className="space-y-3 text-[#7a93b4] text-sm">
-                <li><a href="#" className="hover:text-[#ffc105] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">All Games <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
-                <li><a href="#" className="hover:text-[#ffc105] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">New Releases <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
-                <li><a href="#" className="hover:text-[#ffc105] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Top Rated <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
+              <ul className="space-y-3 text-sahara-muted text-sm">
+                <li><a href="#" className="hover:text-sahara-gold hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">All Games <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
+                <li><a href="#" className="hover:text-sahara-gold hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">New Releases <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
+                <li><a href="#" className="hover:text-sahara-gold hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Top Rated <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
               </ul>
             </div>
 
             <div className="group">
-              <h4 className="font-bold text-[#ffc105] mb-4 uppercase tracking-[.08em] text-sm flex items-center gap-2 group-hover:text-[#ffcf3a] transition-colors">
+              <h4 className="font-bold text-sahara-gold mb-4 uppercase tracking-[.08em] text-sm flex items-center gap-2 group-hover:text-[#ffcf3a] transition-colors">
                 <span className="text-lg">🏢</span> Company
               </h4>
-              <ul className="space-y-3 text-[#7a93b4] text-sm">
-                <li><a href="#" className="hover:text-[#ffc105] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">About <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
-                <li><a href="#" className="hover:text-[#ffc105] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Blog <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
-                <li><a href="#" className="hover:text-[#ffc105] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Careers <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
+              <ul className="space-y-3 text-sahara-muted text-sm">
+                <li><a href="#" className="hover:text-sahara-gold hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">About <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
+                <li><a href="#" className="hover:text-sahara-gold hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Blog <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
+                <li><a href="#" className="hover:text-sahara-gold hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Careers <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
               </ul>
             </div>
 
             <div className="group">
-              <h4 className="font-bold text-[#ffc105] mb-4 uppercase tracking-[.08em] text-sm flex items-center gap-2 group-hover:text-[#ffcf3a] transition-colors">
+              <h4 className="font-bold text-sahara-gold mb-4 uppercase tracking-[.08em] text-sm flex items-center gap-2 group-hover:text-[#ffcf3a] transition-colors">
                 <span className="text-lg">💬</span> Support
               </h4>
-              <ul className="space-y-3 text-[#7a93b4] text-sm">
-                <li><a href="#" className="hover:text-[#ffc105] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Help Center <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
-                <li><a href="#" className="hover:text-[#ffc105] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Community <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
-                <li><a href="#" className="hover:text-[#ffc105] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Contact <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
+              <ul className="space-y-3 text-sahara-muted text-sm">
+                <li><a href="#" className="hover:text-sahara-gold hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Help Center <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
+                <li><a href="#" className="hover:text-sahara-gold hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Community <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
+                <li><a href="#" className="hover:text-sahara-gold hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Contact <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
               </ul>
             </div>
 
             <div className="group">
-              <h4 className="font-bold text-[#ffc105] mb-4 uppercase tracking-[.08em] text-sm flex items-center gap-2 group-hover:text-[#ffcf3a] transition-colors">
+              <h4 className="font-bold text-sahara-gold mb-4 uppercase tracking-[.08em] text-sm flex items-center gap-2 group-hover:text-[#ffcf3a] transition-colors">
                 <span className="text-lg">⚖️</span> Legal
               </h4>
-              <ul className="space-y-3 text-[#7a93b4] text-sm">
-                <li><a href="#" className="hover:text-[#ffc105] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Privacy <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
-                <li><a href="#" className="hover:text-[#ffc105] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Terms <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
-                <li><a href="#" className="hover:text-[#ffc105] hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Cookies <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
+              <ul className="space-y-3 text-sahara-muted text-sm">
+                <li><a href="#" className="hover:text-sahara-gold hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Privacy <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
+                <li><a href="#" className="hover:text-sahara-gold hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Terms <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
+                <li><a href="#" className="hover:text-sahara-gold hover:translate-x-1 transition-all duration-200 inline-flex items-center gap-1">Cookies <span className="opacity-0 group-hover:opacity-100 transition-opacity">→</span></a></li>
               </ul>
             </div>
           </div>
@@ -639,16 +646,16 @@ export default function GamesPage() {
           <div className="border-t border-[rgba(73,122,182,.2)] pt-8">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="text-center md:text-left">
-                <p className="text-[#497ab6] text-sm flex items-center justify-center md:justify-start gap-2">
+                <p className="text-sahara-secondary text-sm flex items-center justify-center md:justify-start gap-2">
                   <span className="text-lg animate-pulse">⭐</span>
                   &copy; 2026 Sahara Games. All rights reserved.
                   <span className="text-lg animate-pulse" style={{ animationDelay: '0.7s' }}>⭐</span>
                 </p>
               </div>
               <div className="flex gap-4 items-center">
-                <span className="text-[#ffc105] text-2xl animate-bounce" style={{ animationDuration: '1.5s' }}>🎯</span>
-                <span className="text-[#497ab6] text-2xl animate-bounce" style={{ animationDuration: '1.5s', animationDelay: '0.3s' }}>🎮</span>
-                <span className="text-[#ffc105] text-2xl animate-bounce" style={{ animationDuration: '1.5s', animationDelay: '0.6s' }}>🕹️</span>
+                <span className="text-sahara-gold text-2xl animate-bounce" style={{ animationDuration: '1.5s' }}>🎯</span>
+                <span className="text-sahara-secondary text-2xl animate-bounce" style={{ animationDuration: '1.5s', animationDelay: '0.3s' }}>🎮</span>
+                <span className="text-sahara-gold text-2xl animate-bounce" style={{ animationDuration: '1.5s', animationDelay: '0.6s' }}>🕹️</span>
               </div>
             </div>
           </div>

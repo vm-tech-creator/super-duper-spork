@@ -122,21 +122,21 @@ export default function EndlessHorse({ onClose }: { onClose: () => void }) {
 
       {/* Header */}
       <div className="absolute top-4 left-4">
-        <h1 className="text-[#ffc105] font-bold text-2xl">🐴 Endless Horse</h1>
+        <h1 className="text-sahara-gold font-bold text-2xl">🐴 Endless Horse</h1>
       </div>
 
       {/* Controls */}
       <div className="absolute top-4 right-4 z-50">
         <button
           onClick={onClose}
-          className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a]"
+          className="bg-sahara-gold text-sahara-bg border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:opacity-90"
         >
           ← Back to Games
         </button>
       </div>
 
       {/* Instructions */}
-      <div className="absolute bottom-4 left-4 bg-black/50 px-4 py-2 rounded text-[#7a93b4] text-sm">
+      <div className="absolute bottom-4 left-4 bg-black/50 px-4 py-2 rounded text-sahara-muted text-sm">
         Scroll to make the horse's legs grow infinitely... 🐴
       </div>
     </div>

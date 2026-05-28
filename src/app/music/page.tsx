@@ -1673,32 +1673,15 @@ Check it out at: /music
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#080f1c] text-[#e8edf5] overflow-x-hidden">
+    <main className="min-h-screen overflow-x-hidden text-[var(--text)]">
       {/* Noise overlay */}
-      <div className="fixed inset-0 pointer-events-none opacity-40 z-0"
+      <div className="pointer-events-none fixed inset-0 z-0 opacity-40"
            style={{
              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E")`
            }} />
 
-      {/* Nav */}
-      <nav className="fixed top-0 w-full z-50 flex items-center justify-between px-[5%] h-[68px] bg-[rgba(8,15,28,.85)] backdrop-blur-[16px] shadow-[0_4px_40px_rgba(0,0,0,.5)] border-b border-[rgba(73,122,182,.2)]">
-        <Link href="/" className="flex items-center gap-2.5 text-decoration-none">
-          <div className="w-9 h-9 bg-gradient-to-br from-[#ffc105] to-[#e0a800] rounded-lg grid place-items-center font-bebas-neue text-xl text-[#080f1c] shadow-[0_0_16px_rgba(255,193,5,.35)]">
-            S
-          </div>
-          <div className="font-barlow-condensed font-black text-xl uppercase tracking-[.04em]">
-            <span className="text-[#ffc105]">Sahara</span>
-          </div>
-        </Link>
-        <ul className="flex gap-8 list-none">
-          <li><Link href="/" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">Home</Link></li>
-          <li><a href="#music" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">Music</a></li>
-          <li><Link href="/music/create" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">Create</Link></li>
-        </ul>
-      </nav>
-
       {/* Sidebar */}
-      <aside className="fixed left-0 top-[68px] w-64 h-[calc(100vh-68px-120px)] bg-slate-900/50 border-r border-cyan-500/20 overflow-y-auto z-40 pb-8">
+      <aside className="fixed left-0 top-[88px] z-40 h-[calc(100vh-88px-120px)] w-64 overflow-y-auto border-r border-[var(--border)] bg-[var(--surface)] pb-8 backdrop-blur-md">
         <div className="p-6">
           {/* Genres Section */}
           <div className="mb-8">
@@ -1795,7 +1778,7 @@ Check it out at: /music
       </aside>
 
       {/* Content with top padding for fixed header and left padding for sidebar */}
-      <div className="relative z-10 pt-[68px] ml-64">
+      <div className="relative z-10 ml-64">
             <div className="p-8">
               {/* Current Playing Track */}
               {isPlaying && currentTrack < allTracks.length && (

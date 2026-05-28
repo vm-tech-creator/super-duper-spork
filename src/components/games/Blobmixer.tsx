@@ -228,21 +228,21 @@ export default function Blobmixer({ onClose }: { onClose: () => void }) {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#041025] text-[#e8edf5] overflow-hidden">
+    <div className="relative min-h-screen bg-[#041025] text-sahara-text overflow-hidden">
       <div className="absolute inset-0 opacity-70 bg-gradient-to-b from-[#041025] via-[#061d41] to-[#041025]" />
       <div ref={containerRef} className="absolute inset-0" />
 
       <div className="relative z-10 px-6 py-6">
         <div className="max-w-6xl mx-auto flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
           <div className="space-y-4">
-            <p className="uppercase tracking-[.2em] text-sm text-[#7a93b4]">Blobmixer</p>
-            <h1 className="text-4xl md:text-5xl font-['Barlow_Condensed'] font-black uppercase text-[#ffc105]">3D Blob Playground</h1>
+            <p className="uppercase tracking-[.2em] text-sm text-sahara-muted">Blobmixer</p>
+            <h1 className="text-4xl md:text-5xl font-['Barlow_Condensed'] font-black uppercase text-sahara-gold">3D Blob Playground</h1>
             <p className="max-w-3xl text-[#c8d3e8] leading-relaxed">{hintText} Use the pointer to push, drag, and stretch each floating blob in a soft, liquid 3D studio.</p>
           </div>
 
           <button
             onClick={onClose}
-            className="rounded-full bg-[#ffc105] px-6 py-3 text-[#080f1c] font-semibold uppercase tracking-[.08em] transition hover:bg-[#ffdd6c]"
+            className="rounded-full bg-sahara-gold px-6 py-3 text-sahara-bg font-semibold uppercase tracking-[.08em] transition hover:bg-[#ffdd6c]"
           >
             Close
           </button>
@@ -250,16 +250,16 @@ export default function Blobmixer({ onClose }: { onClose: () => void }) {
 
         <div className="mt-10 grid gap-4 sm:grid-cols-3">
           <div className="rounded-3xl border border-[rgba(255,193,5,.15)] bg-[rgba(255,255,255,.04)] p-6 backdrop-blur-xl">
-            <h2 className="text-lg font-semibold text-[#e8edf5]">Squish Play</h2>
-            <p className="mt-3 text-sm text-[#7a93b4]">Click on a blob and drag to deform its shape. Release to watch it rebound softly.</p>
+            <h2 className="text-lg font-semibold text-sahara-text">Squish Play</h2>
+            <p className="mt-3 text-sm text-sahara-muted">Click on a blob and drag to deform its shape. Release to watch it rebound softly.</p>
           </div>
           <div className="rounded-3xl border border-[rgba(255,193,5,.15)] bg-[rgba(255,255,255,.04)] p-6 backdrop-blur-xl">
-            <h2 className="text-lg font-semibold text-[#e8edf5]">Float Studio</h2>
-            <p className="mt-3 text-sm text-[#7a93b4]">Three blobs drift together in a calm space, with translucent material and slow motion.</p>
+            <h2 className="text-lg font-semibold text-sahara-text">Float Studio</h2>
+            <p className="mt-3 text-sm text-sahara-muted">Three blobs drift together in a calm space, with translucent material and slow motion.</p>
           </div>
           <div className="rounded-3xl border border-[rgba(255,193,5,.15)] bg-[rgba(255,255,255,.04)] p-6 backdrop-blur-xl">
-            <h2 className="text-lg font-semibold text-[#e8edf5]">Relaxing Visuals</h2>
-            <p className="mt-3 text-sm text-[#7a93b4]">Soft lighting, fluid surfaces, and interactive feedback make this a soothing 3D experiment.</p>
+            <h2 className="text-lg font-semibold text-sahara-text">Relaxing Visuals</h2>
+            <p className="mt-3 text-sm text-sahara-muted">Soft lighting, fluid surfaces, and interactive feedback make this a soothing 3D experiment.</p>
           </div>
         </div>
       </div>

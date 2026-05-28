@@ -139,13 +139,13 @@ export default function NeonFlames({ onClose }: NeonFlamesProps) {
   }, []);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#030414] text-[#e8edf5]">
+    <div className="relative min-h-screen overflow-hidden bg-[#030414] text-sahara-text">
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
       {!started && (
         <div className="absolute inset-0 z-20 grid place-items-center bg-[#030414]/95 p-6">
           <div className="max-w-2xl rounded-[32px] border border-white/10 bg-[#020613]/95 p-10 text-center shadow-[0_40px_120px_rgba(0,0,0,.5)] backdrop-blur-xl">
             <p className="mb-4 text-sm uppercase tracking-[0.3em] text-[#8cb9ff]">Neon Flames</p>
-            <h2 className="mb-6 text-4xl font-black uppercase tracking-[0.12em] text-[#e8edf5] sm:text-5xl">
+            <h2 className="mb-6 text-4xl font-black uppercase tracking-[0.12em] text-sahara-text sm:text-5xl">
               Start Painting Your Nebula
             </h2>
             <p className="mb-8 text-base leading-7 text-[#b2c7ff]">
@@ -156,7 +156,7 @@ export default function NeonFlames({ onClose }: NeonFlamesProps) {
                 startedRef.current = true;
                 setStarted(true);
               }}
-              className="rounded-full bg-gradient-to-r from-[#7c4dff] to-[#00d4ff] px-8 py-4 text-base font-semibold uppercase tracking-[0.14em] text-[#080f1c] shadow-[0_20px_50px_rgba(124,77,255,.35)] transition hover:scale-[1.02]"
+              className="rounded-full bg-gradient-to-r from-[#7c4dff] to-[#00d4ff] px-8 py-4 text-base font-semibold uppercase tracking-[0.14em] text-sahara-bg shadow-[0_20px_50px_rgba(124,77,255,.35)] transition hover:scale-[1.02]"
             >
               Start Painting
             </button>
@@ -167,13 +167,13 @@ export default function NeonFlames({ onClose }: NeonFlamesProps) {
         <header className="flex items-center justify-between gap-4 rounded-3xl border border-white/10 bg-black/20 px-5 py-4 backdrop-blur-xl shadow-[0_20px_80px_rgba(0,0,0,.35)]">
           <div>
             <p className="text-sm uppercase tracking-[0.24em] text-[#8cb9ff]">Neon Flames</p>
-            <h1 className="mt-2 text-3xl font-black uppercase tracking-[0.12em] text-[#e8edf5] sm:text-4xl">
+            <h1 className="mt-2 text-3xl font-black uppercase tracking-[0.12em] text-sahara-text sm:text-4xl">
               Paint your own nebula
             </h1>
           </div>
           <button
             onClick={onClose}
-            className="rounded-full border border-[#ffffff33] bg-[#080f1c]/80 px-5 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-[#ffc105] transition hover:border-[#ffc105] hover:bg-[#111826]"
+            className="rounded-full border border-[#ffffff33] bg-sahara-bg/80 px-5 py-3 text-sm font-semibold uppercase tracking-[0.14em] text-sahara-gold transition hover:border-[#ffc105] hover:bg-[#111826]"
           >
             Exit
           </button>

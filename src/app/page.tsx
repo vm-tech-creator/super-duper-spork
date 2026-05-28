@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -20,6 +19,8 @@ import {
   Layers,
 } from 'lucide-react';
 import GameCard from '@/components/GameCard';
+import { getPageThemeStyles } from '@/lib/themeStyles';
+import { useTheme } from '@/context/ThemeContext';
 
 /** Comprehensive video collection with different categories */
 const VIDEOS_DATA = [
@@ -551,6 +552,7 @@ export default function Home() {
   const [mobileNav, setMobileNav] = useState(false);
   const [siteMode, setSiteMode] = useState<'classic' | 'fantasy' | 'learning' | 'fun' | 'creative' | 'relax' | 'challenge' | 'adventure'>('classic');
   const [activeCategory, setActiveCategory] = useState('All');
+  const { audience, theme, lightDark } = useTheme();
 
   const getFilteredSpotlightVideos = () => {
     const modeFilters: Record<typeof siteMode, string[]> = {
@@ -578,25 +580,17 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const rootBg: Record<typeof siteMode, string> = {
-      classic: '#060a12',
-      fantasy: '#120b2f',
-      learning: '#0d1420',
-      fun: '#0d1420',
-      creative: '#0d1420',
-      relax: '#0d1420',
-      challenge: '#0d1420',
-      adventure: '#0d1420',
-    };
-    document.documentElement.style.setProperty('--bg', rootBg[siteMode]);
-  }, [siteMode]);
-
-  useEffect(() => {
     // Particles animation
     const pc = document.getElementById('particles');
     const createdParticles: HTMLDivElement[] = [];
     if (pc) {
-      const colors = ['#ffc105','#497ab6','#2b4c7d','#ffffff'];
+      const root = getComputedStyle(document.documentElement);
+      const colors = [
+        root.getPropertyValue('--gold').trim(),
+        root.getPropertyValue('--secondary').trim(),
+        root.getPropertyValue('--primary').trim(),
+        root.getPropertyValue('--text').trim(),
+      ].filter(Boolean);
       for (let i = 0; i < 14; i++) {
         const p = document.createElement('div');
         p.className = 'particle';
@@ -656,234 +650,25 @@ export default function Home() {
     return () => {
       createdParticles.forEach(p => p.remove());
     };
-  }, []);
+  }, [theme, lightDark]);
 
-  const getModeStyles = () => {
-    const bases: Record<typeof siteMode, {
-      accentColor: string;
-      textPrimary: string;
-      textSecondary: string;
-      cardBg: string;
-      borderColor: string;
-      glow: string;
-      viewportBg: string;
-      contentShell: string;
-      meshBlob1: string;
-      meshBlob2: string;
-      sectionCategories: string;
-      sectionVideos: string;
-      sectionWhy: string;
-      sectionFooter: string;
-      modeIcon: string;
-      modeDescription: string;
-      primaryAction: string;
-      secondaryAction: string;
-    }> = {
-      classic: {
-        accentColor: '#ffc105',
-        textPrimary: '#e8edf5',
-        textSecondary: '#7a93b4',
-        cardBg: '#101e34',
-        borderColor: 'rgba(73,122,182,.2)',
-        glow: 'rgba(255,193,5,.4)',
-        viewportBg: `
-          radial-gradient(ellipse 100% 80% at 50% -20%, rgba(73, 122, 182, 0.28) 0%, transparent 55%),
-          radial-gradient(ellipse 60% 50% at 100% 50%, rgba(43, 76, 125, 0.35) 0%, transparent 50%),
-          radial-gradient(ellipse 50% 40% at 0% 80%, rgba(255, 193, 5, 0.08) 0%, transparent 45%),
-          linear-gradient(180deg, #060a12 0%, #0a1422 40%, #0c1829 100%)
-        `,
-        contentShell: '',
-        meshBlob1: 'radial-gradient(circle, rgba(255,193,5,0.35) 0%, transparent 65%)',
-        meshBlob2: 'radial-gradient(circle, rgba(73,122,182,0.45) 0%, transparent 65%)',
-        sectionCategories: 'border-t border-[#88a9d8]/10 bg-[#0a1422]',
-        sectionVideos: 'bg-[#080f1c]',
-        sectionWhy: 'border-t border-[#88a9d8]/10 bg-gradient-to-b from-[#0a1422] to-[#060a12]',
-        sectionFooter: 'border-t border-[#88a9d8]/10 bg-[#050810]',
-        modeIcon: '🎯',
-        modeDescription: 'Balanced experience with all content types',
-        primaryAction: 'Explore All',
-        secondaryAction: 'Watch Videos',
-      },
-      learning: {
-        accentColor: '#4ade80',
-        textPrimary: '#f0fdf4',
-        textSecondary: '#86efac',
-        cardBg: '#0f5132',
-        borderColor: 'rgba(74,222,128,.3)',
-        glow: 'rgba(74,222,128,.4)',
-        viewportBg: `
-          radial-gradient(ellipse 100% 80% at 50% -20%, rgba(34, 197, 94, 0.25) 0%, transparent 55%),
-          radial-gradient(ellipse 60% 50% at 100% 50%, rgba(22, 163, 74, 0.3) 0%, transparent 50%),
-          radial-gradient(ellipse 50% 40% at 0% 80%, rgba(74, 222, 128, 0.12) 0%, transparent 45%),
-          linear-gradient(180deg, #0a2e1a 0%, #0f3e2a 40%, #0f5132 100%)
-        `,
-        contentShell: '',
-        meshBlob1: 'radial-gradient(circle, rgba(74,222,128,0.35) 0%, transparent 65%)',
-        meshBlob2: 'radial-gradient(circle, rgba(34,197,94,0.4) 0%, transparent 65%)',
-        sectionCategories: 'border-t border-green-400/20 bg-[#0f3e2a]',
-        sectionVideos: 'bg-[#0a2e1a]',
-        sectionWhy: 'border-t border-green-400/20 bg-gradient-to-b from-[#0f3e2a] to-[#0a2e1a]',
-        sectionFooter: 'border-t border-green-400/20 bg-[#052e16]',
-        modeIcon: '📚',
-        modeDescription: 'Educational content, quizzes, and learning games',
-        primaryAction: 'Start Learning',
-        secondaryAction: 'Take Quiz',
-      },
-      fun: {
-        accentColor: '#f59e0b',
-        textPrimary: '#fffbeb',
-        textSecondary: '#fcd34d',
-        cardBg: '#451a03',
-        borderColor: 'rgba(245,158,11,.3)',
-        glow: 'rgba(245,158,11,.5)',
-        viewportBg: `
-          radial-gradient(ellipse 100% 80% at 50% -20%, rgba(245, 158, 11, 0.3) 0%, transparent 55%),
-          radial-gradient(ellipse 60% 50% at 100% 50%, rgba(217, 119, 6, 0.35) 0%, transparent 50%),
-          radial-gradient(ellipse 50% 40% at 0% 80%, rgba(245, 158, 11, 0.15) 0%, transparent 45%),
-          linear-gradient(180deg, #2d1b06 0%, #451a03 40%, #78350f 100%)
-        `,
-        contentShell: '',
-        meshBlob1: 'radial-gradient(circle, rgba(245,158,11,0.4) 0%, transparent 65%)',
-        meshBlob2: 'radial-gradient(circle, rgba(217,119,6,0.45) 0%, transparent 65%)',
-        sectionCategories: 'border-t border-amber-400/20 bg-[#451a03]',
-        sectionVideos: 'bg-[#2d1b06]',
-        sectionWhy: 'border-t border-amber-400/20 bg-gradient-to-b from-[#451a03] to-[#2d1b06]',
-        sectionFooter: 'border-t border-amber-400/20 bg-[#1c0f04]',
-        modeIcon: '🎉',
-        modeDescription: 'Games, jokes, and silly entertainment',
-        primaryAction: 'Play Games',
-        secondaryAction: 'Watch Comedy',
-      },
-      creative: {
-        accentColor: '#a855f7',
-        textPrimary: '#faf5ff',
-        textSecondary: '#c4b5fd',
-        cardBg: '#2e1065',
-        borderColor: 'rgba(168,85,247,.3)',
-        glow: 'rgba(168,85,247,.4)',
-        viewportBg: `
-          radial-gradient(ellipse 100% 80% at 50% -20%, rgba(168, 85, 247, 0.25) 0%, transparent 55%),
-          radial-gradient(ellipse 60% 50% at 100% 50%, rgba(147, 51, 234, 0.3) 0%, transparent 50%),
-          radial-gradient(ellipse 50% 40% at 0% 80%, rgba(168, 85, 247, 0.12) 0%, transparent 45%),
-          linear-gradient(180deg, #1e0a3c 0%, #2e1065 40%, #4c1d95 100%)
-        `,
-        contentShell: '',
-        meshBlob1: 'radial-gradient(circle, rgba(168,85,247,0.35) 0%, transparent 65%)',
-        meshBlob2: 'radial-gradient(circle, rgba(147,51,234,0.4) 0%, transparent 65%)',
-        sectionCategories: 'border-t border-purple-400/20 bg-[#2e1065]',
-        sectionVideos: 'bg-[#1e0a3c]',
-        sectionWhy: 'border-t border-purple-400/20 bg-gradient-to-b from-[#2e1065] to-[#1e0a3c]',
-        sectionFooter: 'border-t border-purple-400/20 bg-[#0f0529]',
-        modeIcon: '🎨',
-        modeDescription: 'Art, music, and creative activities',
-        primaryAction: 'Create Art',
-        secondaryAction: 'Make Music',
-      },
-      fantasy: {
-        accentColor: '#a855f7',
-        textPrimary: '#f8f2ff',
-        textSecondary: '#c4b5fd',
-        cardBg: '#22133c',
-        borderColor: 'rgba(168,85,247,.3)',
-        glow: 'rgba(168,85,247,.45)',
-        viewportBg: `
-          radial-gradient(ellipse 100% 80% at 50% -20%, rgba(168, 85, 247, 0.28) 0%, transparent 55%),
-          radial-gradient(ellipse 60% 50% at 100% 50%, rgba(168, 85, 247, 0.32) 0%, transparent 50%),
-          radial-gradient(ellipse 50% 40% at 0% 80%, rgba(168, 85, 247, 0.12) 0%, transparent 45%),
-          linear-gradient(180deg, #0c0724 0%, #22133c 40%, #5b21b6 100%)
-        `,
-        contentShell: '',
-        meshBlob1: 'radial-gradient(circle, rgba(168,85,247,0.35) 0%, transparent 65%)',
-        meshBlob2: 'radial-gradient(circle, rgba(168,85,247,0.45) 0%, transparent 65%)',
-        sectionCategories: 'border-t border-purple-400/20 bg-[#22133c]',
-        sectionVideos: 'bg-[#120a2d]',
-        sectionWhy: 'border-t border-purple-400/20 bg-gradient-to-b from-[#22133c] to-[#120a2d]',
-        sectionFooter: 'border-t border-purple-400/20 bg-[#090416]',
-        modeIcon: '🧚',
-        modeDescription: 'Mystical stories, magic games, and fantasy escapes',
-        primaryAction: 'Enter the Realm',
-        secondaryAction: 'Explore Magic',
-      },
-      relax: {
-        accentColor: '#06b6d4',
-        textPrimary: '#ecfeff',
-        textSecondary: '#67e8f9',
-        cardBg: '#164e63',
-        borderColor: 'rgba(6,182,212,.3)',
-        glow: 'rgba(6,182,212,.4)',
-        viewportBg: `
-          radial-gradient(ellipse 100% 80% at 50% -20%, rgba(6, 182, 212, 0.2) 0%, transparent 55%),
-          radial-gradient(ellipse 60% 50% at 100% 50%, rgba(2, 132, 199, 0.25) 0%, transparent 50%),
-          radial-gradient(ellipse 50% 40% at 0% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 45%),
-          linear-gradient(180deg, #0c2d36 0%, #164e63 40%, #0891b2 100%)
-        `,
-        contentShell: '',
-        meshBlob1: 'radial-gradient(circle, rgba(6,182,212,0.3) 0%, transparent 65%)',
-        meshBlob2: 'radial-gradient(circle, rgba(2,132,199,0.35) 0%, transparent 65%)',
-        sectionCategories: 'border-t border-cyan-400/20 bg-[#164e63]',
-        sectionVideos: 'bg-[#0c2d36]',
-        sectionWhy: 'border-t border-cyan-400/20 bg-gradient-to-b from-[#164e63] to-[#0c2d36]',
-        sectionFooter: 'border-t border-cyan-400/20 bg-[#042f2e]',
-        modeIcon: '🧘',
-        modeDescription: 'Calming content and peaceful activities',
-        primaryAction: 'Relax Now',
-        secondaryAction: 'Meditate',
-      },
-      challenge: {
-        accentColor: '#ef4444',
-        textPrimary: '#fef2f2',
-        textSecondary: '#fca5a5',
-        cardBg: '#7f1d1d',
-        borderColor: 'rgba(239,68,68,.3)',
-        glow: 'rgba(239,68,68,.4)',
-        viewportBg: `
-          radial-gradient(ellipse 100% 80% at 50% -20%, rgba(239, 68, 68, 0.25) 0%, transparent 55%),
-          radial-gradient(ellipse 60% 50% at 100% 50%, rgba(220, 38, 38, 0.3) 0%, transparent 50%),
-          radial-gradient(ellipse 50% 40% at 0% 80%, rgba(239, 68, 68, 0.12) 0%, transparent 45%),
-          linear-gradient(180deg, #450a0a 0%, #7f1d1d 40%, #dc2626 100%)
-        `,
-        contentShell: '',
-        meshBlob1: 'radial-gradient(circle, rgba(239,68,68,0.35) 0%, transparent 65%)',
-        meshBlob2: 'radial-gradient(circle, rgba(220,38,38,0.4) 0%, transparent 65%)',
-        sectionCategories: 'border-t border-red-400/20 bg-[#7f1d1d]',
-        sectionVideos: 'bg-[#450a0a]',
-        sectionWhy: 'border-t border-red-400/20 bg-gradient-to-b from-[#7f1d1d] to-[#450a0a]',
-        sectionFooter: 'border-t border-red-400/20 bg-[#2a0a0a]',
-        modeIcon: '🏆',
-        modeDescription: 'Puzzles, brain teasers, and difficult challenges',
-        primaryAction: 'Take Challenge',
-        secondaryAction: 'Solve Puzzle',
-      },
-      adventure: {
-        accentColor: '#f97316',
-        textPrimary: '#fff7ed',
-        textSecondary: '#fdba74',
-        cardBg: '#9a3412',
-        borderColor: 'rgba(249,115,22,.3)',
-        glow: 'rgba(249,115,22,.4)',
-        viewportBg: `
-          radial-gradient(ellipse 100% 80% at 50% -20%, rgba(249, 115, 22, 0.25) 0%, transparent 55%),
-          radial-gradient(ellipse 60% 50% at 100% 50%, rgba(234, 88, 12, 0.3) 0%, transparent 50%),
-          radial-gradient(ellipse 50% 40% at 0% 80%, rgba(249, 115, 22, 0.12) 0%, transparent 45%),
-          linear-gradient(180deg, #4c1d0a 0%, #9a3412 40%, #ea580c 100%)
-        `,
-        contentShell: '',
-        meshBlob1: 'radial-gradient(circle, rgba(249,115,22,0.35) 0%, transparent 65%)',
-        meshBlob2: 'radial-gradient(circle, rgba(234,88,12,0.4) 0%, transparent 65%)',
-        sectionCategories: 'border-t border-orange-400/20 bg-[#9a3412]',
-        sectionVideos: 'bg-[#4c1d0a]',
-        sectionWhy: 'border-t border-orange-400/20 bg-gradient-to-b from-[#9a3412] to-[#4c1d0a]',
-        sectionFooter: 'border-t border-orange-400/20 bg-[#2a1206]',
-        modeIcon: '🗺️',
-        modeDescription: 'Stories, role-playing, and adventure games',
-        primaryAction: 'Start Adventure',
-        secondaryAction: 'Tell Story',
-      },
-    };
-    return bases[siteMode] || bases.classic;
+  const baseTheme = getPageThemeStyles();
+
+  const modeMeta: Record<
+    typeof siteMode,
+    { modeIcon: string; modeDescription: string; primaryAction: string; secondaryAction: string }
+  > = {
+    classic: { modeIcon: '🎯', modeDescription: 'Balanced experience with all content types', primaryAction: 'Explore All', secondaryAction: 'Watch Videos' },
+    learning: { modeIcon: '📚', modeDescription: 'Educational content, quizzes, and learning games', primaryAction: 'Start Learning', secondaryAction: 'Take Quiz' },
+    fun: { modeIcon: '🎉', modeDescription: 'Games, jokes, and silly entertainment', primaryAction: 'Play Games', secondaryAction: 'Watch Comedy' },
+    creative: { modeIcon: '🎨', modeDescription: 'Art, music, and creative activities', primaryAction: 'Create Art', secondaryAction: 'Make Music' },
+    fantasy: { modeIcon: '🧚', modeDescription: 'Mystical stories, magic games, and fantasy escapes', primaryAction: 'Enter the Realm', secondaryAction: 'Explore Magic' },
+    relax: { modeIcon: '🧘', modeDescription: 'Calming content and peaceful activities', primaryAction: 'Relax Now', secondaryAction: 'Meditate' },
+    challenge: { modeIcon: '🏆', modeDescription: 'Puzzles, brain teasers, and difficult challenges', primaryAction: 'Take Challenge', secondaryAction: 'Solve Puzzle' },
+    adventure: { modeIcon: '🗺️', modeDescription: 'Stories, role-playing, and adventure games', primaryAction: 'Start Adventure', secondaryAction: 'Tell Story' },
   };
 
-  const modeStyle = getModeStyles();
+  const modeStyle = { ...baseTheme, ...(modeMeta[siteMode] || modeMeta.classic) };
 
   // Filter content based on mode
   const getFilteredCategories = () => {
@@ -960,168 +745,6 @@ export default function Home() {
         className="pointer-events-none fixed inset-0 z-0"
         style={{ background: modeStyle.viewportBg }}
       />
-      <header className="fixed top-0 left-0 right-0 z-[100] px-3 pt-3 sm:px-5 sm:pt-4">
-        <nav
-          className={`mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-2xl border px-3 py-2.5 pl-4 shadow-lg shadow-black/10 transition-[background,border-color,box-shadow] duration-300 sm:px-5 sm:py-3 ${
-            scrolled
-              ? 'border-[#88a9d8]/18 bg-[#080f1c]/88 backdrop-blur-2xl'
-              : 'border-white/[0.07] bg-[#080f1c]/50 backdrop-blur-xl'
-          }`}
-        >
-          <Link href="/" className="flex items-center gap-3 no-underline">
-            <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#ffc105] to-[#d9a004] font-['Bebas_Neue'] text-xl text-[#0a0f18] shadow-[0_4px_20px_rgba(255,193,5,0.22)]">
-              S
-            </div>
-            <div className="leading-tight">
-              <div className="font-['Barlow_Condensed'] text-[0.7rem] font-bold uppercase tracking-[0.2em] text-[#88a9d8]">
-                Supersite
-              </div>
-              <div className="font-['Barlow_Condensed'] text-lg font-extrabold uppercase tracking-wide" style={{ color: modeStyle.textPrimary }}>
-                Sahara
-              </div>
-              <div className="text-[0.65rem] uppercase tracking-[0.18em] text-[#c5d4eb]">
-                {siteMode === 'fantasy' && 'Fantasy Realm'}
-                {siteMode === 'relax' && 'Tranquil Oasis'}
-                {siteMode === 'adventure' && 'Adventure Hub'}
-                {siteMode === 'learning' && 'Learning Portal'}
-                {siteMode === 'fun' && 'Playground'}
-                {siteMode === 'creative' && 'Studio'}
-                {siteMode === 'challenge' && 'Arena'}
-                {siteMode === 'classic' && 'All-in-One Experience'}
-              </div>
-            </div>
-          </Link>
-
-          <ul className="hidden list-none items-center gap-1 md:flex">
-            {[
-              ['Games', '/games'],
-              ['Videos', '/videos'],
-              ['Books', '/books'],
-              ['Music', '/music'],
-              ['Games', '/games'],
-              ['Explore', '#categories'],
-              ['Features', '#why'],
-              ['About', '#about'],
-            ].map(([label, href]) => (
-              <li key={label}>
-                {href.startsWith('/') ? (
-                  <Link
-                    href={href}
-                    className="rounded-lg px-3 py-2 text-sm font-medium text-[#8ba3c4] no-underline transition-colors hover:bg-white/[0.04] hover:text-[#ffc105]"
-                  >
-                    {label}
-                  </Link>
-                ) : (
-                  <a
-                    href={href}
-                    className="rounded-lg px-3 py-2 text-sm font-medium text-[#8ba3c4] no-underline transition-colors hover:bg-white/[0.04] hover:text-[#ffc105]"
-                  >
-                    {label}
-                  </a>
-                )}
-              </li>
-            ))}
-          </ul>
-
-          <div className="flex items-center gap-2 sm:gap-3">
-            <select
-              value={siteMode}
-              onChange={(e) => setSiteMode(e.target.value as typeof siteMode)}
-              aria-label="Experience mode"
-              className={`max-w-[7.5rem] cursor-pointer rounded-xl border py-2 pl-3 pr-8 text-[0.7rem] font-semibold uppercase tracking-wide sm:max-w-none sm:text-xs ${
-                siteMode === 'learning'
-                  ? 'border-[#4ade80]/50 bg-green-900/80 text-[#4ade80]'
-                  : siteMode === 'fun'
-                  ? 'border-[#f59e0b]/50 bg-amber-900/80 text-[#f59e0b]'
-                  : siteMode === 'creative'
-                  ? 'border-[#a855f7]/50 bg-purple-900/80 text-[#a855f7]'
-                  : siteMode === 'fantasy'
-                  ? 'border-[#a855f7]/50 bg-purple-900/80 text-[#a855f7]'
-                  : siteMode === 'relax'
-                  ? 'border-[#06b6d4]/50 bg-cyan-900/80 text-[#06b6d4]'
-                  : siteMode === 'challenge'
-                  ? 'border-[#ef4444]/50 bg-red-900/80 text-[#ef4444]'
-                  : siteMode === 'adventure'
-                  ? 'border-[#f97316]/50 bg-orange-900/80 text-[#f97316]'
-                  : 'border-[#88a9d8]/25 bg-[#0c1829]/90 text-[#e8edf5]'
-              }`}
-            >
-              <option value="classic">🎯 Classic</option>
-              <option value="fantasy">🧚 Fantasy</option>
-              <option value="learning">📚 Learning</option>
-              <option value="fun">🎉 Fun</option>
-              <option value="creative">🎨 Creative</option>
-              <option value="relax">🧘 Relax</option>
-              <option value="challenge">🏆 Challenge</option>
-              <option value="adventure">🗺️ Adventure</option>
-            </select>
-
-            <Link
-              href="/videos"
-              className="hidden items-center gap-2 rounded-xl bg-[#ffc105] px-4 py-2 text-sm font-semibold text-[#0a0f18] no-underline shadow-[0_4px_24px_rgba(255,193,5,0.28)] transition hover:bg-[#ffcf3a] sm:inline-flex"
-            >
-              Watch
-              <ArrowRight className="h-4 w-4" aria-hidden />
-            </Link>
-
-            <button
-              type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-[#88a9d8]/20 bg-white/[0.03] text-[#e8edf5] md:hidden"
-              aria-expanded={mobileNav}
-              aria-label="Menu"
-              onClick={() => setMobileNav((o) => !o)}
-            >
-              {mobileNav ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
-          </div>
-        </nav>
-
-        {mobileNav && (
-          <div className="mx-auto mt-2 max-w-6xl rounded-2xl border border-[#88a9d8]/15 bg-[#080f1c]/95 p-4 shadow-xl backdrop-blur-2xl md:hidden">
-            <ul className="m-0 flex list-none flex-col gap-1 p-0">
-              {[
-                ['Games', '/games'],
-                ['Videos', '/videos'],
-                ['Books', '/books'],
-                ['Music', '/music'],
-                ['Games', '/games'],
-                ['Explore', '#categories'],
-                ['Features', '#why'],
-                ['About', '#about'],
-              ].map(([label, href]) => (
-                <li key={label}>
-                  {href.startsWith('/') ? (
-                    <Link
-                      href={href}
-                      className="block rounded-lg px-3 py-3 text-sm font-medium text-[#c5d4eb] no-underline hover:bg-white/[0.05]"
-                      onClick={() => setMobileNav(false)}
-                    >
-                      {label}
-                    </Link>
-                  ) : (
-                    <a
-                      href={href}
-                      className="block rounded-lg px-3 py-3 text-sm font-medium text-[#c5d4eb] no-underline hover:bg-white/[0.05]"
-                      onClick={() => setMobileNav(false)}
-                    >
-                      {label}
-                    </a>
-                  )}
-                </li>
-              ))}
-              <li>
-                <Link
-                  href="/videos"
-                  className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-[#ffc105] py-3 text-sm font-semibold text-[#0a0f18] no-underline"
-                  onClick={() => setMobileNav(false)}
-                >
-                  Start watching
-                </Link>
-              </li>
-            </ul>
-          </div>
-        )}
-      </header>
       <div
         className={`relative z-10 min-h-screen overflow-x-hidden ${modeStyle.contentShell}`.trim()}
         style={{ color: modeStyle.textPrimary }}
@@ -1181,7 +804,7 @@ export default function Home() {
             <Link
               href={siteMode === 'learning' ? '/games' : siteMode === 'fantasy' ? '/games' : siteMode === 'fun' ? '/videos' : siteMode === 'creative' ? '#categories' : siteMode === 'relax' ? '/videos' : siteMode === 'challenge' ? '/games' : siteMode === 'adventure' ? '/games' : '/videos'}
               className="inline-flex items-center gap-2 rounded-2xl px-7 py-3.5 text-sm font-semibold no-underline shadow-[0_8px_32px_rgba(255,193,5,0.25)] transition hover:-translate-y-0.5"
-              style={{ backgroundColor: modeStyle.accentColor, color: '#0a0f18', boxShadow: `0_8px_32px_${modeStyle.glow}` }}
+              style={{ backgroundColor: modeStyle.accentColor, color: 'var(--bg)', boxShadow: `0_8px_32px_${modeStyle.glow}` }}
             >
               <Play className="h-4 w-4 fill-current" aria-hidden />
               {modeStyle.primaryAction}
@@ -1196,7 +819,7 @@ export default function Home() {
             </a>
           </div>
 
-          <div className="animate-fade-up mx-auto mt-14 grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-0 sm:rounded-3xl sm:border sm:border-[#88a9d8]/12 sm:bg-[#0c1829]/50 sm:px-6 sm:py-8 sm:backdrop-blur-md">
+          <div className="animate-fade-up mx-auto mt-14 grid max-w-3xl grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-0 sm:rounded-3xl sm:border sm:border-sahara-border/12 sm:bg-sahara-bg2/50 sm:px-6 sm:py-8 sm:backdrop-blur-md">
             {[
               ['250', 'Million people'],
               ['10', 'M+ catalog items'],
@@ -1207,10 +830,10 @@ export default function Home() {
                 key={sub}
                 className={`relative text-center ${i > 0 ? 'sm:before:absolute sm:before:left-0 sm:before:top-1/2 sm:before:h-10 sm:before:w-px sm:before:-translate-y-1/2 sm:before:bg-[#88a9d8]/15' : ''}`}
               >
-                <div className="font-['Bebas_Neue'] text-4xl leading-none text-[#ffc105] sm:text-[2.75rem]" data-target={target}>
+                <div className="font-['Bebas_Neue'] text-4xl leading-none text-sahara-gold sm:text-[2.75rem]" data-target={target}>
                   0
                 </div>
-                <div className="mt-1.5 text-[0.65rem] font-medium uppercase tracking-[0.12em] text-[#8ba3c4]">{sub}</div>
+                <div className="mt-1.5 text-[0.65rem] font-medium uppercase tracking-[0.12em] text-sahara-muted">{sub}</div>
               </div>
             ))}
           </div>
@@ -1261,9 +884,9 @@ export default function Home() {
               const inner = (
                 <>
                   <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-                    <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom right, ${modeStyle.accentColor}15, transparent)` }} />
+                    <div className="absolute inset-0" style={{ background: `linear-gradient(to bottom right, color-mix(in srgb, ${modeStyle.accentColor} 12%, transparent), transparent)` }} />
                   </div>
-                  <div className="relative z-10 mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-[#0c1829]/80 shadow-inner" style={{ borderColor: modeStyle.borderColor, color: modeStyle.accentColor }}>
+                  <div className="relative z-10 mb-5 flex h-12 w-12 items-center justify-center rounded-2xl bg-sahara-bg2/80 shadow-inner" style={{ borderColor: modeStyle.borderColor, color: modeStyle.accentColor }}>
                     <Icon className="h-6 w-6" strokeWidth={1.75} aria-hidden />
                   </div>
                   <h3 className="relative z-10 font-['Barlow_Condensed'] text-xl font-bold uppercase tracking-wide" style={{ color: modeStyle.textPrimary }}>
@@ -1277,7 +900,7 @@ export default function Home() {
                   </div>
                 </>
               );
-              const cardClass = `group reveal relative overflow-hidden rounded-2xl bg-[#0c1829]/70 p-8 pb-7 shadow-[0_4px_40px_rgba(0,0,0,0.2)] backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.35)]`;
+              const cardClass = `group reveal relative overflow-hidden rounded-2xl bg-sahara-bg2/70 p-8 pb-7 shadow-[0_4px_40px_rgba(0,0,0,0.2)] backdrop-blur-sm transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgba(0,0,0,0.35)]`;
               return cat.href.startsWith('/') ? (
                 <Link key={cat.title} href={cat.href} className={`${cardClass} block no-underline`} style={{ borderColor: modeStyle.borderColor, backgroundColor: modeStyle.cardBg }}>
                   {inner}
@@ -1347,7 +970,7 @@ export default function Home() {
           <div className="reveal mt-12 text-center">
             <Link
               href="/games"
-              className="inline-flex items-center gap-2 rounded-xl bg-[#ffc105] px-8 py-4 text-sm font-semibold text-[#0a0f18] no-underline shadow-[0_4px_24px_rgba(255,193,5,0.28)] transition hover:bg-[#ffcf3a] hover:-translate-y-0.5"
+              className="inline-flex items-center gap-2 rounded-xl bg-sahara-gold px-8 py-4 text-sm font-semibold text-sahara-bg no-underline shadow-[0_4px_24px_rgba(255,193,5,0.28)] transition hover:opacity-90 hover:-translate-y-0.5"
             >
               View All Games
               <ArrowRight className="h-4 w-4" aria-hidden />
@@ -1406,7 +1029,7 @@ export default function Home() {
                 className={`rounded-full px-4 py-2 text-xs font-semibold transition ${
                   activeCategory === category
                     ? 'shadow-[0_4px_20px_rgba(255,193,5,0.2)]'
-                    : 'border bg-[#0c1829]/50 hover:text-[#e8edf5]'
+                    : 'border bg-sahara-bg2/50 hover:text-sahara-text'
                 }`}
                 style={{
                   backgroundColor: activeCategory === category ? modeStyle.accentColor : undefined,
@@ -1421,7 +1044,7 @@ export default function Home() {
 
           {/* Videos Grid with Player Boxes */}
           {visibleSpotlightVideos.length === 0 ? (
-            <p className="reveal text-sm text-[#8ba3c4]">Nothing in this filter—pick &quot;All&quot; or another vibe.</p>
+            <p className="reveal text-sm text-sahara-muted">Nothing in this filter—pick &quot;All&quot; or another vibe.</p>
           ) : (
           <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
             {visibleSpotlightVideos.map((video, idx) => {
@@ -1435,19 +1058,19 @@ export default function Home() {
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="text-center">
                           <div className="text-6xl mb-4 group-hover:scale-150 transition-transform duration-500">▶️</div>
-                          <p className="text-[#ffc105] font-black text-sm">CLICK TO PLAY</p>
+                          <p className="text-sahara-gold font-black text-sm">CLICK TO PLAY</p>
                         </div>
                       </div>
-                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#ffc105] to-[#497ab6] group-hover:h-2 transition-all duration-300"></div>
+                      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-sahara-gold to-[#497ab6] group-hover:h-2 transition-all duration-300"></div>
                     </div>
-                    <div className="absolute top-4 right-4 bg-[rgba(0,0,0,.7)] border border-[#ffc105] px-3 py-1.5 rounded-full text-[.7rem] font-bold uppercase text-[#ffc105]">
+                    <div className="absolute top-4 right-4 rounded-full border border-sahara-gold bg-[color-mix(in_srgb,var(--bg)_70%,transparent)] px-3 py-1.5 text-[.7rem] font-bold uppercase text-sahara-gold">
                       {video.duration}s
                     </div>
-                    <div className="bg-gradient-to-b from-[#101e34] to-[#0d1a2e] border-2 border-t-0 border-[#ffc105] p-5 rounded-b-2xl">
-                      <h3 className="text-[#ffc105] font-black text-[1rem] mb-2 line-clamp-2">{video.title}</h3>
+                    <div className="rounded-b-2xl border-2 border-t-0 border-sahara-gold bg-gradient-to-b from-sahara-bg2 to-sahara-bg p-5">
+                      <h3 className="text-sahara-gold font-black text-[1rem] mb-2 line-clamp-2">{video.title}</h3>
                       <div className="flex items-center justify-between">
-                        <p className="text-[#7a93b4] text-[.8rem]">{video.creator}</p>
-                        <span className="text-[#ffc105] font-bold drop-shadow-[0_0_8px_rgba(255,193,5,.5)]">⭐ {video.views}</span>
+                        <p className="text-sahara-muted text-[.8rem]">{video.creator}</p>
+                        <span className="text-sahara-gold font-bold drop-shadow-[0_0_8px_rgba(255,193,5,.5)]">⭐ {video.views}</span>
                       </div>
                     </div>
                   </div>
@@ -1460,7 +1083,7 @@ export default function Home() {
           <div className="reveal mt-16 text-center">
             <Link
               href="/videos"
-              className="inline-flex items-center gap-2 rounded-2xl bg-[#ffc105] px-10 py-3.5 text-sm font-semibold text-[#0a0f18] no-underline shadow-[0_8px_28px_rgba(255,193,5,0.22)] transition hover:-translate-y-0.5 hover:bg-[#ffcf3a]"
+              className="inline-flex items-center gap-2 rounded-2xl bg-sahara-gold px-10 py-3.5 text-sm font-semibold text-sahara-bg no-underline shadow-[0_8px_28px_rgba(255,193,5,0.22)] transition hover:-translate-y-0.5 hover:opacity-90"
             >
               Open LaughTube
               <ArrowRight className="h-4 w-4" aria-hidden />
@@ -1472,11 +1095,11 @@ export default function Home() {
       <section className={`px-[5%] py-24 ${modeStyle.sectionWhy}`} id="why">
         <div className="mx-auto max-w-6xl">
           <div className="reveal mb-14 text-center">
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#88a9d8]">Why Sahara</p>
-            <h2 className="font-['Bebas_Neue'] text-[clamp(2.25rem,4.5vw,3.25rem)] tracking-wide text-[#f0f4fa]">
-              Built to feel fast<span className="text-[#ffc105]">.</span>
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-sahara-secondary">Why Sahara</p>
+            <h2 className="font-['Bebas_Neue'] text-[clamp(2.25rem,4.5vw,3.25rem)] tracking-wide text-sahara-text">
+              Built to feel fast<span className="text-sahara-gold">.</span>
             </h2>
-            <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-[#8ba3c4] sm:text-base">
+            <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-sahara-muted sm:text-base">
               Motion and color support the content—nothing screams for attention unless you ask it to.
             </p>
           </div>
@@ -1516,13 +1139,13 @@ export default function Home() {
             ].map(({ icon: Icon, title, body }) => (
               <div
                 key={title}
-                className="reveal group rounded-2xl border border-[#88a9d8]/10 bg-[#0c1829]/55 p-6 shadow-[0_4px_32px_rgba(0,0,0,0.12)] backdrop-blur-sm transition duration-300 hover:border-[#88a9d8]/22 hover:shadow-[0_12px_40px_rgba(0,0,0,0.2)]"
+                className="reveal group rounded-2xl border border-sahara-border/10 bg-sahara-bg2/55 p-6 shadow-[0_4px_32px_rgba(0,0,0,0.12)] backdrop-blur-sm transition duration-300 hover:border-sahara-border/22 hover:shadow-[0_12px_40px_rgba(0,0,0,0.2)]"
               >
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-[#88a9d8]/12 bg-[#080f1c]/60 text-[#ffc105] transition group-hover:border-[#ffc105]/25">
+                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-sahara-border/12 bg-sahara-bg/60 text-sahara-gold transition group-hover:border-[#ffc105]/25">
                   <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
                 </div>
-                <h3 className="text-base font-semibold text-[#f0f4fa]">{title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-[#8ba3c4]">{body}</p>
+                <h3 className="text-base font-semibold text-sahara-text">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-sahara-muted">{body}</p>
               </div>
             ))}
           </div>
@@ -1532,11 +1155,11 @@ export default function Home() {
       <section className="px-[5%] py-24" id="about">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-center">
           <div className="reveal">
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#88a9d8]">About</p>
-            <h2 className="font-['Bebas_Neue'] text-[clamp(2rem,4vw,2.75rem)] leading-none tracking-wide text-[#f0f4fa]">
-              A supersite for curious people<span className="text-[#ffc105]">.</span>
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-sahara-secondary">About</p>
+            <h2 className="font-['Bebas_Neue'] text-[clamp(2rem,4vw,2.75rem)] leading-none tracking-wide text-sahara-text">
+              A supersite for curious people<span className="text-sahara-gold">.</span>
             </h2>
-            <p className="mt-5 text-sm leading-relaxed text-[#8ba3c4] sm:text-base">
+            <p className="mt-5 text-sm leading-relaxed text-sahara-muted sm:text-base">
               Sahara is a demo front door: rich landing, curated video hub, and room to grow. The palette stays anchored in
               deep blue (#2b4c7d), mid blue (#497ab6), soft blue (#88a9d8), and warm gold (#ffc105)—professional enough for
               classrooms, warm enough for home.
@@ -1544,28 +1167,28 @@ export default function Home() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/videos"
-                className="inline-flex items-center gap-2 rounded-2xl bg-[#ffc105] px-6 py-3 text-sm font-semibold text-[#0a0f18] no-underline transition hover:bg-[#ffcf3a]"
+                className="inline-flex items-center gap-2 rounded-2xl bg-sahara-gold px-6 py-3 text-sm font-semibold text-sahara-bg no-underline transition hover:opacity-90"
               >
                 Try LaughTube
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
               <a
                 href="#categories"
-                className="inline-flex items-center rounded-2xl border border-[#88a9d8]/20 px-6 py-3 text-sm font-semibold text-[#e8edf5] no-underline transition hover:border-[#88a9d8]/40"
+                className="inline-flex items-center rounded-2xl border border-sahara-border/20 px-6 py-3 text-sm font-semibold text-sahara-text no-underline transition hover:border-sahara-border/40"
               >
                 Back to spaces
               </a>
             </div>
           </div>
-          <div className="reveal relative overflow-hidden rounded-3xl border border-[#88a9d8]/12 bg-[#0c1829]/70 p-8 shadow-[0_24px_60px_rgba(0,0,0,0.25)] backdrop-blur-md">
+          <div className="reveal relative overflow-hidden rounded-3xl border border-sahara-border/12 bg-sahara-bg2/70 p-8 shadow-[0_24px_60px_rgba(0,0,0,0.25)] backdrop-blur-md">
             <div
               className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full opacity-50 blur-3xl"
               style={{ background: 'radial-gradient(circle, rgba(255,193,5,0.35), transparent 70%)' }}
             />
-            <blockquote className="relative text-lg font-medium leading-relaxed text-[#e8edf5]">
+            <blockquote className="relative text-lg font-medium leading-relaxed text-sahara-text">
               “Good design disappears. You notice the content, the joke, the lesson—not the chrome around it.”
             </blockquote>
-            <p className="relative mt-6 text-sm text-[#8ba3c4]">— The whole point of this refresh</p>
+            <p className="relative mt-6 text-sm text-sahara-muted">— The whole point of this refresh</p>
           </div>
         </div>
       </section>
@@ -1574,54 +1197,54 @@ export default function Home() {
         <div className="mx-auto flex max-w-6xl flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <span className="grid h-9 w-9 place-items-center rounded-lg bg-[#ffc105] font-['Bebas_Neue'] text-lg text-[#0a0f18]">
+              <span className="grid h-9 w-9 place-items-center rounded-lg bg-sahara-gold font-['Bebas_Neue'] text-lg text-sahara-bg">
                 S
               </span>
-              <span className="font-['Barlow_Condensed'] text-lg font-bold uppercase tracking-wide text-[#f0f4fa]">
+              <span className="font-['Barlow_Condensed'] text-lg font-bold uppercase tracking-wide text-sahara-text">
                 Sahara
               </span>
             </div>
-            <p className="mt-3 max-w-xs text-sm leading-relaxed text-[#8ba3c4]">
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-sahara-muted">
               Explore. Learn. Laugh. One modern surface—no visual noise required.
             </p>
           </div>
           <div className="flex flex-wrap gap-10 text-sm">
             <div>
-              <p className="mb-3 font-semibold text-[#f0f4fa]">Explore</p>
+              <p className="mb-3 font-semibold text-sahara-text">Explore</p>
               <ul className="m-0 flex list-none flex-col gap-2 p-0">
                 <li>
-                  <Link href="/videos" className="text-[#8ba3c4] no-underline hover:text-[#ffc105]">
+                  <Link href="/videos" className="text-sahara-muted no-underline hover:text-sahara-gold">
                     Videos
                   </Link>
                 </li>
                 <li>
-                  <a href="#categories" className="text-[#8ba3c4] no-underline hover:text-[#ffc105]">
+                  <a href="#categories" className="text-sahara-muted no-underline hover:text-sahara-gold">
                     Categories
                   </a>
                 </li>
                 <li>
-                  <a href="#why" className="text-[#8ba3c4] no-underline hover:text-[#ffc105]">
+                  <a href="#why" className="text-sahara-muted no-underline hover:text-sahara-gold">
                     Features
                   </a>
                 </li>
               </ul>
             </div>
             <div>
-              <p className="mb-3 font-semibold text-[#f0f4fa]">Project</p>
+              <p className="mb-3 font-semibold text-sahara-text">Project</p>
               <ul className="m-0 flex list-none flex-col gap-2 p-0">
                 <li>
-                  <a href="#about" className="text-[#8ba3c4] no-underline hover:text-[#ffc105]">
+                  <a href="#about" className="text-sahara-muted no-underline hover:text-sahara-gold">
                     About
                   </a>
                 </li>
                 <li>
-                  <span className="text-[#5c6d8a]">Sign in — coming soon</span>
+                  <span className="text-sahara-muted">Sign in — coming soon</span>
                 </li>
               </ul>
             </div>
           </div>
         </div>
-        <p className="mx-auto mt-12 max-w-6xl border-t border-[#88a9d8]/10 pt-8 text-center text-xs text-[#5c6d8a]">
+        <p className="mx-auto mt-12 max-w-6xl border-t border-sahara-border/10 pt-8 text-center text-xs text-sahara-muted">
           © {new Date().getFullYear()} Sahara demo · Crafted for clarity
         </p>
       </footer>

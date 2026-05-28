@@ -238,23 +238,23 @@ export default function ElonFortune({ onClose }: { onClose: () => void }) {
   }, []);
 
   return (
-    <div className="relative w-full h-screen bg-[#080f1c]">
+    <div className="relative w-full h-screen bg-sahara-bg">
       <div ref={containerRef} className="w-full h-full" />
 
       {/* Header overlay */}
       <div className="absolute top-0 left-0 right-0 border-b border-[rgba(73,122,182,.2)] px-6 py-4 flex items-center justify-between bg-gradient-to-r from-[rgba(255,193,5,.1)] to-[rgba(73,122,182,.1)]">
         <div>
-          <h1 className="text-[#ffc105] font-bold text-2xl">💰 Elon Musk's Fortune</h1>
-          <p className="text-[#497ab6] text-sm">Try to spend $250 billion on ridiculous items!</p>
+          <h1 className="text-sahara-gold font-bold text-2xl">💰 Elon Musk's Fortune</h1>
+          <p className="text-sahara-secondary text-sm">Try to spend $250 billion on ridiculous items!</p>
         </div>
         <Link href="/games">
-          <button className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a]">
+          <button className="bg-sahara-gold text-sahara-bg border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:opacity-90">
             ← Back to Games
           </button>
         </Link>
       </div>
 
-      <div className="absolute top-24 left-0 right-0 bottom-0 text-center text-[#7a93b4] flex items-center justify-center">
+      <div className="absolute top-24 left-0 right-0 bottom-0 text-center text-sahara-muted flex items-center justify-center">
         <p className="text-sm">Click items to purchase them</p>
       </div>
     </div>

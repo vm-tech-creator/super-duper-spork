@@ -289,17 +289,17 @@ export default function MusicQuiz({ onClose }: { onClose: () => void }) {
   }, [currentQuestion, showResult, scores]);
 
   return (
-    <div className="relative w-full h-screen bg-gradient-to-br from-[#0d1a2e] to-[#080f1c]">
+    <div className="relative w-full h-screen bg-gradient-to-br from-[#0d1a2e] to-sahara-bg">
       <div ref={containerRef} className="w-full h-full" />
 
       {/* Back button overlay */}
       <Link href="/games">
-        <button className="absolute top-4 right-4 bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a]">
+        <button className="absolute top-4 right-4 bg-sahara-gold text-sahara-bg border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:opacity-90">
           ← Back
         </button>
       </Link>
 
-      <div className="absolute bottom-4 left-4 text-[#7a93b4] text-sm">
+      <div className="absolute bottom-4 left-4 text-sahara-muted text-sm">
         <p>Click on answers to proceed...</p>
       </div>
     </div>

@@ -37,53 +37,53 @@ export default function GameCard({
 
   return (
     <div
-      className="relative group cursor-pointer overflow-hidden rounded-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[rgba(255,193,5,.3)] h-full"
+      className="group relative h-full cursor-pointer overflow-hidden rounded-lg transition-all duration-300 hover:shadow-2xl hover:shadow-[color-mix(in_srgb,var(--gold)_35%,transparent)]"
       onClick={handleCardClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Background Image */}
-      <div className="relative h-72 w-full overflow-hidden bg-gradient-to-br from-[#1a2f5c] to-[#080f1c]">
+      <div className="relative h-72 w-full overflow-hidden bg-gradient-to-br from-[var(--bg3)] to-[var(--bg)]">
         <img
           src={imageUrl}
           alt={title}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
         />
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#080f1c] via-[rgba(8,15,28,.4)] to-transparent transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-[color-mix(in_srgb,var(--bg)_40%,transparent)] to-transparent transition-opacity duration-300" />
       </div>
 
       {/* Content */}
-      <div className="relative space-y-3 border border-t-0 border-[rgba(73,122,182,.2)] bg-[rgba(8,15,28,.95)] p-5 backdrop-blur-sm">
+      <div className="relative space-y-3 border border-t-0 border-[var(--border)] bg-[var(--surface-elevated)] p-5 backdrop-blur-sm">
         {/* Genre Badge */}
         <div className="flex items-center gap-2">
-          <span className="inline-block rounded-full bg-[rgba(255,193,5,.15)] px-3 py-1 text-xs font-semibold uppercase tracking-[.05em] text-[#ffc105]">
+          <span className="inline-block rounded-full bg-[color-mix(in_srgb,var(--gold)_15%,transparent)] px-3 py-1 text-xs font-semibold uppercase tracking-[.05em] text-[var(--gold)]">
             {genre}
           </span>
-          <span className="flex items-center gap-1 text-sm text-[#ffc105]">
+          <span className="flex items-center gap-1 text-sm text-[var(--gold)]">
             ★ {rating.toFixed(1)}
           </span>
         </div>
 
         {/* Title */}
-        <h3 className="font-['Barlow_Condensed'] text-xl font-black uppercase tracking-[.04em] text-[#e8edf5] line-clamp-2">
+        <h3 className="line-clamp-2 font-['Barlow_Condensed'] text-xl font-black uppercase tracking-[.04em] text-[var(--text)]">
           {title}
         </h3>
 
         {/* Description */}
-        <p className="text-sm leading-relaxed text-[#7a93b4] line-clamp-2">
+        <p className="line-clamp-2 text-sm leading-relaxed text-[var(--muted)]">
           {description}
         </p>
 
         {/* Meta Info */}
-        <div className="flex items-center justify-between text-xs text-[#497ab6]">
+        <div className="flex items-center justify-between text-xs text-[var(--secondary)]">
           <span>👥 {players}</span>
           <span>📅 {releaseDate}</span>
         </div>
 
         {/* Play Button */}
         <button
-          className="w-full bg-gradient-to-r from-[#ffc105] to-[#e0a800] text-[#080f1c] border-none px-4 py-3 rounded font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] text-sm transition-all duration-300 hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] hover:translate-y-[-2px] cursor-pointer active:translate-y-0 mt-2"
+          className="mt-2 w-full cursor-pointer rounded border-none bg-gradient-to-r from-[var(--gold)] to-[var(--gold-dim)] px-4 py-3 font-['Barlow_Condensed'] text-sm font-bold uppercase tracking-[.08em] text-[var(--bg)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_6px_24px_color-mix(in_srgb,var(--gold)_40%,transparent)] active:translate-y-0"
         >
           Play Now
         </button>
@@ -91,7 +91,7 @@ export default function GameCard({
 
       {/* Border Glow on Hover */}
       {isHovered && (
-        <div className="pointer-events-none absolute inset-0 rounded-lg border border-[#ffc105] opacity-50" />
+        <div className="pointer-events-none absolute inset-0 rounded-lg border border-[var(--gold)] opacity-50" />
       )}
     </div>
   );
