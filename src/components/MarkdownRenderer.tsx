@@ -24,19 +24,19 @@ export default function MarkdownRenderer({ content, currentPage, pages }: Markdo
       // Headers
       if (paraText.startsWith('# ')) {
         elements.push(
-          <h2 key={elements.length} className="text-2xl font-bold mt-6 mb-4 text-gray-900 font-serif">
+          <h2 key={elements.length} className="text-2xl font-bebas-neue font-bold mt-6 mb-4 text-gray-900 font-serif">
             {paraText.replace('# ', '')}
           </h2>
         );
       } else if (paraText.startsWith('## ')) {
         elements.push(
-          <h3 key={elements.length} className="text-xl font-bold mt-5 mb-3 text-gray-800 font-serif">
+          <h3 key={elements.length} className="text-xl font-bebas-neue font-bold mt-5 mb-3 text-gray-800 font-serif">
             {paraText.replace('## ', '')}
           </h3>
         );
       } else if (paraText.startsWith('### ')) {
         elements.push(
-          <h4 key={elements.length} className="text-lg font-semibold mt-4 mb-2 text-gray-800 font-serif">
+          <h4 key={elements.length} className="text-lg font-barlow font-semibold mt-4 mb-2 text-gray-800 font-serif">
             {paraText.replace('### ', '')}
           </h4>
         );
@@ -67,9 +67,9 @@ export default function MarkdownRenderer({ content, currentPage, pages }: Markdo
       } else if (paraText.trim().length > 0) {
         // Regular paragraph with formatting
         let formatted = paraText
-          .replace(/\*\*(.+?)\*\*/g, '<strong class="font-bold">$1</strong>')
+          .replace(/\*\*(.+?)\*\*/g, '<strong class="font-barlow font-bold">$1</strong>')
           .replace(/\*(.+?)\*/g, '<em class="italic">$1</em>')
-          .replace(/__(.+?)__/g, '<strong class="font-bold">$1</strong>')
+          .replace(/__(.+?)__/g, '<strong class="font-barlow font-bold">$1</strong>')
           .replace(/_(.+?)_/g, '<em class="italic">$1</em>')
           .replace(/`(.+?)`/g, '<code class="bg-gray-200 px-1.5 py-0.5 rounded text-gray-800 font-mono text-xs">$1</code>');
 

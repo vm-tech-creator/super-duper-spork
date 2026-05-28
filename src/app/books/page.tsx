@@ -153,57 +153,57 @@ export default function BooksPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-12">
           <button
             onClick={() => setSelectedCategory('all')}
-            className={`p-6 rounded-lg font-semibold text-white transition-all duration-300 ${
+            className={`p-6 rounded-lg font-barlow font-semibold text-white transition-all duration-300 ${
               selectedCategory === 'all'
                 ? 'bg-gray-600 shadow-lg scale-105'
                 : 'bg-gray-700 hover:bg-gray-600'
             }`}
           >
-            <div className="text-3xl font-bold">{books.length}</div>
-            <div className="text-sm opacity-90">Total Books</div>
+            <div className="text-3xl font-bebas-neue font-bold">{books.length}</div>
+            <div className="text-sm opacity-90 font-barlow">Total Books</div>
           </button>
 
           <button
             onClick={() => setSelectedCategory('preteen')}
-            className={`p-6 rounded-lg font-semibold text-blue-900 transition-all duration-300 bg-gradient-to-br ${
+            className={`p-6 rounded-lg font-barlow font-semibold text-blue-900 transition-all duration-300 bg-gradient-to-br ${
               selectedCategory === 'preteen' ? categoryColors.preteen + ' shadow-lg scale-105' : 'from-blue-300 to-cyan-200'
             }`}
           >
-            <div className="text-3xl font-bold">{stats.preteen}</div>
-            <div className="text-sm opacity-90">Preteen</div>
+            <div className="text-3xl font-bebas-neue font-bold">{stats.preteen}</div>
+            <div className="text-sm opacity-90 font-barlow">Preteen</div>
           </button>
 
           <button
             onClick={() => setSelectedCategory('teen')}
-            className={`p-6 rounded-lg font-semibold text-purple-900 transition-all duration-300 bg-gradient-to-br ${
+            className={`p-6 rounded-lg font-barlow font-semibold text-purple-900 transition-all duration-300 bg-gradient-to-br ${
               selectedCategory === 'teen' ? categoryColors.teen + ' shadow-lg scale-105' : 'from-purple-300 to-pink-200'
             }`}
           >
-            <div className="text-3xl font-bold">{stats.teen}</div>
-            <div className="text-sm opacity-90">Teen</div>
+            <div className="text-3xl font-bebas-neue font-bold">{stats.teen}</div>
+            <div className="text-sm opacity-90 font-barlow">Teen</div>
           </button>
 
           <button
             onClick={() => setSelectedCategory('adult')}
-            className={`p-6 rounded-lg font-semibold text-amber-900 transition-all duration-300 bg-gradient-to-br ${
+            className={`p-6 rounded-lg font-barlow font-semibold text-amber-900 transition-all duration-300 bg-gradient-to-br ${
               selectedCategory === 'adult' ? categoryColors.adult + ' shadow-lg scale-105' : 'from-amber-300 to-orange-200'
             }`}
           >
-            <div className="text-3xl font-bold">{stats.adult}</div>
-            <div className="text-sm opacity-90">Adult</div>
+            <div className="text-3xl font-bebas-neue font-bold">{stats.adult}</div>
+            <div className="text-sm opacity-90 font-barlow">Adult</div>
           </button>
 
           <button
             onClick={() => setSelectedCategory('bookmarked')}
-            className={`p-6 rounded-lg font-semibold text-rose-900 transition-all duration-300 bg-gradient-to-br ${
+            className={`p-6 rounded-lg font-barlow font-semibold text-rose-900 transition-all duration-300 bg-gradient-to-br ${
               selectedCategory === 'bookmarked' ? categoryColors.bookmarked + ' shadow-lg scale-105' : 'from-rose-300 to-red-200'
             }`}
           >
             <div className="flex justify-center items-center gap-2">
-              <div className="text-3xl font-bold">{stats.bookmarked}</div>
+              <div className="text-3xl font-bebas-neue font-bold">{stats.bookmarked}</div>
               <Bookmark className="w-5 h-5" />
             </div>
-            <div className="text-sm opacity-90">Bookmarked</div>
+            <div className="text-sm opacity-90 font-barlow">Bookmarked</div>
           </button>
         </div>
 
@@ -217,14 +217,14 @@ export default function BooksPage() {
               placeholder="Search by title or book ID..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 transition-all"
+              className="w-full pl-12 pr-4 py-3 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 transition-all font-barlow"
             />
           </div>
 
           {/* Sort Button */}
           <button
             onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-            className="flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl"
+            className="flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 text-white font-barlow font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl"
           >
             {sortOrder === 'asc' ? (
               <>
@@ -251,13 +251,13 @@ export default function BooksPage() {
         ) : paginatedBooks.length > 0 ? (
           <div>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-white">
+              <h2 className="text-2xl font-bebas-neue font-bold text-white">
                 {selectedCategory === 'all'
                   ? `All Books (${processedBooks.length})`
                   : `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Books (${processedBooks.length})`}
                 {searchQuery && ` - Search: "${searchQuery}"`}
               </h2>
-              <p className="text-gray-400 text-sm">
+              <p className="text-gray-400 text-sm font-barlow">
                 Page {currentPage} of {totalPages}
               </p>
             </div>
@@ -274,7 +274,7 @@ export default function BooksPage() {
                 <button
                   onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}
-                  className="px-4 py-2 rounded-lg bg-gray-700 text-white font-semibold hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  className="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all font-barlow font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   ← Previous
                 </button>
@@ -300,7 +300,7 @@ export default function BooksPage() {
                           currentPage === pageNum
                             ? 'bg-blue-600 text-white shadow-lg scale-110'
                             : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                        }`}
+                        } font-barlow`}
                       >
                         {pageNum}
                       </button>
@@ -311,7 +311,7 @@ export default function BooksPage() {
                 <button
                   onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                   disabled={currentPage === totalPages}
-                  className="px-4 py-2 rounded-lg bg-gray-700 text-white font-semibold hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  className="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-all font-barlow font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Next →
                 </button>

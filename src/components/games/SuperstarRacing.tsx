@@ -515,19 +515,19 @@ export default function SuperstarRacing({ onClose }: SuperstarRacingProps) {
         <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
           <div>
             <p className="text-xs uppercase tracking-[0.22em] text-[#7da1ff]">Racing</p>
-            <h1 className="text-4xl font-black tracking-[0.04em] text-white">Superstar Racing</h1>
+            <h1 className="text-4xl font-bebas-neue font-black tracking-[0.04em] text-white">Superstar Racing</h1>
             <p className="mt-2 max-w-2xl text-sm text-slate-300">A hill climb racer inspired by classic mobile physics. Keep the car balanced, collect coins, and avoid flipping.</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <button
               onClick={() => onClose?.()}
-              className="rounded-full bg-[#0b1734] px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#d9e7ff] shadow-[0_18px_40px_rgba(16,29,80,.35)] transition hover:bg-[#111f4f]"
+              className="rounded-full bg-[#0b1734] px-5 py-3 text-sm font-barlow font-semibold uppercase tracking-[0.18em] text-[#d9e7ff] shadow-[0_18px_40px_rgba(16,29,80,.35)] transition hover:bg-[#111f4f]"
             >
               Back
             </button>
             <button
               onClick={toggleFullscreen}
-              className="rounded-full bg-[#1a2a56] px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-[#d9e7ff] shadow-[0_18px_40px_rgba(16,29,80,.35)] transition hover:bg-[#17243f]"
+              className="rounded-full bg-[#1a2a56] px-5 py-3 text-sm font-barlow font-semibold uppercase tracking-[0.18em] text-[#d9e7ff] shadow-[0_18px_40px_rgba(16,29,80,.35)] transition hover:bg-[#17243f]"
             >
               {isFullscreen ? 'Exit Fullscreen' : 'Fullscreen'}
             </button>
