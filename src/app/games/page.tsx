@@ -30,7 +30,7 @@ const GAMES_DATA = [
     releaseDate: 'Mar 2026',
   },
   {
-    id: 10,
+    id: 16,
     title: 'Interactive Space Model',
     description: 'An interactive 3D model of our solar system where you can explore planets, moons, and celestial bodies.',
     imageUrl: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=500&h=400&fit=crop',
@@ -211,7 +211,7 @@ export default function GamesPage() {
   }, []);
 
   const handlePlayGame = (gameId: number) => {
-    alert(`Starting game ${gameId}...`);
+    window.location.href = `/games/${gameId}?play=true`;
   };
 
   return (

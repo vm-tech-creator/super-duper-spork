@@ -549,12 +549,13 @@ const GAMES_DATA = [
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileNav, setMobileNav] = useState(false);
-  const [siteMode, setSiteMode] = useState<'classic' | 'learning' | 'fun' | 'creative' | 'relax' | 'challenge' | 'adventure'>('classic');
+  const [siteMode, setSiteMode] = useState<'classic' | 'fantasy' | 'learning' | 'fun' | 'creative' | 'relax' | 'challenge' | 'adventure'>('classic');
   const [activeCategory, setActiveCategory] = useState('All');
 
   const getFilteredSpotlightVideos = () => {
     const modeFilters: Record<typeof siteMode, string[]> = {
       classic: ['Entertaining', 'Educational', 'Creative'],
+      fantasy: ['Entertaining', 'Creative', 'Lifestyle'],
       learning: ['Educational'],
       fun: ['Entertaining', 'Creative'],
       creative: ['Creative'],
@@ -579,6 +580,7 @@ export default function Home() {
   useEffect(() => {
     const rootBg: Record<typeof siteMode, string> = {
       classic: '#060a12',
+      fantasy: '#120b2f',
       learning: '#0d1420',
       fun: '#0d1420',
       creative: '#0d1420',
@@ -777,6 +779,31 @@ export default function Home() {
         primaryAction: 'Create Art',
         secondaryAction: 'Make Music',
       },
+      fantasy: {
+        accentColor: '#a855f7',
+        textPrimary: '#f8f2ff',
+        textSecondary: '#c4b5fd',
+        cardBg: '#22133c',
+        borderColor: 'rgba(168,85,247,.3)',
+        glow: 'rgba(168,85,247,.45)',
+        viewportBg: `
+          radial-gradient(ellipse 100% 80% at 50% -20%, rgba(168, 85, 247, 0.28) 0%, transparent 55%),
+          radial-gradient(ellipse 60% 50% at 100% 50%, rgba(168, 85, 247, 0.32) 0%, transparent 50%),
+          radial-gradient(ellipse 50% 40% at 0% 80%, rgba(168, 85, 247, 0.12) 0%, transparent 45%),
+          linear-gradient(180deg, #0c0724 0%, #22133c 40%, #5b21b6 100%)
+        `,
+        contentShell: '',
+        meshBlob1: 'radial-gradient(circle, rgba(168,85,247,0.35) 0%, transparent 65%)',
+        meshBlob2: 'radial-gradient(circle, rgba(168,85,247,0.45) 0%, transparent 65%)',
+        sectionCategories: 'border-t border-purple-400/20 bg-[#22133c]',
+        sectionVideos: 'bg-[#120a2d]',
+        sectionWhy: 'border-t border-purple-400/20 bg-gradient-to-b from-[#22133c] to-[#120a2d]',
+        sectionFooter: 'border-t border-purple-400/20 bg-[#090416]',
+        modeIcon: '🧚',
+        modeDescription: 'Mystical stories, magic games, and fantasy escapes',
+        primaryAction: 'Enter the Realm',
+        secondaryAction: 'Explore Magic',
+      },
       relax: {
         accentColor: '#06b6d4',
         textPrimary: '#ecfeff',
@@ -893,6 +920,12 @@ export default function Home() {
         { title: 'Creative Writing', desc: 'Write stories, poems, and creative content.', icon: BookOpen, href: '#categories', cta: 'Write Stories', num: '03' },
         { title: 'DIY Projects', desc: 'Hands-on creative projects and crafts.', icon: Sparkles, href: '#categories', cta: 'Start DIY', num: '04' },
       ],
+      fantasy: [
+        { title: 'Magic Stories', desc: 'Tales of enchanted lands, mythical creatures, and heroic journeys.', icon: BookOpen, href: '#categories', cta: 'Read Magic', num: '01' },
+        { title: 'Mystical Games', desc: 'Play fantasy-themed games filled with spells, quests, and wonder.', icon: Gamepad2, href: '/games', cta: 'Play Magic', num: '02' },
+        { title: 'Spellbinding Videos', desc: 'Watch magical adventures and fairy tale clips.', icon: Clapperboard, href: '/videos', cta: 'Watch Magic', num: '03' },
+        { title: 'Creative Worlds', desc: 'Build and explore dreamy worlds using your imagination.', icon: Palette, href: '#categories', cta: 'Create Worlds', num: '04' },
+      ],
       relax: [
         { title: 'Calming Videos', desc: 'Peaceful videos for relaxation and mindfulness.', icon: Clapperboard, href: '/videos', cta: 'Relax & Watch', num: '01' },
         { title: 'Meditation', desc: 'Guided meditation and breathing exercises.', icon: Sparkles, href: '#categories', cta: 'Meditate', num: '02' },
@@ -936,15 +969,25 @@ export default function Home() {
           }`}
         >
           <Link href="/" className="flex items-center gap-3 no-underline">
-            <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#ffc105] to-[#d9a004] font-bebas-neue text-xl text-[#0a0f18] shadow-[0_4px_20px_rgba(255,193,5,0.22)]">
+            <div className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-[#ffc105] to-[#d9a004] font-['Bebas_Neue'] text-xl text-[#0a0f18] shadow-[0_4px_20px_rgba(255,193,5,0.22)]">
               S
             </div>
             <div className="leading-tight">
-              <div className="font-barlow text-[0.7rem] font-bold uppercase tracking-[0.2em] text-[#88a9d8]">
+              <div className="font-['Barlow_Condensed'] text-[0.7rem] font-bold uppercase tracking-[0.2em] text-[#88a9d8]">
                 Supersite
               </div>
-              <div className="font-bebas-neue text-lg font-extrabold uppercase tracking-wide text-[#f0f4fa]">
+              <div className="font-['Barlow_Condensed'] text-lg font-extrabold uppercase tracking-wide" style={{ color: modeStyle.textPrimary }}>
                 Sahara
+              </div>
+              <div className="text-[0.65rem] uppercase tracking-[0.18em] text-[#c5d4eb]">
+                {siteMode === 'fantasy' && 'Fantasy Realm'}
+                {siteMode === 'relax' && 'Tranquil Oasis'}
+                {siteMode === 'adventure' && 'Adventure Hub'}
+                {siteMode === 'learning' && 'Learning Portal'}
+                {siteMode === 'fun' && 'Playground'}
+                {siteMode === 'creative' && 'Studio'}
+                {siteMode === 'challenge' && 'Arena'}
+                {siteMode === 'classic' && 'All-in-One Experience'}
               </div>
             </div>
           </Link>
@@ -955,7 +998,6 @@ export default function Home() {
               ['Videos', '/videos'],
               ['Books', '/books'],
               ['Music', '/music'],
-              ['Games', '/games'],
               ['Explore', '#categories'],
               ['Features', '#why'],
               ['About', '#about'],
@@ -992,6 +1034,8 @@ export default function Home() {
                   ? 'border-[#f59e0b]/50 bg-amber-900/80 text-[#f59e0b]'
                   : siteMode === 'creative'
                   ? 'border-[#a855f7]/50 bg-purple-900/80 text-[#a855f7]'
+                  : siteMode === 'fantasy'
+                  ? 'border-[#a855f7]/50 bg-purple-900/80 text-[#a855f7]'
                   : siteMode === 'relax'
                   ? 'border-[#06b6d4]/50 bg-cyan-900/80 text-[#06b6d4]'
                   : siteMode === 'challenge'
@@ -1002,6 +1046,7 @@ export default function Home() {
               }`}
             >
               <option value="classic">🎯 Classic</option>
+              <option value="fantasy">🧚 Fantasy</option>
               <option value="learning">📚 Learning</option>
               <option value="fun">🎉 Fun</option>
               <option value="creative">🎨 Creative</option>
@@ -1038,7 +1083,6 @@ export default function Home() {
                 ['Videos', '/videos'],
                 ['Books', '/books'],
                 ['Music', '/music'],
-                ['Games', '/games'],
                 ['Explore', '#categories'],
                 ['Features', '#why'],
                 ['About', '#about'],
@@ -1111,6 +1155,7 @@ export default function Home() {
             style={{ color: modeStyle.textPrimary }}
           >
             {siteMode === 'learning' && <>Learn & Grow<br /><span style={{ color: modeStyle.accentColor }}>With Fun</span></>}
+            {siteMode === 'fantasy' && <>Magic & Mystery<br /><span style={{ color: modeStyle.accentColor }}>Awaits</span></>}
             {siteMode === 'fun' && <>Laugh & Play<br /><span style={{ color: modeStyle.accentColor }}>All Day</span></>}
             {siteMode === 'creative' && <>Create & Build<br /><span style={{ color: modeStyle.accentColor }}>Your Dreams</span></>}
             {siteMode === 'relax' && <>Find Your Peace<br /><span style={{ color: modeStyle.accentColor }}>Relax Deeply</span></>}
@@ -1121,6 +1166,7 @@ export default function Home() {
 
           <p className="animate-fade-up mx-auto mt-6 max-w-xl text-base font-medium leading-relaxed sm:text-lg" style={{ color: modeStyle.textSecondary }}>
             {siteMode === 'learning' && 'Discover educational games, videos, and quizzes that make learning exciting and engaging for all ages.'}
+            {siteMode === 'fantasy' && 'Step into a dreamy fantasy world filled with enchanted games, magical videos, and whimsical stories.'}
             {siteMode === 'fun' && 'Enjoy hilarious videos, silly games, and entertaining content that brings joy and laughter to everyone.'}
             {siteMode === 'creative' && 'Unleash your creativity with art tutorials, music makers, and hands-on projects that inspire imagination.'}
             {siteMode === 'relax' && 'Find peace and tranquility with calming videos, meditation guides, and soothing activities for mindfulness.'}
@@ -1131,7 +1177,7 @@ export default function Home() {
 
           <div className="animate-fade-up mt-10 flex flex-wrap items-center justify-center gap-3">
             <Link
-              href={siteMode === 'learning' ? '/games' : siteMode === 'fun' ? '/videos' : siteMode === 'creative' ? '#categories' : siteMode === 'relax' ? '/videos' : siteMode === 'challenge' ? '/games' : siteMode === 'adventure' ? '/games' : '/videos'}
+              href={siteMode === 'learning' ? '/games' : siteMode === 'fantasy' ? '/games' : siteMode === 'fun' ? '/videos' : siteMode === 'creative' ? '#categories' : siteMode === 'relax' ? '/videos' : siteMode === 'challenge' ? '/games' : siteMode === 'adventure' ? '/games' : '/videos'}
               className="inline-flex items-center gap-2 rounded-2xl px-7 py-3.5 text-sm font-semibold no-underline shadow-[0_8px_32px_rgba(255,193,5,0.25)] transition hover:-translate-y-0.5"
               style={{ backgroundColor: modeStyle.accentColor, color: '#0a0f18', boxShadow: `0_8px_32px_${modeStyle.glow}` }}
             >
@@ -1139,7 +1185,7 @@ export default function Home() {
               {modeStyle.primaryAction}
             </Link>
             <a
-              href={siteMode === 'learning' ? '#categories' : siteMode === 'fun' ? '/games' : siteMode === 'creative' ? '#categories' : siteMode === 'relax' ? '#categories' : siteMode === 'challenge' ? '#categories' : siteMode === 'adventure' ? '/videos' : '#categories'}
+              href={siteMode === 'learning' ? '#categories' : siteMode === 'fantasy' ? '#categories' : siteMode === 'fun' ? '/games' : siteMode === 'creative' ? '#categories' : siteMode === 'relax' ? '#categories' : siteMode === 'challenge' ? '#categories' : siteMode === 'adventure' ? '/videos' : '#categories'}
               className="inline-flex items-center gap-2 rounded-2xl border bg-white/[0.03] px-7 py-3.5 text-sm font-semibold no-underline backdrop-blur-sm transition hover:bg-white/[0.06]"
               style={{ borderColor: modeStyle.borderColor, color: modeStyle.textPrimary }}
             >
@@ -1159,10 +1205,10 @@ export default function Home() {
                 key={sub}
                 className={`relative text-center ${i > 0 ? 'sm:before:absolute sm:before:left-0 sm:before:top-1/2 sm:before:h-10 sm:before:w-px sm:before:-translate-y-1/2 sm:before:bg-[#88a9d8]/15' : ''}`}
               >
-                <div className="font-bebas-neue text-4xl leading-none text-[#ffc105] sm:text-[2.75rem]" data-target={target}>
+                <div className="font-['Bebas_Neue'] text-4xl leading-none text-[#ffc105] sm:text-[2.75rem]" data-target={target}>
                   0
                 </div>
-                <div className="mt-1.5 text-[0.65rem] font-barlow font-medium uppercase tracking-[0.12em] text-[#8ba3c4]">{sub}</div>
+                <div className="mt-1.5 text-[0.65rem] font-medium uppercase tracking-[0.12em] text-[#8ba3c4]">{sub}</div>
               </div>
             ))}
           </div>
@@ -1176,6 +1222,7 @@ export default function Home() {
             <div>
               <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em]" style={{ color: modeStyle.textSecondary }}>
                 {siteMode === 'learning' && 'Learning Zones'}
+                {siteMode === 'fantasy' && 'Fantasy Zones'}
                 {siteMode === 'fun' && 'Fun Zones'}
                 {siteMode === 'creative' && 'Creative Zones'}
                 {siteMode === 'relax' && 'Relax Zones'}
@@ -1185,6 +1232,7 @@ export default function Home() {
               </p>
               <h2 className="font-['Bebas_Neue'] text-[clamp(2.5rem,5vw,3.5rem)] leading-none tracking-wide" style={{ color: modeStyle.textPrimary }}>
                 {siteMode === 'learning' && <>Choose Your<br /><span style={{ color: modeStyle.accentColor }}>Learning Path</span></>}
+                {siteMode === 'fantasy' && <>Follow the<br /><span style={{ color: modeStyle.accentColor }}>Mystic Path</span></>}
                 {siteMode === 'fun' && <>Find Your<br /><span style={{ color: modeStyle.accentColor }}>Fun Zone</span></>}
                 {siteMode === 'creative' && <>Express Your<br /><span style={{ color: modeStyle.accentColor }}>Creativity</span></>}
                 {siteMode === 'relax' && <>Discover<br /><span style={{ color: modeStyle.accentColor }}>Inner Peace</span></>}
@@ -1195,6 +1243,7 @@ export default function Home() {
             </div>
             <p className="max-w-md text-sm leading-relaxed md:text-base" style={{ color: modeStyle.textSecondary }}>
               {siteMode === 'learning' && 'Explore educational content tailored to different learning styles and interests.'}
+              {siteMode === 'fantasy' && 'Get lost in stories of magic, mystery, and wonder—content that feels like a fairy tale.'}
               {siteMode === 'fun' && 'Dive into entertainment that brings joy, laughter, and memorable moments.'}
               {siteMode === 'creative' && 'Unleash your artistic side with tools and inspiration for creative expression.'}
               {siteMode === 'relax' && 'Find tranquility and mindfulness through peaceful activities and content.'}
@@ -1256,6 +1305,7 @@ export default function Home() {
             </p>
             <h2 className="font-['Bebas_Neue'] text-[clamp(2.25rem,4.5vw,3.25rem)] leading-none tracking-wide" style={{ color: modeStyle.textPrimary }}>
               {siteMode === 'learning' && <>Play & Learn<br /><span style={{ color: modeStyle.accentColor }}>Through Games</span></>}
+              {siteMode === 'fantasy' && <>Games That Spark<br /><span style={{ color: modeStyle.accentColor }}>Magic</span></>}
               {siteMode === 'fun' && <>Games That Make<br /><span style={{ color: modeStyle.accentColor }}>You Smile</span></>}
               {siteMode === 'creative' && <>Games That Spark<br /><span style={{ color: modeStyle.accentColor }}>Creativity</span></>}
               {siteMode === 'relax' && <>Games That Help<br /><span style={{ color: modeStyle.accentColor }}>You Relax</span></>}
@@ -1265,6 +1315,7 @@ export default function Home() {
             </h2>
             <p className="mt-4 text-sm leading-relaxed sm:text-base" style={{ color: modeStyle.textSecondary }}>
               {siteMode === 'learning' && <>Discover games that make learning fun and interactive. Click any card to play.</>}
+              {siteMode === 'fantasy' && <>Play magical games, quests, and enchanted worlds that feel like a fairy tale. Click any card to begin.</>}
               {siteMode === 'fun' && <>Enjoy hilarious and entertaining games. Click any card to play.</>}
               {siteMode === 'creative' && <>Play games that encourage creativity and imagination. Click any card to play.</>}
               {siteMode === 'relax' && <>Find calming and peaceful games for relaxation. Click any card to play.</>}
@@ -1350,7 +1401,7 @@ export default function Home() {
                 key={category}
                 type="button"
                 onClick={() => setActiveCategory(category)}
-                className={`rounded-full px-4 py-2 text-xs font-barlow font-semibold transition ${
+                className={`rounded-full px-4 py-2 text-xs font-semibold transition ${
                   activeCategory === category
                     ? 'shadow-[0_4px_20px_rgba(255,193,5,0.2)]'
                     : 'border bg-[#0c1829]/50 hover:text-[#e8edf5]'
@@ -1368,7 +1419,7 @@ export default function Home() {
 
           {/* Videos Grid with Player Boxes */}
           {visibleSpotlightVideos.length === 0 ? (
-            <p className="reveal text-sm font-barlow text-[#8ba3c4]">Nothing in this filter—pick &quot;All&quot; or another vibe.</p>
+            <p className="reveal text-sm text-[#8ba3c4]">Nothing in this filter—pick &quot;All&quot; or another vibe.</p>
           ) : (
           <div className="grid gap-5 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
             {visibleSpotlightVideos.map((video, idx) => {
@@ -1407,7 +1458,7 @@ export default function Home() {
           <div className="reveal mt-16 text-center">
             <Link
               href="/videos"
-              className="inline-flex items-center gap-2 rounded-2xl bg-[#ffc105] px-10 py-3.5 text-sm font-barlow font-semibold text-[#0a0f18] no-underline shadow-[0_8px_28px_rgba(255,193,5,0.22)] transition hover:-translate-y-0.5 hover:bg-[#ffcf3a]"
+              className="inline-flex items-center gap-2 rounded-2xl bg-[#ffc105] px-10 py-3.5 text-sm font-semibold text-[#0a0f18] no-underline shadow-[0_8px_28px_rgba(255,193,5,0.22)] transition hover:-translate-y-0.5 hover:bg-[#ffcf3a]"
             >
               Open LaughTube
               <ArrowRight className="h-4 w-4" aria-hidden />
@@ -1419,11 +1470,11 @@ export default function Home() {
       <section className={`px-[5%] py-24 ${modeStyle.sectionWhy}`} id="why">
         <div className="mx-auto max-w-6xl">
           <div className="reveal mb-14 text-center">
-            <p className="mb-3 text-xs font-barlow font-bold uppercase tracking-[0.2em] text-[#88a9d8]">Why Sahara</p>
-            <h2 className="font-bebas-neue text-[clamp(2.25rem,4.5vw,3.25rem)] tracking-wide text-[#f0f4fa]">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#88a9d8]">Why Sahara</p>
+            <h2 className="font-['Bebas_Neue'] text-[clamp(2.25rem,4.5vw,3.25rem)] tracking-wide text-[#f0f4fa]">
               Built to feel fast<span className="text-[#ffc105]">.</span>
             </h2>
-            <p className="mx-auto mt-4 max-w-lg text-sm font-barlow leading-relaxed text-[#8ba3c4] sm:text-base">
+            <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-[#8ba3c4] sm:text-base">
               Motion and color support the content—nothing screams for attention unless you ask it to.
             </p>
           </div>
@@ -1468,8 +1519,8 @@ export default function Home() {
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-[#88a9d8]/12 bg-[#080f1c]/60 text-[#ffc105] transition group-hover:border-[#ffc105]/25">
                   <Icon className="h-5 w-5" strokeWidth={1.75} aria-hidden />
                 </div>
-                <h3 className="text-base font-bebas-neue font-semibold text-[#f0f4fa]">{title}</h3>
-                <p className="mt-2 text-sm font-barlow leading-relaxed text-[#8ba3c4]">{body}</p>
+                <h3 className="text-base font-semibold text-[#f0f4fa]">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[#8ba3c4]">{body}</p>
               </div>
             ))}
           </div>
@@ -1479,11 +1530,11 @@ export default function Home() {
       <section className="px-[5%] py-24" id="about">
         <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-2 lg:items-center">
           <div className="reveal">
-            <p className="mb-3 text-xs font-barlow font-bold uppercase tracking-[0.2em] text-[#88a9d8]">About</p>
-            <h2 className="font-bebas-neue text-[clamp(2rem,4vw,2.75rem)] leading-none tracking-wide text-[#f0f4fa]">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-[#88a9d8]">About</p>
+            <h2 className="font-['Bebas_Neue'] text-[clamp(2rem,4vw,2.75rem)] leading-none tracking-wide text-[#f0f4fa]">
               A supersite for curious people<span className="text-[#ffc105]">.</span>
             </h2>
-            <p className="mt-5 text-sm font-barlow leading-relaxed text-[#8ba3c4] sm:text-base">
+            <p className="mt-5 text-sm leading-relaxed text-[#8ba3c4] sm:text-base">
               Sahara is a demo front door: rich landing, curated video hub, and room to grow. The palette stays anchored in
               deep blue (#2b4c7d), mid blue (#497ab6), soft blue (#88a9d8), and warm gold (#ffc105)—professional enough for
               classrooms, warm enough for home.
@@ -1491,14 +1542,14 @@ export default function Home() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/videos"
-                className="inline-flex items-center gap-2 rounded-2xl bg-[#ffc105] px-6 py-3 text-sm font-barlow font-semibold text-[#0a0f18] no-underline transition hover:bg-[#ffcf3a]"
+                className="inline-flex items-center gap-2 rounded-2xl bg-[#ffc105] px-6 py-3 text-sm font-semibold text-[#0a0f18] no-underline transition hover:bg-[#ffcf3a]"
               >
                 Try LaughTube
                 <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
               <a
                 href="#categories"
-                className="inline-flex items-center rounded-2xl border border-[#88a9d8]/20 px-6 py-3 text-sm font-barlow font-semibold text-[#e8edf5] no-underline transition hover:border-[#88a9d8]/40"
+                className="inline-flex items-center rounded-2xl border border-[#88a9d8]/20 px-6 py-3 text-sm font-semibold text-[#e8edf5] no-underline transition hover:border-[#88a9d8]/40"
               >
                 Back to spaces
               </a>
@@ -1509,10 +1560,10 @@ export default function Home() {
               className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full opacity-50 blur-3xl"
               style={{ background: 'radial-gradient(circle, rgba(255,193,5,0.35), transparent 70%)' }}
             />
-            <blockquote className="relative text-lg font-barlow font-medium leading-relaxed text-[#e8edf5]">
+            <blockquote className="relative text-lg font-medium leading-relaxed text-[#e8edf5]">
               “Good design disappears. You notice the content, the joke, the lesson—not the chrome around it.”
             </blockquote>
-            <p className="relative mt-6 text-sm font-barlow text-[#8ba3c4]">— The whole point of this refresh</p>
+            <p className="relative mt-6 text-sm text-[#8ba3c4]">— The whole point of this refresh</p>
           </div>
         </div>
       </section>
@@ -1521,20 +1572,20 @@ export default function Home() {
         <div className="mx-auto flex max-w-6xl flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <span className="grid h-9 w-9 place-items-center rounded-lg bg-[#ffc105] font-bebas-neue text-lg text-[#0a0f18]">
+              <span className="grid h-9 w-9 place-items-center rounded-lg bg-[#ffc105] font-['Bebas_Neue'] text-lg text-[#0a0f18]">
                 S
               </span>
-              <span className="font-bebas-neue text-lg font-bold uppercase tracking-wide text-[#f0f4fa]">
+              <span className="font-['Barlow_Condensed'] text-lg font-bold uppercase tracking-wide text-[#f0f4fa]">
                 Sahara
               </span>
             </div>
-            <p className="mt-3 max-w-xs text-sm font-barlow leading-relaxed text-[#8ba3c4]">
+            <p className="mt-3 max-w-xs text-sm leading-relaxed text-[#8ba3c4]">
               Explore. Learn. Laugh. One modern surface—no visual noise required.
             </p>
           </div>
           <div className="flex flex-wrap gap-10 text-sm">
             <div>
-              <p className="mb-3 font-barlow font-semibold text-[#f0f4fa]">Explore</p>
+              <p className="mb-3 font-semibold text-[#f0f4fa]">Explore</p>
               <ul className="m-0 flex list-none flex-col gap-2 p-0">
                 <li>
                   <Link href="/videos" className="text-[#8ba3c4] no-underline hover:text-[#ffc105]">
@@ -1554,7 +1605,7 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <p className="mb-3 font-barlow font-semibold text-[#f0f4fa]">Project</p>
+              <p className="mb-3 font-semibold text-[#f0f4fa]">Project</p>
               <ul className="m-0 flex list-none flex-col gap-2 p-0">
                 <li>
                   <a href="#about" className="text-[#8ba3c4] no-underline hover:text-[#ffc105]">
@@ -1562,13 +1613,13 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <span className="text-[#5c6d8a] font-barlow">Sign in — coming soon</span>
+                  <span className="text-[#5c6d8a]">Sign in — coming soon</span>
                 </li>
               </ul>
             </div>
           </div>
         </div>
-        <p className="mx-auto mt-12 max-w-6xl border-t border-[#88a9d8]/10 pt-8 text-center text-xs font-barlow text-[#5c6d8a]">
+        <p className="mx-auto mt-12 max-w-6xl border-t border-[#88a9d8]/10 pt-8 text-center text-xs text-[#5c6d8a]">
           © {new Date().getFullYear()} Sahara demo · Crafted for clarity
         </p>
       </footer>
