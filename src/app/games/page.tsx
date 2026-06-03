@@ -16,9 +16,6 @@ import ElonFortune from '@/components/games/ElonFortune';
 import MusicQuiz from '@/components/games/MusicQuiz';
 import WeirdBooks from '@/components/games/WeirdBooks';
 import SuperstarRacing from '@/components/games/SuperstarRacing';
-import SpaceWar from '@/components/games/SpaceWar';
-import Snake from '@/components/games/Snake';
-import SiteHeader from '@/components/SiteHeader';
 
 type GameItem = {
   id: number;
@@ -44,7 +41,7 @@ const GAMES_DATA: GameItem[] = [
     releaseDate: 'Mar 2026',
   },
   {
-    id: 16,
+    id: 10,
     title: 'Interactive Space Model',
     description: 'An interactive 3D model of our solar system where you can explore planets, moons, and celestial bodies.',
     imageUrl: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=500&h=400&fit=crop',
@@ -147,27 +144,7 @@ const GAMES_DATA: GameItem[] = [
     releaseDate: 'Feb 2026',
   },
   {
-    id: 15,
-    title: 'Space War',
-    description: 'Battle against an AI opponent in rocket combat! Use arrow keys to move and space to shoot.',
-    imageUrl: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=500&h=400&fit=crop',
-    genre: 'Space',
-    rating: 4.9,
-    players: '1v1',
-    releaseDate: 'May 2026',
-  },
-  {
-    id: 16,
-    title: 'Snake',
-    description: 'A classic snake game where you eat apples to grow longer. Don\'t hit the walls or yourself!',
-    imageUrl: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=400&fit=crop',
-    genre: 'Classic Arcade Game',
-    rating: 4.9,
-    players: 'Solo',
-    releaseDate: 'May 2026',
-  },
-  {
-    id: 13,
+    id: 10,
     title: 'Pac-Man',
     description: 'A classic maze game where you navigate Pac-Man through a two-line pathway maze while avoiding colorful ghosts.',
     imageUrl: 'https://images.unsplash.com/photo-1535371579214-d6a72b3b5c47?w=500&h=400&fit=crop',
@@ -231,7 +208,7 @@ export default function GamesPage() {
   }, []);
 
   const handlePlayGame = (gameId: number) => {
-    window.location.href = `/games/${gameId}?play=true`;
+    alert(`Starting game ${gameId}...`);
   };
 
   return (
@@ -242,22 +219,6 @@ export default function GamesPage() {
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E")`,
         }}
-      />
-
-      {/* Nav */}
-      <SiteHeader
-        links={[
-          { label: 'Home', href: '/' },
-          { label: 'Games', href: '/games' },
-        ]}
-        rightSlot={
-          <button
-            onClick={() => window.location.href = '/games/avatar'}
-            className="bg-[#4a90e2] text-white border-none px-4 py-2 rounded transition-all hover:bg-[#357abd] hover:translate-y-[-1px] hover:shadow-[0_4px_16px_rgba(74,144,226,.3)] font-barlow font-bold uppercase tracking-[.08em] text-[.85rem] cursor-pointer"
-          >
-            Avatar
-          </button>
-        }
       />
 
       {/* Main Content */}

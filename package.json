@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "lint:fix": "eslint --fix",
+    "lint:fix": "esl'int --fix",
     "format": "prettier --write .",
     "type-check": "tsc -noEmit",
     "portless:build": "portless build",
