@@ -180,8 +180,8 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Bubble Dynamics',
     features: ['3D Bubbles', 'Combo System', 'Particle Effects', 'Mouse Controls', 'Progressive Levels'],
   },
-  10: {
-    id: 10,
+  17: {
+    id: 17,
     title: 'Pac-Man',
     description: 'A classic maze game where you navigate Pac-Man through a two-line pathway maze while avoiding colorful ghosts.',
     fullDescription: 'Navigate the classic Pac-Man through a perfectly designed maze filled with pellets. Collect all pellets to win while avoiding four intelligent ghosts with unique AI behaviors. Arrow keys or WASD to move. A nostalgic return to arcade gaming.',
@@ -292,7 +292,11 @@ export default function GameDetailPage({ params }: { params: Promise<{ id: strin
       case 9:
         return <WeirdBooks onClose={() => setIsPlaying(false)} />;
       case 10:
-        return <PacMan onClose={() => setIsPlaying(false)} />;
+        return <SpaceExplorerGame />;
+      case 11:
+        return <MazeRunnerGame />;
+      case 12:
+        return <BubblePopperGame />;
       case 13:
         return <NeonFlames onClose={() => setIsPlaying(false)} />;
       case 14:
@@ -301,6 +305,8 @@ export default function GameDetailPage({ params }: { params: Promise<{ id: strin
         return <SpaceWar onClose={() => setIsPlaying(false)} />;
       case 16:
         return <Snake onClose={() => setIsPlaying(false)} />;
+      case 17:
+        return <PacMan onClose={() => setIsPlaying(false)} />;
       default:
         return null;
     }

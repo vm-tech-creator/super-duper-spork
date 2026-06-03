@@ -3,6 +3,7 @@
 import { ReactNode, useState } from 'react';
 import Link from 'next/link';
 import { Menu, X, ArrowRight } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface SaharaHeaderProps {
   links?: { label: string; href: string }[];
@@ -18,6 +19,7 @@ const defaultLinks = [
 ];
 
 export default function SaharaHeader({ links = defaultLinks, rightSlot }: SaharaHeaderProps) {
+  const { t } = useLanguage();
   const [mobileNav, setMobileNav] = useState(false);
   const [siteMode, setSiteMode] = useState<'classic' | 'fancy' | 'neon' | 'minimal' | 'dark' | 'vibrant' | 'glassmorphism'>('classic');
 
@@ -69,7 +71,7 @@ export default function SaharaHeader({ links = defaultLinks, rightSlot }: Sahara
               href="#"
               className="rounded-lg px-3 py-2 text-sm font-medium text-[#8ba3c4] no-underline transition-colors hover:bg-white/[0.04] hover:text-[#ffc105]"
             >
-              Sign in
+              {t('header.signIn')}
             </a>
           </li>
         </ul>
@@ -94,7 +96,7 @@ export default function SaharaHeader({ links = defaultLinks, rightSlot }: Sahara
             href="/videos"
             className="hidden items-center gap-2 rounded-xl bg-[#ffc105] px-4 py-2 text-sm font-medium text-[#0a0f18] no-underline shadow-[0_4px_24px_rgba(255,193,5,0.28)] transition hover:bg-[#ffcf3a] sm:inline-flex"
           >
-            Watch
+            {t('header.startWatching')}
             <ArrowRight className="h-4 w-4" aria-hidden />
           </Link>
 
@@ -132,7 +134,7 @@ export default function SaharaHeader({ links = defaultLinks, rightSlot }: Sahara
                 className="block rounded-lg px-3 py-3 text-sm font-medium text-[#c5d4eb] no-underline hover:bg-white/[0.05]"
                 onClick={() => setMobileNav(false)}
               >
-                Sign in
+                {t('header.signIn')}
               </a>
             </li>
           </ul>
@@ -141,7 +143,7 @@ export default function SaharaHeader({ links = defaultLinks, rightSlot }: Sahara
             className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-[#ffc105] py-3 text-sm font-semibold text-[#0a0f18] no-underline shadow-[0_4px_24px_rgba(255,193,5,0.28)] transition hover:bg-[#ffcf3a]"
             onClick={() => setMobileNav(false)}
           >
-            Start watching
+            {t('header.startWatching')}
           </Link>
           {rightSlot && <div className="mt-3">{rightSlot}</div>}
         </div>
