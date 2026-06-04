@@ -823,7 +823,7 @@ export default function SpaceModelPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#080f1c] text-[#e8edf5] overflow-hidden">
+    <div className="relative min-h-screen bg-sahara-bg text-sahara-text overflow-hidden">
       {/* Noise overlay */}
       <div
         className="fixed inset-0 pointer-events-none opacity-25 z-0"
@@ -835,26 +835,26 @@ export default function SpaceModelPage() {
       {/* Nav */}
       <nav className="fixed top-0 w-full z-50 flex items-center justify-between px-[5%] h-[68px] bg-[rgba(8,15,28,.85)] backdrop-blur-[16px] border-b border-[rgba(73,122,182,.2)]">
         <a href="/" className="flex items-center gap-2.5 text-decoration-none">
-          <div className="w-9 h-9 bg-gradient-to-br from-[#ffc105] to-[#e0a800] rounded-lg grid place-items-center font-['Bebas_Neue'] text-xl text-[#080f1c] shadow-[0_0_16px_rgba(255,193,5,.35)]">
+          <div className="w-9 h-9 bg-gradient-to-br from-sahara-gold to-sahara-gold rounded-lg grid place-items-center font-['Bebas_Neue'] text-xl text-sahara-bg shadow-[0_0_16px_rgba(255,193,5,.35)]">
             S
           </div>
           <div className="font-['Barlow_Condensed'] font-black text-xl uppercase tracking-[.04em]">
-            <span className="text-[#ffc105]">Sahara</span>
+            <span className="text-sahara-gold">Sahara</span>
           </div>
         </a>
         <ul className="flex gap-8 list-none">
           <li>
-            <a href="/" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] hover:text-[#ffc105] transition-colors">
+            <a href="/" className="text-sahara-muted no-underline font-medium uppercase tracking-[.05em] text-[.875rem] hover:text-sahara-gold transition-colors">
               Home
             </a>
           </li>
           <li>
-            <a href="/games" className="text-[#ffc105] no-underline font-medium uppercase tracking-[.05em] text-[.875rem]">
+            <a href="/games" className="text-sahara-gold no-underline font-medium uppercase tracking-[.05em] text-[.875rem]">
               Games
             </a>
           </li>
         </ul>
-        <button className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2.5 rounded transition-all hover:bg-[#ffcf3a] hover:translate-y-[-1px] hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] text-[.95rem] cursor-pointer">
+        <button className="bg-sahara-gold text-sahara-bg border-none px-6 py-2.5 rounded transition-all hover:opacity-90 hover:translate-y-[-1px] hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] text-[.95rem] cursor-pointer">
           Sign In
         </button>
       </nav>
@@ -864,7 +864,7 @@ export default function SpaceModelPage() {
         {/* Left Sidebar - Entity List */}
         <div className="w-80 h-full bg-[rgba(8,15,28,.9)] backdrop-blur-md border-r border-[rgba(73,122,182,.2)] flex flex-col">
           <div className="p-4 border-b border-[rgba(73,122,182,.2)]">
-            <h2 className="font-['Bebas_Neue'] text-2xl text-[#ffc105] tracking-[.03em] mb-3">
+            <h2 className="font-['Bebas_Neue'] text-2xl text-sahara-gold tracking-[.03em] mb-3">
               Space Entities
             </h2>
             {/* Search Bar */}
@@ -874,9 +874,9 @@ export default function SpaceModelPage() {
                 placeholder="Search entities..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[rgba(73,122,182,.1)] border border-[rgba(73,122,182,.3)] rounded-lg px-4 py-2.5 text-[#e8edf5] placeholder-[#7a93b4] focus:outline-none focus:border-[#ffc105] transition-colors"
+                className="w-full bg-[rgba(73,122,182,.1)] border border-[rgba(73,122,182,.3)] rounded-lg px-4 py-2.5 text-sahara-text placeholder-[#7a93b4] focus:outline-none focus:border-[#ffc105] transition-colors"
               />
-              <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#7a93b4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-sahara-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
@@ -900,7 +900,7 @@ export default function SpaceModelPage() {
                 />
                 <div className="flex-1 min-w-0">
                   <div className="font-medium text-sm truncate">{entity.name}</div>
-                  <div className="text-xs text-[#7a93b4]">{entity.classification}</div>
+                  <div className="text-xs text-sahara-muted">{entity.classification}</div>
                 </div>
               </button>
             ))}
@@ -914,10 +914,10 @@ export default function SpaceModelPage() {
         {hoveredEntity && !showInfo && (
           <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-[rgba(8,15,28,.95)] backdrop-blur-md border border-[rgba(255,193,5,.3)] rounded-lg px-6 py-3 z-20">
             <div className="text-center">
-              <div className="font-['Bebas_Neue'] text-xl text-[#ffc105] tracking-[.02em]">
+              <div className="font-['Bebas_Neue'] text-xl text-sahara-gold tracking-[.02em]">
                 {hoveredEntity.name}
               </div>
-              <div className="text-sm text-[#7a93b4]">
+              <div className="text-sm text-sahara-muted">
                 {hoveredEntity.classification}
               </div>
             </div>
@@ -928,12 +928,12 @@ export default function SpaceModelPage() {
         {showInfo && selectedEntity && (
           <div className="w-96 h-full bg-[rgba(8,15,28,.95)] backdrop-blur-md border-l border-[rgba(73,122,182,.2)] flex flex-col overflow-hidden animate-[slideIn_0.3s_ease-out]">
             <div className="p-4 border-b border-[rgba(73,122,182,.2)] flex items-center justify-between">
-              <h2 className="font-['Bebas_Neue'] text-2xl text-[#ffc105] tracking-[.03em]">
+              <h2 className="font-['Bebas_Neue'] text-2xl text-sahara-gold tracking-[.03em]">
                 {selectedEntity.name}
               </h2>
               <button
                 onClick={handleBackToSystem}
-                className="text-[#7a93b4] hover:text-[#ffc105] transition-colors"
+                className="text-sahara-muted hover:text-sahara-gold transition-colors"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -954,23 +954,23 @@ export default function SpaceModelPage() {
 
               {/* Description */}
               <div>
-                <h3 className="text-sm font-bold text-[#7a93b4] uppercase tracking-[.05em] mb-2">
+                <h3 className="text-sm font-bold text-sahara-muted uppercase tracking-[.05em] mb-2">
                   Overview
                 </h3>
-                <p className="text-[#e8edf5] leading-relaxed">
+                <p className="text-sahara-text leading-relaxed">
                   {selectedEntity.description}
                 </p>
               </div>
 
               {/* Facts */}
               <div>
-                <h3 className="text-sm font-bold text-[#7a93b4] uppercase tracking-[.05em] mb-2">
+                <h3 className="text-sm font-bold text-sahara-muted uppercase tracking-[.05em] mb-2">
                   Did You Know?
                 </h3>
                 <ul className="space-y-2">
                   {selectedEntity.facts.map((fact, index) => (
-                    <li key={index} className="flex gap-2 text-sm text-[#e8edf5]">
-                      <span className="text-[#ffc105]">•</span>
+                    <li key={index} className="flex gap-2 text-sm text-sahara-text">
+                      <span className="text-sahara-gold">•</span>
                       {fact}
                     </li>
                   ))}
@@ -984,24 +984,24 @@ export default function SpaceModelPage() {
         {!showInfo && (
           <div className="w-96 h-full bg-[rgba(8,15,28,.95)] backdrop-blur-md border-l border-[rgba(73,122,182,.2)] flex flex-col overflow-hidden">
             <div className="p-4 border-b border-[rgba(73,122,182,.2)]">
-              <h2 className="font-['Bebas_Neue'] text-2xl text-[#ffc105] tracking-[.03em]">
+              <h2 className="font-['Bebas_Neue'] text-2xl text-sahara-gold tracking-[.03em]">
                 The Solar System
               </h2>
             </div>
             
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
-              <p className="text-[#e8edf5] leading-relaxed">
+              <p className="text-sahara-text leading-relaxed">
                 {SOLAR_SYSTEM_INFO.description}
               </p>
 
               <div>
-                <h3 className="text-sm font-bold text-[#7a93b4] uppercase tracking-[.05em] mb-2">
+                <h3 className="text-sm font-bold text-sahara-muted uppercase tracking-[.05em] mb-2">
                   Key Facts
                 </h3>
                 <ul className="space-y-2">
                   {SOLAR_SYSTEM_INFO.facts.map((fact, index) => (
-                    <li key={index} className="flex gap-2 text-sm text-[#e8edf5]">
-                      <span className="text-[#ffc105]">•</span>
+                    <li key={index} className="flex gap-2 text-sm text-sahara-text">
+                      <span className="text-sahara-gold">•</span>
                       {fact}
                     </li>
                   ))}
@@ -1009,10 +1009,10 @@ export default function SpaceModelPage() {
               </div>
 
               <div className="mt-6 p-4 bg-[rgba(255,193,5,.1)] rounded-lg border border-[rgba(255,193,5,.2)]">
-                <h3 className="text-sm font-bold text-[#ffc105] uppercase tracking-[.05em] mb-2">
+                <h3 className="text-sm font-bold text-sahara-gold uppercase tracking-[.05em] mb-2">
                   How to Navigate
                 </h3>
-                <ul className="space-y-1 text-sm text-[#7a93b4]">
+                <ul className="space-y-1 text-sm text-sahara-muted">
                   <li>🖱️ Click + drag to rotate</li>
                   <li>🔍 Scroll to zoom in/out</li>
                   <li>👆 Hover to identify objects</li>

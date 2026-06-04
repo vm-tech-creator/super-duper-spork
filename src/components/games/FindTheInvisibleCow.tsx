@@ -215,14 +215,14 @@ export default function FindTheInvisibleCow({ onClose }: { onClose: () => void }
   };
 
   return (
-    <div className="relative w-full h-screen bg-gradient-to-br from-[#0d1a2e] to-[#080f1c]">
+    <div className="relative w-full h-screen bg-gradient-to-br from-[#0d1a2e] to-sahara-bg">
       <div ref={containerRef} className="w-full h-full" />
 
       {/* Header */}
       <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-        <h1 className="text-[#ffc105] font-bold text-2xl">🐄 Find the Invisible Cow</h1>
+        <h1 className="text-sahara-gold font-bold text-2xl">🐄 Find the Invisible Cow</h1>
         <Link href="/games">
-          <button className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a]">
+          <button className="bg-sahara-gold text-sahara-bg border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:opacity-90">
             ← Back to Games
           </button>
         </Link>
@@ -232,7 +232,7 @@ export default function FindTheInvisibleCow({ onClose }: { onClose: () => void }
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2">
           <button
             onClick={handlePlayAgain}
-            className="bg-[#ffc105] text-[#080f1c] border-none px-8 py-3 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a]"
+            className="bg-sahara-gold text-sahara-bg border-none px-8 py-3 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:opacity-90"
           >
             Play Again
           </button>

@@ -244,19 +244,19 @@ export default function WeirdBooks({ onClose }: { onClose: () => void }) {
   }, [currentIndex]);
 
   return (
-    <div className="relative w-full h-screen bg-[#080f1c]">
+    <div className="relative w-full h-screen bg-sahara-bg">
       <div ref={containerRef} className="w-full h-full" />
 
       {/* Back button overlay */}
       <div className="absolute top-4 right-4">
         <Link href="/games">
-          <button className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a]">
+          <button className="bg-sahara-gold text-sahara-bg border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:opacity-90">
             ← Back
           </button>
         </Link>
       </div>
 
-      <div className="absolute bottom-4 left-4 text-[#7a93b4] text-sm">
+      <div className="absolute bottom-4 left-4 text-sahara-muted text-sm">
         <p>Click buttons to navigate...</p>
       </div>
     </div>

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ThemeProvider } from "@/context/ThemeContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
-import LanguageSelector from "@/components/LanguageSelector";
+import SiteChrome from "@/components/SiteChrome";
 
 export const metadata: Metadata = {
   title: "Sahara – World's Largest Supersite",
@@ -14,11 +15,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" suppressHydrationWarning>
+      <body className="themed-body">
         <LanguageProvider>
-          {children}
-          <LanguageSelector />
+          <ThemeProvider>
+            <SiteChrome>{children}</SiteChrome>
+          </ThemeProvider>
         </LanguageProvider>
       </body>
     </html>

@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import SaharaHeader from '@/components/SaharaHeader';
 import {
   Bell,
   ChevronDown,
@@ -30,13 +29,7 @@ import {
   X,
 } from 'lucide-react';
 
-const C = {
-  deep: '#2b4c7d',
-  mid: '#497ab6',
-  soft: '#88a9d8',
-  gold: '#ffc105',
-  ink: '#080f1c',
-} as const;
+import { themeInline as C, mix } from '@/lib/themeTokens';
 
 type VideoItem = {
   id: string;
@@ -242,16 +235,10 @@ export default function VideosHub() {
   };
 
   return (
-    <div
-      className="min-h-screen text-[#e8edf5] relative"
-      style={{
-        background: `linear-gradient(165deg, ${C.ink} 0%, #0f1f38 45%, ${C.deep}ee 100%)`,
-      }}
-    >
-      <SaharaHeader />
+    <div className="relative min-h-screen text-[var(--text)]">
       <a
         href="#main-feed"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[200] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-[#ffc105] focus:text-[#080f1c] focus:font-bold"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-[200] focus:rounded-lg focus:px-4 focus:py-2 focus:bg-[var(--gold)] focus:font-bold focus:text-[var(--bg)]"
       >
         Skip to video feed
       </a>
@@ -260,27 +247,21 @@ export default function VideosHub() {
         <div
           role="status"
           className="fixed bottom-6 right-6 z-[190] rounded-xl px-4 py-3 shadow-2xl border text-sm font-medium animate-in fade-in"
-          style={{ background: C.deep, borderColor: C.soft, color: '#fff' }}
+          style={{ background: C.deep, borderColor: C.soft, color: 'var(--text)' }}
         >
           {toast}
         </div>
       )}
 
       <header
-        className="sticky top-0 z-[100] border-b backdrop-blur-xl"
-        style={{ background: `${C.deep}e6`, borderColor: `${C.mid}55` }}
+        className="sticky z-50 border-b border-sahara-border backdrop-blur-xl"
+        style={{
+          top: 'var(--header-offset)',
+          background: mix(C.primary, 92),
+        }}
       >
-        <div className="max-w-[1400px] mx-auto px-4 h-14 flex items-center gap-3">
-          <Link href="/" className="flex items-center gap-2 font-['Barlow_Condensed'] font-black uppercase tracking-wide shrink-0" style={{ color: C.gold }}>
-            <span className="grid place-items-center w-9 h-9 rounded-lg text-[#080f1c]" style={{ background: C.gold }}>
-              S
-            </span>
-            <span className="hidden sm:inline">Sahara</span>
-          </Link>
-
-          <div className="hidden md:block w-px h-6 shrink-0" style={{ background: `${C.mid}66` }} role="separator" aria-orientation="vertical" />
-
-          <nav aria-label="Breadcrumb" className="hidden md:flex text-sm" style={{ color: C.soft }}>
+        <div className="mx-auto flex h-12 max-w-[1400px] items-center gap-3 px-4">
+          <nav aria-label="Breadcrumb" className="hidden text-sm md:flex" style={{ color: C.soft }}>
             <ol className="flex items-center gap-2 list-none m-0 p-0">
               <li>
                 <Link href="/" className="hover:underline" style={{ color: C.soft }}>
@@ -288,7 +269,7 @@ export default function VideosHub() {
                 </Link>
               </li>
               <li aria-hidden="true">/</li>
-              <li className="font-semibold" style={{ color: '#fff' }}>
+              <li className="font-semibold" style={{ color: 'var(--text)' }}>
                 LaughTube
               </li>
             </ol>
@@ -306,17 +287,17 @@ export default function VideosHub() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full rounded-full pl-10 pr-4 py-2 text-sm outline-none border"
-              style={{ background: `${C.ink}99`, borderColor: `${C.mid}66`, color: '#fff' }}
+              style={{ background: `${mix(C.ink, 60)}`, borderColor: `${mix(C.mid, 40)}`, color: 'var(--text)' }}
             />
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
-            <div className="hidden sm:flex rounded-lg overflow-hidden border" style={{ borderColor: `${C.mid}55` }}>
+            <div className="hidden sm:flex rounded-lg overflow-hidden border" style={{ borderColor: `${mix(C.mid, 33)}` }}>
               <button
                 type="button"
                 onClick={() => setDrawerOpen(true)}
                 className="px-3 py-2 text-xs font-semibold uppercase tracking-wider flex items-center gap-1"
-                style={{ background: C.mid, color: '#fff' }}
+                style={{ background: C.mid, color: 'var(--text)' }}
                 aria-expanded={drawerOpen}
               >
                 <PanelRight className="w-4 h-4" />
@@ -338,7 +319,7 @@ export default function VideosHub() {
                 type="button"
                 onClick={() => setDropdownOpen((o) => !o)}
                 className="p-2 rounded-lg border"
-                style={{ borderColor: `${C.soft}44`, background: `${C.deep}88` }}
+                style={{ borderColor: `${mix(C.soft, 27)}`, background: `${mix(C.deep, 53)}` }}
                 aria-haspopup="menu"
                 aria-expanded={dropdownOpen}
               >
@@ -348,7 +329,7 @@ export default function VideosHub() {
                 <ul
                   role="menu"
                   className="absolute right-0 mt-2 w-48 rounded-xl border shadow-xl py-1 z-[120] list-none m-0 p-0"
-                  style={{ background: C.ink, borderColor: `${C.mid}66` }}
+                  style={{ background: C.ink, borderColor: `${mix(C.mid, 40)}` }}
                 >
                   <li>
                     <button type="button" role="menuitem" className="w-full text-left px-3 py-2 text-sm hover:bg-white/5">
@@ -382,9 +363,9 @@ export default function VideosHub() {
 
         <div
           className="max-w-[1400px] mx-auto px-4 pb-2 flex flex-wrap items-center gap-3 border-t"
-          style={{ borderColor: `${C.mid}33` }}
+          style={{ borderColor: `${mix(C.mid, 20)}` }}
         >
-          <div role="tablist" aria-label="LaughTube areas" className="flex gap-1 p-1 rounded-lg" style={{ background: `${C.ink}aa` }}>
+          <div role="tablist" aria-label="LaughTube areas" className="flex gap-1 p-1 rounded-lg" style={{ background: `${mix(C.ink, 67)}` }}>
             {(
               [
                 ['home', 'Home', Home],
@@ -399,7 +380,7 @@ export default function VideosHub() {
                 type="button"
                 onClick={() => setTab(id)}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-wide transition-colors ${
-                  tab === id ? 'text-[#080f1c]' : 'text-[#c8d6ea]'
+                  tab === id ? 'text-sahara-bg' : 'text-sahara-muted'
                 }`}
                 style={{ background: tab === id ? C.gold : 'transparent' }}
               >
@@ -411,7 +392,7 @@ export default function VideosHub() {
 
           <div
             className="inline-flex rounded-full p-0.5 text-xs font-bold"
-            style={{ background: `${C.deep}cc`, border: `1px solid ${C.mid}55` }}
+            style={{ background: `${mix(C.deep, 80)}`, border: `1px solid ${mix(C.mid, 33)}` }}
             role="group"
             aria-label="Filter by length"
           >
@@ -423,7 +404,7 @@ export default function VideosHub() {
                 className="px-3 py-1.5 rounded-full capitalize"
                 style={{
                   background: segment === s ? C.mid : 'transparent',
-                  color: segment === s ? '#fff' : C.soft,
+                  color: segment === s ? C.text : C.soft,
                 }}
               >
                 {s}
@@ -435,7 +416,7 @@ export default function VideosHub() {
             <button
               type="button"
               className="flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-md"
-              style={{ color: C.soft, background: `${C.mid}22` }}
+              style={{ color: C.soft, background: `${mix(C.mid, 13)}` }}
               aria-expanded={popoverOpen}
               onClick={() => setPopoverOpen((p) => !p)}
             >
@@ -445,7 +426,7 @@ export default function VideosHub() {
             {popoverOpen && (
               <div
                 className="absolute left-0 top-full mt-2 w-64 p-3 rounded-xl border shadow-xl z-[110] text-xs leading-relaxed"
-                style={{ background: C.ink, borderColor: `${C.mid}66`, color: C.soft }}
+                style={{ background: C.ink, borderColor: `${mix(C.mid, 40)}`, color: C.soft }}
               >
                 Bigger cards, calmer layout, and tools YouTube buries—queue drawer, watch-later modal, and a focus on
                 all-ages picks.
@@ -455,7 +436,7 @@ export default function VideosHub() {
 
           <span
             className="text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider"
-            style={{ background: `${C.gold}22`, color: C.gold, border: `1px solid ${C.gold}55` }}
+            style={{ background: `${mix(C.gold, 13)}`, color: C.gold, border: `1px solid ${mix(C.gold, 33)}` }}
             title="Curated for classrooms and couches"
           >
             All ages
@@ -466,11 +447,11 @@ export default function VideosHub() {
       <div
         role="alert"
         className="max-w-[1400px] mx-auto px-4 pt-4 flex items-start gap-3 rounded-xl border p-3 text-sm"
-        style={{ background: `${C.mid}18`, borderColor: `${C.gold}44`, color: '#fff' }}
+        style={{ background: `${mix(C.mid, 9)}`, borderColor: `${mix(C.gold, 27)}`, color: 'var(--text)' }}
       >
         <Laugh className="w-5 h-5 shrink-0 mt-0.5" style={{ color: C.gold }} />
         <div>
-          <strong className="font-['Barlow_Condensed'] uppercase tracking-wide text-[#fff]">LaughTube beta</strong>
+          <strong className="font-['Barlow_Condensed'] uppercase tracking-wide text-sahara-text">LaughTube beta</strong>
           <p className="m-0 mt-1 opacity-90">
             Watch any clip inside the hub using the site player. Parents: preview anything new—humor varies by household.
           </p>
@@ -485,12 +466,12 @@ export default function VideosHub() {
           <div
             className="relative overflow-hidden rounded-2xl border p-8 md:p-12 min-h-[280px] flex flex-col justify-center gap-4"
             style={{
-              borderColor: `${C.soft}44`,
-              background: `linear-gradient(120deg, ${C.deep}dd 0%, ${C.mid}99 50%, ${C.ink}ee 100%)`,
+              borderColor: `${mix(C.soft, 27)}`,
+              background: `linear-gradient(120deg, ${mix(C.deep, 87)} 0%, ${mix(C.mid, 60)} 50%, ${mix(C.ink, 93)} 100%)`,
             }}
           >
             <Film className="w-10 h-10" style={{ color: C.gold }} aria-hidden />
-            <h1 id="hero-heading" className="font-['Bebas_Neue'] text-5xl md:text-6xl m-0 tracking-wide" style={{ color: '#fff' }}>
+            <h1 id="hero-heading" className="font-['Bebas_Neue'] text-5xl md:text-6xl m-0 tracking-wide" style={{ color: 'var(--text)' }}>
               LaughTube
             </h1>
             <p className="m-0 max-w-xl text-base md:text-lg" style={{ color: C.soft }}>
@@ -510,7 +491,7 @@ export default function VideosHub() {
                 type="button"
                 onClick={() => setModalOpen(true)}
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm border"
-                style={{ borderColor: C.soft, color: '#fff', background: 'transparent' }}
+                style={{ borderColor: C.soft, color: 'var(--text)', background: 'transparent' }}
               >
                 <Heart className="w-4 h-4" />
                 Save for later
@@ -528,7 +509,7 @@ export default function VideosHub() {
                   type="button"
                   aria-label="Previous slide"
                   className="p-2 rounded-lg border"
-                  style={{ borderColor: `${C.mid}66`, background: `${C.deep}88` }}
+                  style={{ borderColor: `${mix(C.mid, 40)}`, background: `${mix(C.deep, 53)}` }}
                   onClick={() => setCarousel((c) => (c - 1 + featured.length) % featured.length)}
                 >
                   <ChevronLeft className="w-4 h-4" />
@@ -537,14 +518,14 @@ export default function VideosHub() {
                   type="button"
                   aria-label="Next slide"
                   className="p-2 rounded-lg border"
-                  style={{ borderColor: `${C.mid}66`, background: `${C.deep}88` }}
+                  style={{ borderColor: `${mix(C.mid, 40)}`, background: `${mix(C.deep, 53)}` }}
                   onClick={() => setCarousel((c) => (c + 1) % featured.length)}
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
-            <div className="relative rounded-2xl overflow-hidden border aspect-video max-h-[420px]" style={{ borderColor: `${C.mid}55` }}>
+            <div className="relative rounded-2xl overflow-hidden border aspect-video max-h-[420px]" style={{ borderColor: `${mix(C.mid, 33)}` }}>
               <iframe
                 title={featured[carousel]!.title}
                 className="absolute inset-0 w-full h-full"
@@ -554,7 +535,7 @@ export default function VideosHub() {
               />
             </div>
             <p className="mt-2 text-sm m-0" style={{ color: C.soft }}>
-              Now showing: <strong style={{ color: '#fff' }}>{featured[carousel]!.title}</strong>
+              Now showing: <strong style={{ color: 'var(--text)' }}>{featured[carousel]!.title}</strong>
             </p>
             <div className="flex gap-1 mt-2">
               {featured.map((_, i) => (
@@ -563,7 +544,7 @@ export default function VideosHub() {
                   type="button"
                   aria-label={`Go to slide ${i + 1}`}
                   className="h-1.5 flex-1 rounded-full transition-all"
-                  style={{ background: i === carousel ? C.gold : `${C.soft}44` }}
+                  style={{ background: i === carousel ? C.gold : `${mix(C.soft, 27)}` }}
                   onClick={() => setCarousel(i)}
                 />
               ))}
@@ -578,7 +559,7 @@ export default function VideosHub() {
               <h2 className="font-['Barlow_Condensed'] text-xl font-bold uppercase tracking-wide m-0">Main feed</h2>
             </div>
 
-            <div className="rounded-2xl border overflow-hidden mb-8" style={{ borderColor: `${C.mid}44`, background: `${C.deep}44` }}>
+            <div className="rounded-2xl border overflow-hidden mb-8" style={{ borderColor: `${mix(C.mid, 27)}`, background: `${mix(C.deep, 27)}` }}>
               <div className="p-5">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                   <div>
@@ -605,14 +586,14 @@ export default function VideosHub() {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-bold no-underline"
-                      style={{ background: `${C.mid}44`, color: '#fff' }}
+                      style={{ background: `${mix(C.mid, 27)}`, color: 'var(--text)' }}
                     >
                       Open on YouTube ↗
                     </a>
                   </div>
                 </div>
               </div>
-              <div className="relative aspect-video border-t" style={{ borderColor: `${C.mid}44` }}>
+              <div className="relative aspect-video border-t" style={{ borderColor: `${mix(C.mid, 27)}` }}>
                 <iframe
                   title={`Now playing ${selectedVideo.title}`}
                   className="absolute inset-0 w-full h-full"
@@ -621,7 +602,7 @@ export default function VideosHub() {
                   allowFullScreen
                 />
               </div>
-              <div className="p-5 border-t" style={{ borderColor: `${C.mid}44` }}>
+              <div className="p-5 border-t" style={{ borderColor: `${mix(C.mid, 27)}` }}>
                 <p className="text-sm m-0" style={{ color: C.soft }}>
                   {selectedVideo.quote}
                 </p>
@@ -631,17 +612,17 @@ export default function VideosHub() {
             {loadingDemo ? (
               <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4" aria-busy="true">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="rounded-xl border p-3 space-y-3 animate-pulse" style={{ borderColor: `${C.mid}33` }}>
-                    <div className="h-36 rounded-lg" style={{ background: `${C.deep}88` }} />
-                    <div className="h-4 rounded" style={{ background: `${C.mid}44` }} />
-                    <div className="h-3 rounded w-2/3" style={{ background: `${C.soft}33` }} />
+                  <div key={i} className="rounded-xl border p-3 space-y-3 animate-pulse" style={{ borderColor: `${mix(C.mid, 20)}` }}>
+                    <div className="h-36 rounded-lg" style={{ background: `${mix(C.deep, 53)}` }} />
+                    <div className="h-4 rounded" style={{ background: `${mix(C.mid, 27)}` }} />
+                    <div className="h-3 rounded w-2/3" style={{ background: `${mix(C.soft, 20)}` }} />
                   </div>
                 ))}
               </div>
             ) : filtered.length === 0 ? (
               <div
                 className="rounded-2xl border border-dashed p-10 text-center"
-                style={{ borderColor: `${C.soft}55`, background: `${C.deep}33` }}
+                style={{ borderColor: `${mix(C.soft, 33)}`, background: `${mix(C.deep, 20)}` }}
               >
                 <ListVideo className="w-12 h-12 mx-auto mb-3 opacity-60" />
                 <h3 className="m-0 font-bold text-lg">No laughs match that filter</h3>
@@ -666,7 +647,7 @@ export default function VideosHub() {
                   <article
                     key={v.id}
                     className="rounded-2xl border overflow-hidden flex flex-col shadow-lg transition-transform hover:-translate-y-0.5"
-                    style={{ borderColor: `${C.mid}44`, background: `${C.ink}ee` }}
+                    style={{ borderColor: `${mix(C.mid, 27)}`, background: `${mix(C.ink, 93)}` }}
                   >
                     <button
                       type="button"
@@ -677,7 +658,7 @@ export default function VideosHub() {
                       <img src={thumbUrl(v.id)} alt="" className="w-full aspect-video object-cover" />
                       <span
                         className="absolute bottom-2 right-2 text-[10px] font-bold px-1.5 py-0.5 rounded"
-                        style={{ background: '#000c', color: '#fff' }}
+                        style={{ background: C.overlay, color: C.text }}
                       >
                         {v.duration}
                       </span>
@@ -689,7 +670,7 @@ export default function VideosHub() {
                       <div className="flex gap-3">
                         <div
                           className="w-10 h-10 rounded-full grid place-items-center text-xs font-black shrink-0"
-                          style={{ background: C.mid, color: '#fff' }}
+                          style={{ background: C.mid, color: 'var(--text)' }}
                           aria-hidden
                         >
                           {v.channel.slice(0, 2).toUpperCase()}
@@ -713,7 +694,7 @@ export default function VideosHub() {
                               <span
                                 key={t}
                                 className="text-[10px] uppercase font-bold px-2 py-0.5 rounded-full"
-                                style={{ background: `${C.mid}33`, color: C.soft, border: `1px solid ${C.soft}44` }}
+                                style={{ background: `${mix(C.mid, 20)}`, color: C.soft, border: `1px solid ${mix(C.soft, 27)}` }}
                               >
                                 {t}
                               </span>
@@ -723,7 +704,7 @@ export default function VideosHub() {
                       </div>
                       <blockquote
                         className="m-0 text-sm pl-3 border-l-4 italic"
-                        style={{ borderColor: C.gold, color: '#dbe5f5' }}
+                        style={{ borderColor: C.gold, color: 'var(--muted)' }}
                       >
                         {v.quote}
                       </blockquote>
@@ -731,7 +712,7 @@ export default function VideosHub() {
                         <button
                           type="button"
                           className="inline-flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-md"
-                          style={{ background: `${C.mid}44`, color: '#fff' }}
+                          style={{ background: `${mix(C.mid, 27)}`, color: 'var(--text)' }}
                           onClick={() => setSelectedVideoId(v.id)}
                         >
                           <Play className="w-3.5 h-3.5" />
@@ -740,7 +721,7 @@ export default function VideosHub() {
                         <button
                           type="button"
                           className="inline-flex items-center gap-1 text-xs font-bold px-2 py-1 rounded-md"
-                          style={{ background: `${C.soft}18`, color: C.gold, border: `1px solid ${C.gold}55` }}
+                          style={{ background: `${mix(C.soft, 9)}`, color: C.gold, border: `1px solid ${mix(C.gold, 33)}` }}
                           onClick={() => window.open(ytWatch(v.id), '_blank', 'noopener')}
                         >
                           Open on YouTube ↗
@@ -756,7 +737,7 @@ export default function VideosHub() {
               <button
                 type="button"
                 className="px-3 py-1.5 rounded-lg text-sm font-bold disabled:opacity-40"
-                style={{ background: C.deep, color: '#fff', border: `1px solid ${C.mid}` }}
+                style={{ background: C.deep, color: 'var(--text)', border: `1px solid ${C.mid}` }}
                 disabled={page <= 1}
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
               >
@@ -770,7 +751,7 @@ export default function VideosHub() {
                   className="w-9 h-9 rounded-lg text-sm font-bold"
                   style={{
                     background: n === page ? C.gold : C.deep,
-                    color: n === page ? C.ink : '#fff',
+                    color: n === page ? C.onAccent : C.text,
                     border: `1px solid ${n === page ? C.gold : C.mid}`,
                   }}
                 >
@@ -780,7 +761,7 @@ export default function VideosHub() {
               <button
                 type="button"
                 className="px-3 py-1.5 rounded-lg text-sm font-bold disabled:opacity-40"
-                style={{ background: C.deep, color: '#fff', border: `1px solid ${C.mid}` }}
+                style={{ background: C.deep, color: 'var(--text)', border: `1px solid ${C.mid}` }}
                 disabled={page >= pageCount}
                 onClick={() => setPage((p) => Math.min(pageCount, p + 1))}
               >
@@ -789,7 +770,7 @@ export default function VideosHub() {
             </nav>
           </div>
 
-          <section className="mt-12 rounded-2xl border p-5" style={{ borderColor: `${C.mid}44`, background: `${C.deep}44` }}>
+          <section className="mt-12 rounded-2xl border p-5" style={{ borderColor: `${mix(C.mid, 27)}`, background: `${mix(C.deep, 27)}` }}>
             <h2 className="font-['Barlow_Condensed'] text-lg font-bold uppercase tracking-wide m-0 mb-4">Creator studio (demo form)</h2>
             <form
               className="grid md:grid-cols-2 gap-6"
@@ -798,7 +779,7 @@ export default function VideosHub() {
                 showToast('Playlist idea saved locally (demo only)');
               }}
             >
-              <fieldset className="border rounded-xl p-4 m-0" style={{ borderColor: `${C.soft}44` }}>
+              <fieldset className="border rounded-xl p-4 m-0" style={{ borderColor: `${mix(C.soft, 27)}` }}>
                 <legend className="px-2 font-bold text-sm" style={{ color: C.gold }}>
                   Watch preferences
                 </legend>
@@ -851,7 +832,7 @@ export default function VideosHub() {
                     type="text"
                     placeholder="Friday Funny Mix"
                     className="w-full rounded-lg px-3 py-2 text-sm border outline-none"
-                    style={{ background: C.ink, borderColor: `${C.mid}66`, color: '#fff' }}
+                    style={{ background: C.ink, borderColor: `${mix(C.mid, 40)}`, color: 'var(--text)' }}
                   />
                 </div>
                 <div>
@@ -862,7 +843,7 @@ export default function VideosHub() {
                     id="pl-notes"
                     rows={3}
                     className="w-full rounded-lg px-3 py-2 text-sm border outline-none resize-y"
-                    style={{ background: C.ink, borderColor: `${C.mid}66`, color: '#fff' }}
+                    style={{ background: C.ink, borderColor: `${mix(C.mid, 40)}`, color: 'var(--text)' }}
                     placeholder="What should the room feel like?"
                   />
                 </div>
@@ -877,7 +858,7 @@ export default function VideosHub() {
                       value={pickDate}
                       onChange={(e) => setPickDate(e.target.value)}
                       className="w-full rounded-lg px-2 py-2 text-sm border"
-                      style={{ background: C.ink, borderColor: `${C.mid}66`, color: '#fff' }}
+                      style={{ background: C.ink, borderColor: `${mix(C.mid, 40)}`, color: 'var(--text)' }}
                     />
                   </div>
                   <div>
@@ -911,7 +892,7 @@ export default function VideosHub() {
                   <label className="flex items-center gap-2 text-sm cursor-pointer">
                     <span
                       className="relative w-10 h-6 rounded-full transition-colors"
-                      style={{ background: toggleNotify ? C.gold : `${C.mid}66` }}
+                      style={{ background: toggleNotify ? C.gold : `${mix(C.mid, 40)}` }}
                     >
                       <input
                         type="checkbox"
@@ -933,7 +914,7 @@ export default function VideosHub() {
                     <button
                       type="button"
                       className="w-8 h-8 rounded-lg font-bold"
-                      style={{ background: C.mid, color: '#fff' }}
+                      style={{ background: C.mid, color: 'var(--text)' }}
                       onClick={() => setQty((q) => Math.max(1, q - 1))}
                     >
                       −
@@ -942,7 +923,7 @@ export default function VideosHub() {
                     <button
                       type="button"
                       className="w-8 h-8 rounded-lg font-bold"
-                      style={{ background: C.mid, color: '#fff' }}
+                      style={{ background: C.mid, color: 'var(--text)' }}
                       onClick={() => setQty((q) => q + 1)}
                     >
                       +
@@ -958,7 +939,7 @@ export default function VideosHub() {
                     value={sortSelect}
                     onChange={(e) => setSortSelect(e.target.value)}
                     className="w-full rounded-lg px-3 py-2 text-sm border"
-                    style={{ background: C.ink, borderColor: `${C.mid}66`, color: '#fff' }}
+                    style={{ background: C.ink, borderColor: `${mix(C.mid, 40)}`, color: 'var(--text)' }}
                   >
                     <option value="trending">Trending wholesomeness</option>
                     <option value="short">Short bursts</option>
@@ -969,19 +950,19 @@ export default function VideosHub() {
                   <label className="block text-xs font-bold uppercase mb-1" style={{ color: C.soft }}>
                     Upload cover art (demo)
                   </label>
-                  <label className="flex items-center gap-2 px-3 py-2 rounded-lg border border-dashed cursor-pointer text-sm" style={{ borderColor: `${C.soft}66` }}>
+                  <label className="flex items-center gap-2 px-3 py-2 rounded-lg border border-dashed cursor-pointer text-sm" style={{ borderColor: mix(C.soft, 40) }}>
                     <Upload className="w-4 h-4" />
                     Choose file
                     <input type="file" className="sr-only" accept="image/*" />
                   </label>
                 </div>
-                <div className="rounded-lg border p-3 flex items-center gap-3" style={{ borderColor: `${C.mid}44`, background: `${C.ink}aa` }}>
+                <div className="rounded-lg border p-3 flex items-center gap-3" style={{ borderColor: `${mix(C.mid, 27)}`, background: `${mix(C.ink, 67)}` }}>
                   <Download className="w-5 h-5 shrink-0" style={{ color: C.gold }} />
                   <div>
                     <div className="text-xs font-bold uppercase" style={{ color: C.soft }}>
                       Offline kit
                     </div>
-                    <a href="#" className="text-sm font-semibold no-underline" style={{ color: '#fff' }} onClick={(e) => e.preventDefault()}>
+                    <a href="#" className="text-sm font-semibold no-underline" style={{ color: 'var(--text)' }} onClick={(e) => e.preventDefault()}>
                       laughtube-checklist.pdf
                     </a>
                   </div>
@@ -1001,10 +982,10 @@ export default function VideosHub() {
                 Mini rich-text editor
               </h3>
               <div className="flex gap-1 mb-2">
-                <button type="button" className="px-2 py-1 rounded text-xs font-bold" style={{ background: C.mid, color: '#fff' }} onClick={boldRte}>
+                <button type="button" className="px-2 py-1 rounded text-xs font-bold" style={{ background: C.mid, color: 'var(--text)' }} onClick={boldRte}>
                   Bold
                 </button>
-                <button type="button" className="px-2 py-1 rounded text-xs font-bold" style={{ background: C.mid, color: '#fff' }} onClick={italicRte}>
+                <button type="button" className="px-2 py-1 rounded text-xs font-bold" style={{ background: C.mid, color: 'var(--text)' }} onClick={italicRte}>
                   Italic
                 </button>
               </div>
@@ -1013,17 +994,17 @@ export default function VideosHub() {
                 contentEditable
                 suppressContentEditableWarning
                 className="min-h-[100px] rounded-lg border p-3 text-sm outline-none"
-                style={{ borderColor: `${C.mid}66`, background: C.ink }}
+                style={{ borderColor: `${mix(C.mid, 40)}`, background: C.ink }}
               >
                 Type your <strong>show notes</strong> here—like a tiny <em>studio teleprompter</em>.
               </div>
             </div>
 
-            <div className="mt-8 overflow-x-auto rounded-xl border" style={{ borderColor: `${C.mid}44` }}>
+            <div className="mt-8 overflow-x-auto rounded-xl border" style={{ borderColor: `${mix(C.mid, 27)}` }}>
               <table className="w-full text-sm border-collapse">
                 <caption className="sr-only">Sample analytics</caption>
                 <thead>
-                  <tr style={{ background: `${C.deep}cc` }}>
+                  <tr style={{ background: `${mix(C.deep, 80)}` }}>
                     <th className="text-left p-3 font-['Barlow_Condensed'] uppercase text-xs tracking-wide">Video</th>
                     <th className="text-left p-3 font-['Barlow_Condensed'] uppercase text-xs tracking-wide">Vibe</th>
                     <th className="text-left p-3 font-['Barlow_Condensed'] uppercase text-xs tracking-wide">Laugh meter</th>
@@ -1031,7 +1012,7 @@ export default function VideosHub() {
                 </thead>
                 <tbody>
                   {LIBRARY.slice(0, 4).map((v) => (
-                    <tr key={v.id} className="border-t" style={{ borderColor: `${C.mid}33` }}>
+                    <tr key={v.id} className="border-t" style={{ borderColor: `${mix(C.mid, 20)}` }}>
                       <td className="p-3 font-medium">{v.title}</td>
                       <td className="p-3" style={{ color: C.soft }}>
                         {v.tags[0]}
@@ -1071,7 +1052,7 @@ export default function VideosHub() {
                   <span>Buffering storytime…</span>
                   <span>73%</span>
                 </div>
-                <div className="h-2 rounded-full overflow-hidden" style={{ background: `${C.mid}33` }}>
+                <div className="h-2 rounded-full overflow-hidden" style={{ background: `${mix(C.mid, 20)}` }}>
                   <div className="h-full rounded-full" style={{ width: '73%', background: `linear-gradient(90deg, ${C.gold}, ${C.soft})` }} />
                 </div>
               </div>
@@ -1083,13 +1064,13 @@ export default function VideosHub() {
                   <span
                     className="w-7 h-7 rounded-full grid place-items-center text-xs font-black"
                     style={{
-                      background: i <= 1 ? C.gold : `${C.mid}44`,
-                      color: i <= 1 ? C.ink : '#fff',
+                      background: i <= 1 ? C.gold : `${mix(C.mid, 27)}`,
+                      color: i <= 1 ? C.onAccent : C.text,
                     }}
                   >
                     {i + 1}
                   </span>
-                  <span className="text-xs font-bold uppercase" style={{ color: i <= 1 ? '#fff' : C.soft }}>
+                  <span className="text-xs font-bold uppercase" style={{ color: i <= 1 ? C.text : C.soft }}>
                     {step}
                   </span>
                   {i < 2 && <span className="text-xs" style={{ color: C.soft }}>→</span>}
@@ -1103,11 +1084,11 @@ export default function VideosHub() {
               <h2 className="font-['Barlow_Condensed'] text-lg font-bold uppercase m-0 mb-3">Showy-hidey FAQ</h2>
               <div className="space-y-2">
                 {['Why not just YouTube?', 'Are these videos free?', 'Can I suggest a clip?'].map((q, i) => (
-                  <div key={q} className="rounded-xl border overflow-hidden" style={{ borderColor: `${C.mid}44` }}>
+                  <div key={q} className="rounded-xl border overflow-hidden" style={{ borderColor: `${mix(C.mid, 27)}` }}>
                     <button
                       type="button"
                       className="w-full flex items-center justify-between px-4 py-3 text-left text-sm font-bold"
-                      style={{ background: `${C.deep}88`, color: '#fff' }}
+                      style={{ background: `${mix(C.deep, 53)}`, color: 'var(--text)' }}
                       aria-expanded={accordionOpen === i}
                       onClick={() => setAccordionOpen((a) => (a === i ? null : i))}
                     >
@@ -1121,7 +1102,7 @@ export default function VideosHub() {
                       />
                     </button>
                     {accordionOpen === i && (
-                      <div className="px-4 py-3 text-sm" style={{ background: `${C.ink}cc`, color: C.soft }}>
+                      <div className="px-4 py-3 text-sm" style={{ background: mix(C.ink, 80), color: C.soft }}>
                         {i === 0 && 'LaughTube wraps YouTube with calmer hierarchy, queues, and classroom-minded defaults, plus an in-site embed for every clip.'}
                         {i === 1 && 'Yes—each card can also still open the original free watch page on YouTube if you need it.'}
                         {i === 2 && 'Use the feedback items in the ⋮ menu; this demo stores nothing on a server.'}
@@ -1130,7 +1111,7 @@ export default function VideosHub() {
                   </div>
                 ))}
               </div>
-              <details className="mt-4 rounded-xl border open:bg-white/5" style={{ borderColor: `${C.soft}55` }}>
+              <details className="mt-4 rounded-xl border open:bg-white/5" style={{ borderColor: `${mix(C.soft, 33)}` }}>
                 <summary className="cursor-pointer px-4 py-3 font-bold text-sm" style={{ color: C.gold }}>
                   Collapsible details (native disclosure)
                 </summary>
@@ -1156,7 +1137,7 @@ export default function VideosHub() {
                   }}
                   onFocus={() => setComboOpen(true)}
                   className="w-full rounded-lg px-3 py-2 text-sm border"
-                  style={{ background: C.ink, borderColor: `${C.mid}66`, color: '#fff' }}
+                  style={{ background: C.ink, borderColor: `${mix(C.mid, 40)}`, color: 'var(--text)' }}
                   placeholder="Type a tag: cartoon, pets…"
                   role="combobox"
                   aria-expanded={comboOpen}
@@ -1166,7 +1147,7 @@ export default function VideosHub() {
                   <ul
                     role="listbox"
                     className="absolute z-50 mt-1 w-full max-h-40 overflow-auto rounded-lg border shadow-lg m-0 p-0 list-none"
-                    style={{ background: C.ink, borderColor: `${C.mid}66` }}
+                    style={{ background: C.ink, borderColor: `${mix(C.mid, 40)}` }}
                   >
                     {comboOptions.map((opt) => (
                       <li key={opt}>
@@ -1192,14 +1173,14 @@ export default function VideosHub() {
               <ul className="m-0 pl-0 list-none text-sm" style={{ color: C.soft }}>
                 <li>
                   <span className="font-bold text-white">Animals</span>
-                  <ul className="mt-1 ml-4 border-l pl-3" style={{ borderColor: `${C.mid}44` }}>
+                  <ul className="mt-1 ml-4 border-l pl-3" style={{ borderColor: `${mix(C.mid, 27)}` }}>
                     <li>Penguins &amp; pals</li>
                     <li>Dogs being dogs</li>
                   </ul>
                 </li>
                 <li className="mt-3">
                   <span className="font-bold text-white">Animation</span>
-                  <ul className="mt-1 ml-4 border-l pl-3" style={{ borderColor: `${C.mid}44` }}>
+                  <ul className="mt-1 ml-4 border-l pl-3" style={{ borderColor: `${mix(C.mid, 27)}` }}>
                     <li>Silent comedy</li>
                     <li>Stop-motion gags</li>
                   </ul>
@@ -1207,7 +1188,7 @@ export default function VideosHub() {
               </ul>
 
               <dl className="mt-6 text-sm grid gap-2">
-                <div className="flex justify-between gap-4 border-b pb-2" style={{ borderColor: `${C.mid}33` }}>
+                <div className="flex justify-between gap-4 border-b pb-2" style={{ borderColor: `${mix(C.mid, 20)}` }}>
                   <dt className="m-0 font-bold" style={{ color: C.gold }}>
                     Golden rule
                   </dt>
@@ -1229,7 +1210,7 @@ export default function VideosHub() {
         </div>
 
         <aside className="space-y-6 lg:sticky lg:top-20 self-start">
-          <div className="rounded-2xl border p-4" style={{ borderColor: `${C.mid}44`, background: `${C.deep}55` }}>
+          <div className="rounded-2xl border p-4" style={{ borderColor: `${mix(C.mid, 27)}`, background: `${mix(C.deep, 33)}` }}>
             <div className="flex items-center justify-between mb-3">
               <h2 className="font-['Barlow_Condensed'] text-sm font-bold uppercase m-0">Studio toggles</h2>
               <Settings2 className="w-4 h-4" style={{ color: C.soft }} />
@@ -1265,14 +1246,14 @@ export default function VideosHub() {
             </div>
           </div>
 
-          <div className="rounded-2xl border p-4 text-sm" style={{ borderColor: `${C.mid}44`, background: `${C.ink}dd` }}>
+          <div className="rounded-2xl border p-4 text-sm" style={{ borderColor: `${mix(C.mid, 27)}`, background: `${mix(C.ink, 87)}` }}>
             <h3 className="font-['Barlow_Condensed'] uppercase text-xs font-bold m-0 mb-2" style={{ color: C.gold }}>
               Keyboard tooltip
             </h3>
             <p className="m-0">
               <kbd
                 className="px-1.5 py-0.5 rounded border text-xs font-mono"
-                style={{ borderColor: `${C.soft}55`, background: `${C.deep}88` }}
+                style={{ borderColor: `${mix(C.soft, 33)}`, background: `${mix(C.deep, 53)}` }}
                 title="Press slash to focus search on big sites—here it is just a demo hint"
               >
                 /
@@ -1281,7 +1262,7 @@ export default function VideosHub() {
             </p>
           </div>
 
-          <div className="rounded-2xl border p-4" style={{ borderColor: `${C.mid}44` }}>
+          <div className="rounded-2xl border p-4" style={{ borderColor: `${mix(C.mid, 27)}` }}>
             <h3 className="font-['Barlow_Condensed'] uppercase text-xs font-bold m-0 mb-3" style={{ color: C.soft }}>
               Date fields (split)
             </h3>
@@ -1290,26 +1271,26 @@ export default function VideosHub() {
                 <label className="text-[10px] uppercase font-bold" style={{ color: C.soft }}>
                   Day
                 </label>
-                <input type="number" min={1} max={31} defaultValue={15} className="w-full mt-1 rounded px-2 py-1 text-sm border" style={{ background: C.ink, borderColor: `${C.mid}66`, color: '#fff' }} />
+                <input type="number" min={1} max={31} defaultValue={15} className="w-full mt-1 rounded px-2 py-1 text-sm border" style={{ background: C.ink, borderColor: `${mix(C.mid, 40)}`, color: 'var(--text)' }} />
               </div>
               <div className="flex-1">
                 <label className="text-[10px] uppercase font-bold" style={{ color: C.soft }}>
                   Month
                 </label>
-                <input type="number" min={1} max={12} defaultValue={4} className="w-full mt-1 rounded px-2 py-1 text-sm border" style={{ background: C.ink, borderColor: `${C.mid}66`, color: '#fff' }} />
+                <input type="number" min={1} max={12} defaultValue={4} className="w-full mt-1 rounded px-2 py-1 text-sm border" style={{ background: C.ink, borderColor: `${mix(C.mid, 40)}`, color: 'var(--text)' }} />
               </div>
               <div className="flex-1">
                 <label className="text-[10px] uppercase font-bold" style={{ color: C.soft }}>
                   Year
                 </label>
-                <input type="number" min={2020} max={2030} defaultValue={2026} className="w-full mt-1 rounded px-2 py-1 text-sm border" style={{ background: C.ink, borderColor: `${C.mid}66`, color: '#fff' }} />
+                <input type="number" min={2020} max={2030} defaultValue={2026} className="w-full mt-1 rounded px-2 py-1 text-sm border" style={{ background: C.ink, borderColor: `${mix(C.mid, 40)}`, color: 'var(--text)' }} />
               </div>
             </div>
           </div>
         </aside>
       </section>
 
-      <footer className="border-t mt-12 py-10" style={{ borderColor: `${C.mid}44`, background: `${C.ink}ee` }}>
+      <footer className="border-t mt-12 py-10" style={{ borderColor: `${mix(C.mid, 27)}`, background: `${mix(C.ink, 93)}` }}>
         <div className="max-w-[1400px] mx-auto px-4 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
             <div className="font-['Barlow_Condensed'] font-black text-xl uppercase" style={{ color: C.gold }}>
@@ -1339,13 +1320,13 @@ export default function VideosHub() {
           <button type="button" className="absolute inset-0 bg-black/50 border-0 w-full h-full cursor-pointer" aria-label="Close queue" onClick={() => setDrawerOpen(false)} />
           <aside
             className="absolute top-0 right-0 h-full w-full max-w-md shadow-2xl border-l flex flex-col animate-in slide-in-from-right"
-            style={{ background: C.ink, borderColor: `${C.mid}66` }}
+            style={{ background: C.ink, borderColor: `${mix(C.mid, 40)}` }}
             role="dialog"
             aria-label="Watch queue"
           >
-            <div className="flex items-center justify-between p-4 border-b" style={{ borderColor: `${C.mid}44` }}>
+            <div className="flex items-center justify-between p-4 border-b" style={{ borderColor: `${mix(C.mid, 27)}` }}>
               <h2 className="m-0 font-['Barlow_Condensed'] text-lg uppercase">Your queue</h2>
-              <button type="button" className="p-2 rounded-lg border-0 cursor-pointer" style={{ background: `${C.deep}88` }} onClick={() => setDrawerOpen(false)}>
+              <button type="button" className="p-2 rounded-lg border-0 cursor-pointer" style={{ background: `${mix(C.deep, 53)}` }} onClick={() => setDrawerOpen(false)}>
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -1370,7 +1351,7 @@ export default function VideosHub() {
             aria-modal="true"
             aria-labelledby="modal-title"
             className="relative z-10 w-full max-w-md rounded-2xl border p-6 shadow-2xl"
-            style={{ background: C.deep, borderColor: `${C.gold}55` }}
+            style={{ background: C.deep, borderColor: `${mix(C.gold, 33)}` }}
           >
             <h2 id="modal-title" className="m-0 font-['Barlow_Condensed'] text-xl uppercase" style={{ color: C.gold }}>
               Watch later
@@ -1379,7 +1360,7 @@ export default function VideosHub() {
               This modal is a demo—your list lives in your head until we wire real accounts.
             </p>
             <div className="flex justify-end gap-2 mt-6">
-              <button type="button" className="px-4 py-2 rounded-lg text-sm font-bold" style={{ background: `${C.mid}44`, color: '#fff' }} onClick={() => setModalOpen(false)}>
+              <button type="button" className="px-4 py-2 rounded-lg text-sm font-bold" style={{ background: `${mix(C.mid, 27)}`, color: 'var(--text)' }} onClick={() => setModalOpen(false)}>
                 Close
               </button>
               <button

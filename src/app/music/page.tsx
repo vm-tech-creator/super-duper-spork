@@ -1673,36 +1673,19 @@ Check it out at: /music
   }, []);
 
   return (
-    <main className="min-h-screen bg-[#080f1c] text-[#e8edf5] overflow-x-hidden">
+    <main className="min-h-screen overflow-x-hidden text-[var(--text)]">
       {/* Noise overlay */}
-      <div className="fixed inset-0 pointer-events-none opacity-40 z-0"
+      <div className="pointer-events-none fixed inset-0 z-0 opacity-40"
            style={{
              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E")`
            }} />
 
-      {/* Nav */}
-      <nav className="fixed top-0 w-full z-50 flex items-center justify-between px-[5%] h-[68px] bg-[rgba(8,15,28,.85)] backdrop-blur-[16px] shadow-[0_4px_40px_rgba(0,0,0,.5)] border-b border-[rgba(73,122,182,.2)]">
-        <Link href="/" className="flex items-center gap-2.5 text-decoration-none">
-          <div className="w-9 h-9 bg-gradient-to-br from-[#ffc105] to-[#e0a800] rounded-lg grid place-items-center font-bebas-neue text-xl text-[#080f1c] shadow-[0_0_16px_rgba(255,193,5,.35)]">
-            S
-          </div>
-          <div className="font-barlow-condensed font-black text-xl uppercase tracking-[.04em]">
-            <span className="text-[#ffc105]">Sahara</span>
-          </div>
-        </Link>
-        <ul className="flex gap-8 list-none">
-          <li><Link href="/" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">Home</Link></li>
-          <li><a href="#music" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">Music</a></li>
-          <li><Link href="/music/create" className="text-[#7a93b4] no-underline font-medium uppercase tracking-[.05em] text-[.875rem] transition-colors hover:text-[#ffc105]">Create</Link></li>
-        </ul>
-      </nav>
-
       {/* Sidebar */}
-      <aside className="fixed left-0 top-[68px] w-64 h-[calc(100vh-68px-120px)] bg-slate-900/50 border-r border-cyan-500/20 overflow-y-auto z-40 pb-8">
+      <aside className="fixed left-0 top-[88px] z-40 h-[calc(100vh-88px-120px)] w-64 overflow-y-auto border-r border-[var(--border)] bg-[var(--surface)] pb-8 backdrop-blur-md">
         <div className="p-6">
           {/* Genres Section */}
           <div className="mb-8">
-            <h3 className="text-cyan-400 font-barlow font-bold uppercase text-xs tracking-widest mb-4">Genres</h3>
+            <h3 className="text-cyan-400 font-bold uppercase text-xs tracking-widest mb-4">Genres</h3>
             <div className="space-y-2">
               {Object.keys(tracksByGenre).map((genre) => (
                 <button
@@ -1722,7 +1705,7 @@ Check it out at: /music
 
           {/* Age Level Section */}
           <div className="mb-8">
-            <h3 className="text-cyan-400 font-barlow font-bold uppercase text-xs tracking-widest mb-4">Age Level</h3>
+            <h3 className="text-cyan-400 font-bold uppercase text-xs tracking-widest mb-4">Age Level</h3>
             <div className="space-y-2">
               {Object.keys(tracksByAge).map((ageLevel) => (
                 <button
@@ -1742,7 +1725,7 @@ Check it out at: /music
 
           {/* Moods Section */}
           <div className="mb-8">
-            <h3 className="text-cyan-400 font-barlow font-bold uppercase text-xs tracking-widest mb-4">Moods</h3>
+            <h3 className="text-cyan-400 font-bold uppercase text-xs tracking-widest mb-4">Moods</h3>
             <div className="space-y-2">
               {moods.map((mood) => (
                 <button
@@ -1757,7 +1740,7 @@ Check it out at: /music
 
           {/* Eras Section */}
           <div className="mb-8">
-            <h3 className="text-cyan-400 font-barlow font-bold uppercase text-xs tracking-widest mb-4">Eras</h3>
+            <h3 className="text-cyan-400 font-bold uppercase text-xs tracking-widest mb-4">Eras</h3>
             <div className="space-y-2">
               {eras.map((era) => (
                 <button
@@ -1772,7 +1755,7 @@ Check it out at: /music
 
           {/* Favorites Section */}
           <div className="mb-8">
-            <h3 className="text-cyan-400 font-barlow font-bold uppercase text-xs tracking-widest mb-4">
+            <h3 className="text-cyan-400 font-bold uppercase text-xs tracking-widest mb-4">
               ❤️ Favorites ({favorites.length})
             </h3>
             {favorites.length > 0 ? (
@@ -1795,15 +1778,15 @@ Check it out at: /music
       </aside>
 
       {/* Content with top padding for fixed header and left padding for sidebar */}
-      <div className="relative z-10 pt-[68px] ml-64">
+      <div className="relative z-10 ml-64">
             <div className="p-8">
               {/* Current Playing Track */}
               {isPlaying && currentTrack < allTracks.length && (
                 <div className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/40 rounded-lg p-6 mb-8">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-cyan-400 text-sm font-barlow font-semibold mb-1">NOW PLAYING</p>
-                      <h2 className="text-2xl font-bebas-neue font-bold text-white">{allTracks[currentTrack]?.title}</h2>
+                      <p className="text-cyan-400 text-sm font-semibold mb-1">NOW PLAYING</p>
+                      <h2 className="text-2xl font-bold text-white">{allTracks[currentTrack]?.title}</h2>
                       <p className="text-gray-300 text-sm mt-1">{allTracks[currentTrack]?.artist}</p>
                     </div>
                     <span className="text-4xl animate-pulse">🎵</span>
@@ -1837,7 +1820,7 @@ Check it out at: /music
                       </div>
 
                       {/* Track Info */}
-                      <h3 className="font-barlow font-bold text-white group-hover:text-cyan-400 transition-colors line-clamp-2 mb-1">
+                      <h3 className="font-bold text-white group-hover:text-cyan-400 transition-colors line-clamp-2 mb-1">
                         {track.title}
                       </h3>
                       <p className="text-gray-400 text-sm line-clamp-1 mb-3">{track.artist}</p>
@@ -1871,7 +1854,7 @@ Check it out at: /music
         <div className="flex items-center gap-4 mb-3">
           {/* Track Info */}
           <div className="flex-1 min-w-0">
-            <p className="text-white font-barlow font-semibold truncate">
+            <p className="text-white font-semibold truncate">
               {currentTrack < allTracks.length ? allTracks[currentTrack]?.title : 'Select a track'}
             </p>
             <p className="text-gray-400 text-sm truncate">
@@ -1906,7 +1889,7 @@ Check it out at: /music
             </button>
             <button
               onClick={handlePlayPause}
-              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-barlow font-bold text-lg transition-all transform hover:scale-110"
+              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg transition-all transform hover:scale-110"
               title={isPlaying ? 'Pause' : 'Play'}
             >
               {isPlaying ? '⏸' : '▶'}

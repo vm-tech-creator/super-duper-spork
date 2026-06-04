@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
-import SaharaHeader from '@/components/SaharaHeader';
 
 export default function Synthesizer() {
   const [frequency, setFrequency] = useState(440);
@@ -137,28 +136,23 @@ export default function Synthesizer() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white">
-      <div className="max-w-7xl mx-auto">
-        {/* Navigation Header */}
-        <nav className="flex items-center justify-between p-6 border-b border-slate-700">
-          <Link href="/" className="text-2xl font-bebas-neue font-bold text-yellow-400 hover:text-yellow-300 transition-colors">
-            🌍 Sahara Supersite
-          </Link>
-        </nav>
-      </div>
-      <div className="max-w-7xl mx-auto">
+    <main className="min-h-screen text-[var(--text)]">
+      <div className="mx-auto max-w-7xl px-4">
+        <Link href="/music" className="t-btn-primary mb-6 inline-flex rounded-xl px-4 py-2 text-sm font-semibold no-underline">
+          Back to Music
+        </Link>
 
         {/* Hero Section */}
         <section className="py-16 px-4">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
-              <h1 className="text-5xl md:text-6xl font-bebas-neue font-bold mb-4 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+              <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-sahara-secondary to-sahara-primary bg-clip-text text-transparent">
                 🎹 Synthesizer
               </h1>
               <p className="text-xl text-gray-300">
                 Create custom sounds with oscillators and controls
               </p>
-              <div className="h-1 w-32 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full mx-auto mt-6"></div>
+              <div className="h-1 w-32 bg-gradient-to-r from-sahara-secondary to-sahara-primary rounded-full mx-auto mt-6"></div>
             </div>
           </div>
         </section>
@@ -167,11 +161,11 @@ export default function Synthesizer() {
         <section className="py-12 px-4 mb-12">
           <div className="max-w-4xl mx-auto">
             <div className="bg-gradient-to-br from-slate-700/50 to-slate-800/50 border border-cyan-500/30 rounded-xl p-8">
-              <h2 className="text-2xl font-bebas-neue font-bold text-cyan-400 mb-8">Synthesizer Controls</h2>
+              <h2 className="text-2xl font-bold text-cyan-400 mb-8">Synthesizer Controls</h2>
 
               {/* Tempo Control */}
               <div className="mb-8">
-                <label className="block text-lg font-barlow font-semibold text-gray-300 mb-4">
+                <label className="block text-lg font-semibold text-gray-300 mb-4">
                   Tempo: {tempo === 0 ? 'Off' : `${tempo} BPM`}
                 </label>
                 <div className="flex gap-4 mb-4">
@@ -185,7 +179,7 @@ export default function Synthesizer() {
                   />
                   <button
                     onClick={toggleMetronome}
-                    className={`px-6 py-2 rounded-lg font-barlow font-bold transition-all transform hover:scale-105 whitespace-nowrap ${
+                    className={`px-6 py-2 rounded-lg font-bold transition-all transform hover:scale-105 whitespace-nowrap ${
                       isMetronomeActive
                         ? 'bg-red-500 hover:bg-red-400 text-white'
                         : 'bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white'
@@ -198,13 +192,13 @@ export default function Synthesizer() {
 
               {/* Waveform Selection */}
               <div className="mb-8">
-                <label className="block text-lg font-barlow font-semibold text-gray-300 mb-4">Waveform</label>
+                <label className="block text-lg font-semibold text-gray-300 mb-4">Waveform</label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   {['sine', 'square', 'sawtooth', 'triangle'].map((wave) => (
                     <button
                       key={wave}
                       onClick={() => setWaveform(wave)}
-                      className={`px-4 py-3 rounded-lg font-barlow font-semibold transition-all capitalize ${
+                      className={`px-4 py-3 rounded-lg font-semibold transition-all capitalize ${
                         waveform === wave
                           ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/50'
                           : 'bg-slate-600 hover:bg-slate-500 text-gray-300'
@@ -218,7 +212,7 @@ export default function Synthesizer() {
 
               {/* Frequency Control */}
               <div className="mb-8">
-                <label className="block text-lg font-barlow font-semibold text-gray-300 mb-4">
+                <label className="block text-lg font-semibold text-gray-300 mb-4">
                   Frequency: {frequency} Hz
                 </label>
                 <input
@@ -243,7 +237,7 @@ export default function Synthesizer() {
                   onMouseLeave={stopSound}
                   onTouchStart={playSound}
                   onTouchEnd={stopSound}
-                  className="flex-1 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-barlow font-bold text-lg rounded-lg transition-all transform hover:scale-105 active:scale-95"
+                  className="flex-1 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-lg rounded-lg transition-all transform hover:scale-105 active:scale-95"
                 >
                   ▶ Play (Click & Hold)
                 </button>
@@ -262,7 +256,7 @@ export default function Synthesizer() {
         {/* Information Section */}
         <section className="py-12 px-4 mb-12">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bebas-neue font-bold mb-8 text-cyan-400 flex items-center gap-3">
+            <h2 className="text-3xl font-bold mb-8 text-cyan-400 flex items-center gap-3">
               <span className="text-4xl">ℹ️</span>
               About Synthesizers
             </h2>

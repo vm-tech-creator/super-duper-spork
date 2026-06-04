@@ -145,13 +145,13 @@ export default function CatBounce({ onClose }: { onClose: () => void }) {
       <div className="absolute top-4 right-4 z-50 flex gap-2">
         <button
           onClick={() => (window as any).makeItRain()}
-          className="bg-[#ffc105] text-[#080f1c] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#ffcf3a] transition-all hover:shadow-lg"
+          className="bg-sahara-gold text-sahara-bg border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:opacity-90 transition-all hover:shadow-lg"
         >
           🌧️ Make it Rain Cats
         </button>
         <button
           onClick={onClose}
-          className="bg-[#497ab6] text-[#e8edf5] border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#2b4c7d]"
+          className="bg-[#497ab6] text-sahara-text border-none px-6 py-2 rounded font-bold uppercase tracking-[.08em] cursor-pointer hover:bg-[#2b4c7d]"
         >
           ← Back to Games
         </button>
@@ -159,7 +159,7 @@ export default function CatBounce({ onClose }: { onClose: () => void }) {
 
       {/* Header */}
       <div className="absolute top-4 left-4">
-        <h1 className="text-[#ffc105] font-bold text-2xl">🐱 Cat Bounce</h1>
+        <h1 className="text-sahara-gold font-bold text-2xl">🐱 Cat Bounce</h1>
       </div>
     </div>
   );
