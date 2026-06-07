@@ -1,4 +1,4 @@
-import type { OpenGraph } from '../node_modules/next/dist/lib/metadata/types/opengraph-types';
+import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
 
 /**
  * The "Already Boring" Song.

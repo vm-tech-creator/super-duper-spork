@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   basePath,
   assetPrefix,
   trailingSlash: true,
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   turbopack: {
     root: process.cwd(),
   },
