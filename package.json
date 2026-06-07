@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "export": "next build && next export",
+    "deploy": "cross-env NEXT_PUBLIC_BASE_PATH=/super-duper-spork npm run export && gh-pages -d out",
     "start": "next start",
     "lint": "eslint",
     "lint:fix": "esl'int --fix",
@@ -33,8 +35,10 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cross-env": "^7.0.3",
     "eslint": "^9",
     "eslint-config-next": "16.2.1",
+    "gh-pages": "^5.0.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

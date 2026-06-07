@@ -1,7 +1,13 @@
 import type { NextConfig } from "next";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+const assetPrefix = basePath || undefined;
+
 const nextConfig: NextConfig = {
-  // Turbopack configuration
+  output: "export",
+  basePath,
+  assetPrefix,
+  trailingSlash: true,
   turbopack: {
     root: process.cwd(),
   },
