@@ -4,6 +4,7 @@ import { ReactNode, useState } from 'react';
 import Link from 'next/link';
 import { Menu, X, ArrowRight, Moon, Sun } from 'lucide-react';
 import { useTheme, type Theme } from '@/context/ThemeContext';
+import SettingsMenu from './SettingsMenu';
 
 interface SaharaHeaderProps {
   links?: { label: string; href: string }[];
@@ -154,6 +155,8 @@ export default function SaharaHeader({ links = defaultLinks, rightSlot }: Sahara
           </Link>
 
           {rightSlot}
+
+          <SettingsMenu />
 
           <button
             type="button"

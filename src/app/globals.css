@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@500;600;700;800&family=VCR+OSD+Mono&display=swap');
 @import "tailwindcss";
 
 @theme inline {
@@ -396,6 +396,63 @@ html[data-theme="retro"] body::after {
 
 html[data-theme="retro"][data-light-dark="light"] body::after {
   opacity: 0.06;
+}
+
+/* 80s stripes background for retro theme */
+html[data-theme="retro"] body,
+html[data-theme="retro"] .themed-body {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--bg),
+    var(--bg) 20px,
+    color-mix(in srgb, var(--secondary) 30%, var(--bg)) 20px,
+    color-mix(in srgb, var(--secondary) 30%, var(--bg)) 40px
+  ) !important;
+}
+
+html[data-theme="retro"] .sahara-main {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--bg),
+    var(--bg) 20px,
+    color-mix(in srgb, var(--secondary) 30%, var(--bg)) 20px,
+    color-mix(in srgb, var(--secondary) 30%, var(--bg)) 40px
+  ) !important;
+}
+
+html[data-theme="retro"][data-light-dark="light"] body,
+html[data-theme="retro"][data-light-dark="light"] .themed-body {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--bg),
+    var(--bg) 20px,
+    color-mix(in srgb, var(--secondary) 25%, var(--bg)) 20px,
+    color-mix(in srgb, var(--secondary) 25%, var(--bg)) 40px
+  ) !important;
+}
+
+html[data-theme="retro"][data-light-dark="light"] .sahara-main {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--bg),
+    var(--bg) 20px,
+    color-mix(in srgb, var(--secondary) 25%, var(--bg)) 20px,
+    color-mix(in srgb, var(--secondary) 25%, var(--bg)) 40px
+  ) !important;
+}
+
+/* Retro font for retro theme */
+html[data-theme="retro"] body,
+html[data-theme="retro"] .themed-body {
+  font-family: 'VCR OSD Mono', monospace, system-ui, sans-serif;
+}
+
+html[data-theme="retro"] h1,
+html[data-theme="retro"] h2,
+html[data-theme="retro"] h3,
+html[data-theme="retro"] h4 {
+  font-family: 'VCR OSD Mono', monospace, system-ui, sans-serif;
+  letter-spacing: 0.05em;
 }
 
 * {

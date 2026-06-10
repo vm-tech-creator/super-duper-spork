@@ -42,6 +42,7 @@ import GameCard from '@/components/GameCard';
 import { getPageThemeStyles } from '@/lib/themeStyles';
 import { useTheme } from '@/context/ThemeContext';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useEducationTracking } from '@/hooks/useEducationTracking';
 
 /** Comprehensive video collection with different categories */
 
@@ -814,6 +815,9 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState('All');
   const { audience, theme, lightDark } = useTheme();
   const { t } = useLanguage();
+  
+  // Track education progress when in learning mode
+  useEducationTracking(siteMode === 'learning');
 
   const getFilteredSpotlightVideos = () => {
 
@@ -1040,23 +1044,23 @@ export default function Home() {
 
       classic: [
 
-        { title: t('home.categories.games.title'), desc: t('home.categories.games.desc'), icon: Gamepad2, href: '/games', cta: t('home.categories.games.cta'), num: '01' },
+        { title: 'Games', desc: 'Play exciting games and challenge your skills.', icon: Gamepad2, href: '/games', cta: 'Play Games', num: '01' },
 
-        { title: t('home.categories.videos.title'), desc: t('home.categories.videos.desc'), icon: Clapperboard, href: '/videos', cta: t('home.categories.videos.cta'), num: '02' },
+        { title: 'Videos', desc: 'Watch entertaining and educational videos.', icon: Clapperboard, href: '/videos', cta: 'Watch Videos', num: '02' },
 
-        { title: t('home.categories.music.title'), desc: t('home.categories.music.desc'), icon: Music2, href: '#categories', cta: t('home.categories.music.cta'), num: '03' },
+        { title: 'Music', desc: 'Listen to music and discover new artists.', icon: Music2, href: '#categories', cta: 'Listen Music', num: '03' },
 
-        { title: t('home.categories.education.title'), desc: t('home.categories.education.desc'), icon: BookOpen, href: '#categories', cta: t('home.categories.education.cta'), num: '04' },
+        { title: 'Education', desc: 'Learn something new every day.', icon: BookOpen, href: '#categories', cta: 'Start Learning', num: '04' },
 
       ],
 
       learning: [
 
-        { title: t('home.categories.study.title'), desc: t('home.categories.study.desc'), icon: BookOpen, href: '/study', cta: t('home.categories.study.cta'), num: '01' },
+        { title: 'Study', desc: 'Access study materials and resources.', icon: BookOpen, href: '/study', cta: 'Start Studying', num: '01' },
 
-        { title: t('home.categories.mathGames.title'), desc: t('home.categories.mathGames.desc'), icon: Gamepad2, href: '/math-ela-games', cta: t('home.categories.mathGames.cta'), num: '02' },
+        { title: 'Math Games', desc: 'Fun math games to improve your skills.', icon: Gamepad2, href: '/math-ela-games', cta: 'Play Math Games', num: '02' },
 
-        { title: t('home.categories.quiz.title'), desc: t('home.categories.quiz.desc'), icon: Sparkles, href: '/quiz', cta: t('home.categories.quiz.cta'), num: '03' },
+        { title: 'Quiz', desc: 'Test your knowledge with quizzes.', icon: Sparkles, href: '/quiz', cta: 'Take Quiz', num: '03' },
 
       ],
 
@@ -1231,21 +1235,21 @@ export default function Home() {
 
           >
 
-            {siteMode === 'learning' && <>{t('home.hero.learning.title').split(' ').map((word: string, i: number) => i === 2 ? <><br /><span style={{ color: modeStyle.accentColor }}>{word}</span></> : <>{word} </>)}</>}
+            {siteMode === 'learning' && <>{'Learn Grow Discover'.split(' ').map((word: string, i: number) => i === 2 ? <><br /><span style={{ color: modeStyle.accentColor }}>{word}</span></> : <>{word} </>)}</>}
 
-            {siteMode === 'fantasy' && <>{t('home.hero.fun.title').split(' ').map((word: string, i: number) => i === 2 ? <><br /><span style={{ color: modeStyle.accentColor }}>{word}</span></> : <>{word} </>)}</>}
+            {siteMode === 'fantasy' && <>{'Dream Explore Imagine'.split(' ').map((word: string, i: number) => i === 2 ? <><br /><span style={{ color: modeStyle.accentColor }}>{word}</span></> : <>{word} </>)}</>}
 
-            {siteMode === 'fun' && <>{t('home.hero.fun.title').split(' ').map((word: string, i: number) => i === 2 ? <><br /><span style={{ color: modeStyle.accentColor }}>{word}</span></> : <>{word} </>)}</>}
+            {siteMode === 'fun' && <>{'Laugh Play Enjoy'.split(' ').map((word: string, i: number) => i === 2 ? <><br /><span style={{ color: modeStyle.accentColor }}>{word}</span></> : <>{word} </>)}</>}
 
-            {siteMode === 'creative' && <>{t('home.hero.creative.title').split(' ').map((word: string, i: number) => i === 2 ? <><br /><span style={{ color: modeStyle.accentColor }}>{word}</span></> : <>{word} </>)}</>}
+            {siteMode === 'creative' && <>{'Create Inspire Express'.split(' ').map((word: string, i: number) => i === 2 ? <><br /><span style={{ color: modeStyle.accentColor }}>{word}</span></> : <>{word} </>)}</>}
 
-            {siteMode === 'relax' && <>{t('home.hero.relax.title').split(' ').map((word: string, i: number) => i === 2 ? <><br /><span style={{ color: modeStyle.accentColor }}>{word}</span></> : <>{word} </>)}</>}
+            {siteMode === 'relax' && <>{'Calm Breathe Unwind'.split(' ').map((word: string, i: number) => i === 2 ? <><br /><span style={{ color: modeStyle.accentColor }}>{word}</span></> : <>{word} </>)}</>}
 
-            {siteMode === 'challenge' && <>{t('home.hero.challenge.title').split(' ').map((word: string, i: number) => i === 2 ? <><br /><span style={{ color: modeStyle.accentColor }}>{word}</span></> : <>{word} </>)}</>}
+            {siteMode === 'challenge' && <>{'Compete Win Achieve'.split(' ').map((word: string, i: number) => i === 2 ? <><br /><span style={{ color: modeStyle.accentColor }}>{word}</span></> : <>{word} </>)}</>}
 
-            {siteMode === 'adventure' && <>{t('home.hero.adventure.title').split(' ').map((word: string, i: number) => i === 2 ? <><br /><span style={{ color: modeStyle.accentColor }}>{word}</span></> : <>{word} </>)}</>}
+            {siteMode === 'adventure' && <>{'Explore Journey Discover'.split(' ').map((word: string, i: number) => i === 2 ? <><br /><span style={{ color: modeStyle.accentColor }}>{word}</span></> : <>{word} </>)}</>}
 
-            {siteMode === 'classic' && <>{t('home.hero.classic.title').split(' ').map((word: string, i: number) => i === 2 ? <><br /><span style={{ background: `linear-gradient(to right, ${modeStyle.accentColor}, #88a9d8)`, WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{word}</span></> : <>{word} </>)}</>}
+            {siteMode === 'classic' && <>{'Welcome to Sahara'.split(' ').map((word: string, i: number) => i === 2 ? <><br /><span style={{ background: `linear-gradient(to right, ${modeStyle.accentColor}, #88a9d8)`, WebkitBackgroundClip: 'text', backgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>{word}</span></> : <>{word} </>)}</>}
 
           </h1>
 
@@ -1253,21 +1257,21 @@ export default function Home() {
 
           <p className="animate-fade-up mx-auto mt-6 max-w-xl text-base font-medium leading-relaxed sm:text-lg" style={{ color: modeStyle.textSecondary }}>
 
-            {siteMode === 'learning' && t('home.hero.learning.subtitle')}
+            {siteMode === 'learning' && 'Your journey to knowledge starts here. Explore, learn, and grow with our curated educational content.'}
 
-            {siteMode === 'fantasy' && t('home.hero.fun.subtitle')}
+            {siteMode === 'fantasy' && 'Enter a world of magic and wonder. Discover amazing stories and adventures that spark your imagination.'}
 
-            {siteMode === 'fun' && t('home.hero.fun.subtitle')}
+            {siteMode === 'fun' && 'Laugh, play, and enjoy endless entertainment. Your daily dose of happiness is just a click away.'}
 
-            {siteMode === 'creative' && t('home.hero.creative.subtitle')}
+            {siteMode === 'creative' && 'Unleash your creativity and express yourself. Discover tools and inspiration to bring your ideas to life.'}
 
-            {siteMode === 'relax' && t('home.hero.relax.subtitle')}
+            {siteMode === 'relax' && 'Take a moment to breathe and unwind. Find peace and tranquility with our calming content.'}
 
-            {siteMode === 'challenge' && t('home.hero.challenge.subtitle')}
+            {siteMode === 'challenge' && 'Push your limits and test your skills. Compete, achieve, and become your best self.'}
 
-            {siteMode === 'adventure' && t('home.hero.adventure.subtitle')}
+            {siteMode === 'adventure' && 'Embark on exciting journeys and discover new worlds. Your next great adventure awaits.'}
 
-            {siteMode === 'classic' && t('home.hero.classic.subtitle')}
+            {siteMode === 'classic' && 'One destination. Infinite possibilities. Discover a universe of entertainment, knowledge, and creativity.'}
 
           </p>
 
@@ -1285,21 +1289,21 @@ export default function Home() {
 
               <Play className="h-4 w-4 fill-current" aria-hidden />
 
-              {siteMode === 'learning' && t('home.hero.learning.cta')}
+              {siteMode === 'learning' && 'Start Learning'}
 
-              {siteMode === 'fantasy' && t('home.hero.fun.cta')}
+              {siteMode === 'fantasy' && 'Enter Fantasy'}
 
-              {siteMode === 'fun' && t('home.hero.fun.cta')}
+              {siteMode === 'fun' && 'Have Fun'}
 
-              {siteMode === 'creative' && t('home.hero.creative.cta')}
+              {siteMode === 'creative' && 'Create Now'}
 
-              {siteMode === 'relax' && t('home.hero.relax.cta')}
+              {siteMode === 'relax' && 'Relax Now'}
 
-              {siteMode === 'challenge' && t('home.hero.challenge.cta')}
+              {siteMode === 'challenge' && 'Take Challenge'}
 
-              {siteMode === 'adventure' && t('home.hero.adventure.cta')}
+              {siteMode === 'adventure' && 'Start Adventure'}
 
-              {siteMode === 'classic' && t('home.hero.classic.cta')}
+              {siteMode === 'classic' && 'Start Watching'}
 
             </Link>
 
@@ -1414,21 +1418,21 @@ export default function Home() {
 
             <p className="max-w-md text-sm leading-relaxed md:text-base" style={{ color: modeStyle.textSecondary }}>
 
-              {siteMode === 'learning' && t('home.zones.learning.subtitle')}
+              {siteMode === 'learning' && 'Explore our educational content designed to help you learn and grow.'}
 
-              {siteMode === 'fantasy' && t('home.zones.fun.subtitle')}
+              {siteMode === 'fantasy' && 'Discover magical worlds and enchanting stories.'}
 
-              {siteMode === 'fun' && t('home.zones.fun.subtitle')}
+              {siteMode === 'fun' && 'Enjoy hilarious content that will brighten your day.'}
 
-              {siteMode === 'creative' && t('home.zones.creative.subtitle')}
+              {siteMode === 'creative' && 'Find inspiration and tools to express your creativity.'}
 
-              {siteMode === 'relax' && t('home.zones.relax.subtitle')}
+              {siteMode === 'relax' && 'Unwind with calming content for peace of mind.'}
 
-              {siteMode === 'challenge' && t('home.zones.challenge.subtitle')}
+              {siteMode === 'challenge' && 'Test your skills with challenging activities.'}
 
-              {siteMode === 'adventure' && t('home.zones.adventure.subtitle')}
+              {siteMode === 'adventure' && 'Embark on exciting adventures and discoveries.'}
 
-              {siteMode === 'classic' && t('home.zones.classic.subtitle')}
+              {siteMode === 'classic' && 'Explore our curated collection of entertainment and knowledge.'}
 
             </p>
 
