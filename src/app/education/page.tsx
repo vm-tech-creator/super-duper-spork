@@ -28,15 +28,32 @@ interface MathGame {
   highScore?: number;
 }
 
+type GradeLevel = 'Elementary' | 'Middle' | 'High' | 'College';
+
+interface QuizResult {
+  quizId: string;
+  score: number;
+  totalQuestions: number;
+  grade: 'A' | 'B' | 'C' | 'D' | 'F';
+}
+
 export default function EducationPage() {
-  const [activeTab, setActiveTab] = useState<'quizzes' | 'games' | 'progress'>('quizzes');
+  const [activeTab, setActiveTab] = useState<'quizzes' | 'games' | 'math-practice' | 'progress'>('quizzes');
   const [selectedDifficulty, setSelectedDifficulty] = useState<'All' | 'Easy' | 'Medium' | 'Hard'>('All');
+  const [selectedGrade, setSelectedGrade] = useState<GradeLevel>('Middle');
+  const [quizResults, setQuizResults] = useState<QuizResult[]>([
+    { quizId: 'math-algebra', score: 95, totalQuestions: 10, grade: 'A' },
+    { quizId: 'math-geometry', score: 88, totalQuestions: 8, grade: 'B' },
+    { quizId: 'ela-grammar', score: 92, totalQuestions: 10, grade: 'A' },
+  ]);
   const [userStats] = useState({
     quizzesCompleted: 8,
     gamesPlayed: 15,
     totalPoints: 3250,
     currentStreak: 7,
   });
+
+  const grades: GradeLevel[] = ['Elementary', 'Middle', 'High', 'College'];
 
   const quizzes: Quiz[] = [
     {
@@ -176,6 +193,168 @@ export default function EducationPage() {
     },
   ];
 
+  interface MathPractice {
+    id: string;
+    title: string;
+    description: string;
+    topic: string;
+    gradeLevel: GradeLevel;
+    difficulty: 'Easy' | 'Medium' | 'Hard';
+    problemCount: number;
+    icon: string;
+    estimatedTime: number;
+  }
+
+  const mathPractices: MathPractice[] = [
+    // Elementary
+    {
+      id: 'elem-addition',
+      title: 'Addition Basics',
+      description: 'Practice addition with single and double-digit numbers',
+      topic: 'Arithmetic',
+      gradeLevel: 'Elementary',
+      difficulty: 'Easy',
+      problemCount: 20,
+      icon: '➕',
+      estimatedTime: 10,
+    },
+    {
+      id: 'elem-subtraction',
+      title: 'Subtraction Practice',
+      description: 'Master subtraction with regrouping',
+      topic: 'Arithmetic',
+      gradeLevel: 'Elementary',
+      difficulty: 'Easy',
+      problemCount: 20,
+      icon: '➖',
+      estimatedTime: 10,
+    },
+    {
+      id: 'elem-multiplication',
+      title: 'Multiplication Times Tables',
+      description: 'Build fluency with multiplication facts',
+      topic: 'Multiplication',
+      gradeLevel: 'Elementary',
+      difficulty: 'Medium',
+      problemCount: 30,
+      icon: '✖️',
+      estimatedTime: 15,
+    },
+    {
+      id: 'elem-division',
+      title: 'Division Practice',
+      description: 'Learn division as inverse of multiplication',
+      topic: 'Division',
+      gradeLevel: 'Elementary',
+      difficulty: 'Medium',
+      problemCount: 25,
+      icon: '➗',
+      estimatedTime: 12,
+    },
+    // Middle School
+    {
+      id: 'middle-fractions',
+      title: 'Fractions & Decimals',
+      description: 'Work with fractions, decimals, and percentages',
+      topic: 'Fractions',
+      gradeLevel: 'Middle',
+      difficulty: 'Medium',
+      problemCount: 25,
+      icon: '⅝',
+      estimatedTime: 15,
+    },
+    {
+      id: 'middle-prealgebra',
+      title: 'Pre-Algebra Fundamentals',
+      description: 'Introduction to variables and simple equations',
+      topic: 'Algebra',
+      gradeLevel: 'Middle',
+      difficulty: 'Medium',
+      problemCount: 20,
+      icon: '🔤',
+      estimatedTime: 12,
+    },
+    {
+      id: 'middle-ratios',
+      title: 'Ratios & Proportions',
+      description: 'Understand relationships between quantities',
+      topic: 'Ratios',
+      gradeLevel: 'Middle',
+      difficulty: 'Medium',
+      problemCount: 18,
+      icon: '⚖️',
+      estimatedTime: 14,
+    },
+    {
+      id: 'middle-geometry',
+      title: 'Geometry Basics',
+      description: 'Learn about shapes, angles, and area',
+      topic: 'Geometry',
+      gradeLevel: 'Middle',
+      difficulty: 'Medium',
+      problemCount: 22,
+      icon: '📐',
+      estimatedTime: 13,
+    },
+    // High School
+    {
+      id: 'high-algebra1',
+      title: 'Algebra I',
+      description: 'Equations, inequalities, and functions',
+      topic: 'Algebra',
+      gradeLevel: 'High',
+      difficulty: 'Hard',
+      problemCount: 30,
+      icon: '🧮',
+      estimatedTime: 20,
+    },
+    {
+      id: 'high-geometry',
+      title: 'Geometry Proofs',
+      description: 'Master geometric theorems and proofs',
+      topic: 'Geometry',
+      gradeLevel: 'High',
+      difficulty: 'Hard',
+      problemCount: 25,
+      icon: '△',
+      estimatedTime: 18,
+    },
+    {
+      id: 'high-trigonometry',
+      title: 'Trigonometry',
+      description: 'Sine, cosine, tangent, and applications',
+      topic: 'Trigonometry',
+      gradeLevel: 'High',
+      difficulty: 'Hard',
+      problemCount: 28,
+      icon: '〰️',
+      estimatedTime: 22,
+    },
+    // College
+    {
+      id: 'college-calculus',
+      title: 'Calculus I',
+      description: 'Limits, derivatives, and integrals',
+      topic: 'Calculus',
+      gradeLevel: 'College',
+      difficulty: 'Hard',
+      problemCount: 35,
+      icon: '∫',
+      estimatedTime: 25,
+    },
+    {
+      id: 'college-linearalgebra',
+      title: 'Linear Algebra',
+      description: 'Matrices, vectors, and linear transformations',
+      topic: 'Linear Algebra',
+      gradeLevel: 'College',
+      difficulty: 'Hard',
+      problemCount: 32,
+      icon: '⬚',
+      estimatedTime: 24,
+    },
+  ];
+
   const filteredQuizzes = selectedDifficulty === 'All' 
     ? quizzes 
     : quizzes.filter(q => q.difficulty === selectedDifficulty);
@@ -184,7 +363,18 @@ export default function EducationPage() {
     ? mathGames
     : mathGames.filter(g => g.difficulty === selectedDifficulty);
 
+  const filteredMathPractices = mathPractices.filter(p => p.gradeLevel === selectedGrade);
+
   const difficulties: Array<'All' | 'Easy' | 'Medium' | 'Hard'> = ['All', 'Easy', 'Medium', 'Hard'];
+
+  const calculateGrade = (score: number, total: number): 'A' | 'B' | 'C' | 'D' | 'F' => {
+    const percentage = (score / total) * 100;
+    if (percentage >= 90) return 'A';
+    if (percentage >= 80) return 'B';
+    if (percentage >= 70) return 'C';
+    if (percentage >= 60) return 'D';
+    return 'F';
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#080f1c] via-[#0f1929] to-[#080f1c]">
@@ -253,7 +443,8 @@ export default function EducationPage() {
           {[
             { id: 'quizzes', label: '📝 Practice Quizzes', icon: Brain },
             { id: 'games', label: '🎮 Math Games', icon: Gamepad2 },
-            { id: 'progress', label: '📊 Your Progress', icon: BarChart3 },
+            { id: 'math-practice', label: '📊 Math Practice', icon: Target },
+            { id: 'progress', label: '📈 Your Progress', icon: BarChart3 },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -269,10 +460,30 @@ export default function EducationPage() {
           ))}
         </div>
 
+        {/* Grade Level Selector - Show for Math Practice tab */}
+        {activeTab === 'math-practice' && (
+          <div className="mb-8 flex flex-wrap gap-3 items-center">
+            <span className="text-[#7a93b4] font-semibold uppercase tracking-widest">Grade Level:</span>
+            {grades.map((grade) => (
+              <button
+                key={grade}
+                onClick={() => setSelectedGrade(grade)}
+                className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+                  selectedGrade === grade
+                    ? 'bg-[#ffc105] text-[#080f1c]'
+                    : 'bg-[rgba(255,193,5,.1)] text-[#ffc105] hover:bg-[rgba(255,193,5,.2)]'
+                }`}
+              >
+                {grade}
+              </button>
+            ))}
+          </div>
+        )}
+
         {/* Filter Bar */}
-        {activeTab !== 'progress' && (
+        {activeTab !== 'progress' && activeTab !== 'math-practice' && (
           <div className="flex items-center gap-3 mb-8 overflow-x-auto pb-2">
-            <Filter className="h-5 w-5 text-[#7a93b4] flex-shrink-0" />
+            <Filter className="h-5 w-5 text-[#7a93b4] shrink-0" />
             {difficulties.map((diff) => (
               <button
                 key={diff}
@@ -385,6 +596,56 @@ export default function EducationPage() {
           </div>
         )}
 
+        {/* Math Practice Tab */}
+        {activeTab === 'math-practice' && (
+          <div className="space-y-6">
+            <div className="grid gap-6">
+              {filteredMathPractices.map((practice) => (
+                <div
+                  key={practice.id}
+                  className="group relative bg-gradient-to-r from-[rgba(255,193,5,.08)] to-[rgba(73,122,182,.08)] border border-[rgba(255,193,5,.15)] rounded-xl p-6 hover:border-[rgba(255,193,5,.3)] transition-all cursor-pointer overflow-hidden"
+                >
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-[rgba(255,193,5,.05)] to-transparent" />
+                  
+                  <div className="relative flex items-start justify-between gap-6">
+                    <div className="flex gap-6 flex-1">
+                      <div className="text-5xl pt-1 flex-shrink-0">{practice.icon}</div>
+                      <div className="flex-1 space-y-3">
+                        <div>
+                          <h3 className="text-2xl font-bold text-white mb-2">{practice.title}</h3>
+                          <p className="text-[#7a93b4]">{practice.description}</p>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-4 text-sm">
+                          <span className={`px-3 py-1 rounded-full font-semibold ${
+                            practice.difficulty === 'Easy' ? 'bg-green-500/20 text-green-300' :
+                            practice.difficulty === 'Medium' ? 'bg-yellow-500/20 text-yellow-300' :
+                            'bg-red-500/20 text-red-300'
+                          }`}>
+                            {practice.difficulty}
+                          </span>
+                          <span className="flex items-center gap-1 text-[#7a93b4]">
+                            <BookOpen className="h-4 w-4" /> {practice.problemCount} Problems
+                          </span>
+                          <span className="flex items-center gap-1 text-[#7a93b4]">
+                            <Clock className="h-4 w-4" /> {practice.estimatedTime} min
+                          </span>
+                          <span className="text-xs text-[#ffc105] bg-[rgba(255,193,5,.1)] px-2 py-1 rounded">
+                            {practice.topic}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <button className="flex-shrink-0 bg-[#ffc105] hover:bg-[#ffcf3a] text-[#080f1c] rounded-lg px-6 py-3 font-bold uppercase tracking-[.05em] transition-all hover:-translate-y-1 flex items-center gap-2 group/btn">
+                      Start
+                      <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Progress Tab */}
         {activeTab === 'progress' && (
           <div className="grid md:grid-cols-2 gap-8">
@@ -416,29 +677,40 @@ export default function EducationPage() {
               ))}
             </div>
 
-            {/* Recent Activity */}
+            {/* Quiz Results with Grades */}
             <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-white">Recent Activity</h2>
+              <h2 className="text-2xl font-bold text-white">Quiz Results & Grades</h2>
               
               <div className="space-y-3">
-                {[
-                  { activity: 'Completed "Algebra Fundamentals"', time: '2 hours ago', points: '+100' },
-                  { activity: 'High Score in "Math Blaster"', time: '5 hours ago', points: '+250' },
-                  { activity: 'Completed "Geometry Basics"', time: '1 day ago', points: '+85' },
-                  { activity: 'Completed "Grammar Mastery"', time: '2 days ago', points: '+100' },
-                  { activity: 'High Score in "Number Ninja"', time: '3 days ago', points: '+180' },
-                ].map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center justify-between p-4 bg-[rgba(255,193,5,.08)] border border-[rgba(255,193,5,.15)] rounded-lg"
-                  >
-                    <div>
-                      <p className="text-white font-semibold">{item.activity}</p>
-                      <p className="text-[#7a93b4] text-sm">{item.time}</p>
+                {quizResults.map((result, idx) => {
+                  const quizData = quizzes.find(q => q.id === result.quizId);
+                  const gradeColor = 
+                    result.grade === 'A' ? 'text-green-400' :
+                    result.grade === 'B' ? 'text-blue-400' :
+                    result.grade === 'C' ? 'text-yellow-400' :
+                    result.grade === 'D' ? 'text-orange-400' :
+                    'text-red-400';
+                  
+                  return (
+                    <div
+                      key={idx}
+                      className="flex items-center justify-between p-4 bg-[rgba(255,193,5,.08)] border border-[rgba(255,193,5,.15)] rounded-lg hover:border-[rgba(255,193,5,.3)] transition-all"
+                    >
+                      <div>
+                        <p className="text-white font-semibold">{quizData?.title || 'Quiz'}</p>
+                        <p className="text-[#7a93b4] text-sm">Score: {result.score}/{result.totalQuestions}</p>
+                      </div>
+                      <div className="text-center">
+                        <div className={`text-3xl font-black ${gradeColor}`}>
+                          {result.grade}
+                        </div>
+                        <div className="text-[#7a93b4] text-xs font-semibold mt-1">
+                          {Math.round((result.score / result.totalQuestions) * 100)}%
+                        </div>
+                      </div>
                     </div>
-                    <span className="text-[#ffc105] font-bold">{item.points}</span>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
