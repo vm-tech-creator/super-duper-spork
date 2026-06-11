@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useAudienceFilter } from '@/hooks/useAudienceFilter';
 import type { AudienceTag } from '@/hooks/useAudienceFilter';
 import { useTheme } from '@/context/ThemeContext';
@@ -514,51 +515,71 @@ export default function GamesPage() {
               <p className="text-sahara-gold font-black text-[1.5rem] drop-shadow-[0_0_10px_rgba(255,193,5,.3)]">CONTENT CATEGORIES</p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-7xl mx-auto">
               {[
-                { title: 'Games', emoji: '🎮', description: 'Discover thousands of amazing games across all genres.' },
-                { title: 'Videos', emoji: '🎬', description: 'Stream movies, series, and short films.' },
-                { title: 'Books', emoji: '📚', description: 'Dive into our vast library of digital books.' },
-                { title: 'Experiences', emoji: '✨', description: 'Immersive interactive experiences and adventures.' }
-              ].map((card, index) => (
-                <div
-                  key={card.title}
-                  className="group reveal relative cursor-pointer overflow-hidden rounded-xl border-2 border-sahara-border bg-gradient-to-br from-sahara-bg2 to-sahara-bg p-8 transition-all duration-300 hover:-translate-y-2 hover:border-sahara-gold hover:shadow-[0_30px_80px_color-mix(in_srgb,var(--gold)_30%,transparent)]"
-                  style={{
-                    transitionDelay: `${index * 100}ms`,
-                  }}
-                >
-                  {/* Animated background */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-[rgba(255,193,5,.1)] via-transparent to-[rgba(73,122,182,.1)]"></div>
-                  
-                  {/* Glow effect */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-40 bg-sahara-gold rounded-full blur-3xl opacity-20"></div>
-                  </div>
-
-                  {/* Icon with animation */}
-                  <div className="relative z-10 mb-6">
-                    <div className="w-20 h-20 rounded-lg grid place-items-center text-5xl bg-gradient-to-br from-[rgba(255,193,5,.2)] to-[rgba(73,122,182,.2)] group-hover:from-[rgba(255,193,5,.4)] group-hover:to-[rgba(73,122,182,.4)] transition-all duration-300 transform group-hover:scale-110 group-hover:rotate-12">
-                      <span className="inline-block animate-bounce">{card.emoji}</span>
+                { title: 'Games', emoji: '🎮', description: 'Discover thousands of amazing games across all genres.', href: '/games' },
+                { title: 'Wonders', emoji: '🌍', description: 'Explore the Seven Wonders of the World in 3D.', href: '/wonders' },
+                { title: 'Education', emoji: '🎓', description: 'Practice quizzes and math games to boost your learning.', href: '/education' },
+                { title: 'Videos', emoji: '🎬', description: 'Stream movies, series, and short films.', href: '#' },
+                { title: 'Books', emoji: '📚', description: 'Dive into our vast library of digital books.', href: '#' }
+              ].map((card, index) => {
+                const cardContent = (
+                  <>
+                    {/* Animated background */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br from-[rgba(255,193,5,.1)] via-transparent to-[rgba(73,122,182,.1)]"></div>
+                    
+                    {/* Glow effect */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-40 bg-sahara-gold rounded-full blur-3xl opacity-20"></div>
                     </div>
-                  </div>
 
-                  {/* Text content */}
-                  <div className="relative z-10 space-y-3">
-                    <h3 className="font-['Barlow_Condensed'] font-black text-[1.5rem] uppercase tracking-[.04em] text-sahara-text group-hover:text-sahara-gold transition-colors">
-                      {card.title}
-                    </h3>
-                    <p className="text-[.88rem] text-sahara-muted leading-[1.65] group-hover:text-[#97b3d4] transition-colors">
-                      {card.description}
-                    </p>
-                  </div>
+                    {/* Icon with animation */}
+                    <div className="relative z-10 mb-6">
+                      <div className="w-20 h-20 rounded-lg grid place-items-center text-5xl bg-gradient-to-br from-[rgba(255,193,5,.2)] to-[rgba(73,122,182,.2)] group-hover:from-[rgba(255,193,5,.4)] group-hover:to-[rgba(73,122,182,.4)] transition-all duration-300 transform group-hover:scale-110 group-hover:rotate-12">
+                        <span className="inline-block animate-bounce">{card.emoji}</span>
+                      </div>
+                    </div>
 
-                  {/* Arrow indicator on hover */}
-                  <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sahara-gold transform translate-x-2 group-hover:translate-x-0 text-2xl">
-                    →
+                    {/* Text content */}
+                    <div className="relative z-10 space-y-3">
+                      <h3 className="font-['Barlow_Condensed'] font-black text-[1.5rem] uppercase tracking-[.04em] text-sahara-text group-hover:text-sahara-gold transition-colors">
+                        {card.title}
+                      </h3>
+                      <p className="text-[.88rem] text-sahara-muted leading-[1.65] group-hover:text-[#97b3d4] transition-colors">
+                        {card.description}
+                      </p>
+                    </div>
+
+                    {/* Arrow indicator on hover */}
+                    <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-sahara-gold transform translate-x-2 group-hover:translate-x-0 text-2xl">
+                      →
+                    </div>
+                  </>
+                );
+
+                return card.href === '#' ? (
+                  <div
+                    key={card.title}
+                    className="group reveal relative cursor-pointer overflow-hidden rounded-xl border-2 border-sahara-border bg-gradient-to-br from-sahara-bg2 to-sahara-bg p-8 transition-all duration-300 hover:-translate-y-2 hover:border-sahara-gold hover:shadow-[0_30px_80px_color-mix(in_srgb,var(--gold)_30%,transparent)]"
+                    style={{
+                      transitionDelay: `${index * 100}ms`,
+                    }}
+                  >
+                    {cardContent}
                   </div>
-                </div>
-              ))}
+                ) : (
+                  <Link
+                    key={card.title}
+                    href={card.href}
+                    className="group reveal relative cursor-pointer overflow-hidden rounded-xl border-2 border-sahara-border bg-gradient-to-br from-sahara-bg2 to-sahara-bg p-8 transition-all duration-300 hover:-translate-y-2 hover:border-sahara-gold hover:shadow-[0_30px_80px_color-mix(in_srgb,var(--gold)_30%,transparent)] block"
+                    style={{
+                      transitionDelay: `${index * 100}ms`,
+                    }}
+                  >
+                    {cardContent}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>
