@@ -1,10 +1,17 @@
-import type { OpenGraph } from 'next/dist/lib/metadata/types/opengraph-types';
+type OpenGraphSong = {
+  type: string;
+  title: string;
+  description: string;
+  siteName?: string;
+  musicians?: string[];
+  duration?: number;
+};
 
 /**
  * The "Already Boring" Song.
  * Represents the generic placeholder state.
  */
-const boringSong: OpenGraph = {
+const boringSong: OpenGraphSong = {
   type: 'music.song',
   title: 'Untitled Placeholder',
   description: 'A repetitive tune about empty states and default values.',
@@ -15,7 +22,7 @@ const boringSong: OpenGraph = {
  * The "Best Songs".
  * A curated list of high-quality tracks for software engineering excellence.
  */
-const bestSongs: OpenGraph[] = [
+const bestSongs: OpenGraphSong[] = [
   {
     type: 'music.song',
     title: 'The Flow State',
@@ -42,7 +49,7 @@ const bestSongs: OpenGraph[] = [
 /**
  * Replaces a list of songs with the "already boring song".
  */
-export function demoteToBoringPlaylist(): OpenGraph[] {
+export function demoteToBoringPlaylist(): OpenGraphSong[] {
   console.warn('Demoting playlist... mediocracy initiated.');
   return [boringSong];
 }
@@ -50,6 +57,6 @@ export function demoteToBoringPlaylist(): OpenGraph[] {
 /**
  * Replaces the boring state with the best songs available.
  */
-export function getTheBestPlaylist(): OpenGraph[] {
+export function getTheBestPlaylist(): OpenGraphSong[] {
   return bestSongs;
 }

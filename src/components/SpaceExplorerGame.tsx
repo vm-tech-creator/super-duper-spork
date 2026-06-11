@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { forwardRef, useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Stars, Text, Html } from '@react-three/drei';
 import * as THREE from 'three';
@@ -12,7 +12,10 @@ interface GameState {
   paused: boolean;
 }
 
-function Spaceship({ position, rotation }: { position: [number, number, number]; rotation: [number, number, number] }) {
+const Spaceship = forwardRef<
+  THREE.Group,
+  { position: [number, number, number]; rotation: [number, number, number] }
+>(({ position, rotation }, ref) => {
   const meshRef = useRef<THREE.Mesh>(null);
 
   useFrame((state) => {
@@ -22,7 +25,7 @@ function Spaceship({ position, rotation }: { position: [number, number, number];
   });
 
   return (
-    <group position={position} rotation={rotation}>
+    <group ref={ref} position={position} rotation={rotation}>
       {/* Main body */}
       <mesh ref={meshRef}>
         <coneGeometry args={[0.5, 2, 8]} />
@@ -44,7 +47,9 @@ function Spaceship({ position, rotation }: { position: [number, number, number];
       </mesh>
     </group>
   );
-}
+});
+
+Spaceship.displayName = 'Spaceship';
 
 function Star({ position, onCollect }: { position: [number, number, number]; onCollect: () => void }) {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -272,7 +277,7 @@ function GameScene({ gameState, setGameState }: { gameState: GameState; setGameS
   );
 }
 
-export default function SpaceExplorerGame() {
+export default function SpaceExplorerGame({ onClose }: { onClose?: () => void } = {}) {
   const [gameState, setGameState] = useState<GameState>({
     score: 0,
     lives: 3,

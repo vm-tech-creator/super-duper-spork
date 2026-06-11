@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect, useMemo } from 'react';
+import { useRef, useState, useEffect, useMemo, type Dispatch, type SetStateAction } from 'react';
 import { Canvas, useFrame, useThree, extend } from '@react-three/fiber';
 import { Text, Html } from '@react-three/drei';
 import * as THREE from 'three';
@@ -140,7 +140,13 @@ function Wall({ position, size }: { position: [number, number, number]; size: [n
   );
 }
 
-function MazeScene({ gameState, setGameState }: { gameState: GameState; setGameState: (state: GameState) => void }) {
+function MazeScene({
+  gameState,
+  setGameState,
+}: {
+  gameState: GameState;
+  setGameState: Dispatch<SetStateAction<GameState>>;
+}) {
   const [playerPos, setPlayerPos] = useState<[number, number, number]>([-7, 0.5, -7]);
   const [coins, setCoins] = useState<Array<{ id: number; position: [number, number, number] }>>([]);
   const [collectedCoins, setCollectedCoins] = useState(0);

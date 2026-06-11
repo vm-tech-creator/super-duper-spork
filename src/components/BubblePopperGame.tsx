@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, useEffect, useMemo } from 'react';
+import { useRef, useState, useEffect, useMemo, type Dispatch, type SetStateAction } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Text, Html } from '@react-three/drei';
 import * as THREE from 'three';
@@ -117,7 +117,13 @@ function ParticleSystem({ position, color }: { position: [number, number, number
   );
 }
 
-function BubbleScene({ gameState, setGameState }: { gameState: GameState; setGameState: (state: GameState) => void }) {
+function BubbleScene({
+  gameState,
+  setGameState,
+}: {
+  gameState: GameState;
+  setGameState: Dispatch<SetStateAction<GameState>>;
+}) {
   const [bubbles, setBubbles] = useState<Bubble[]>([]);
   const [particles, setParticles] = useState<Array<{ id: number; position: [number, number, number]; color: string }>>([]);
   const [lastPopTime, setLastPopTime] = useState(0);

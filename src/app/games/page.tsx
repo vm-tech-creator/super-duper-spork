@@ -1,10 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAudienceFilter } from '@/hooks/useAudienceFilter';
 import type { AudienceTag } from '@/hooks/useAudienceFilter';
 import { useTheme } from '@/context/ThemeContext';
 import GameCard from '@/components/GameCard';
+import AvatarBuilder from '@/components/games/AvatarBuilder';
 import PacMan from '@/components/games/PacMan';
 import ThePointingPointer from '@/components/games/ThePointingPointer';
 import EndlessHorse from '@/components/games/EndlessHorse';
@@ -16,6 +18,8 @@ import ElonFortune from '@/components/games/ElonFortune';
 import MusicQuiz from '@/components/games/MusicQuiz';
 import WeirdBooks from '@/components/games/WeirdBooks';
 import SuperstarRacing from '@/components/games/SuperstarRacing';
+import { addSandDollars } from '@/utils/sandDollars';
+import { getGameLink } from '@/utils/gameLinks';
 
 type GameItem = {
   id: number;
@@ -41,7 +45,7 @@ const GAMES_DATA: GameItem[] = [
     releaseDate: 'Mar 2026',
   },
   {
-    id: 10,
+    id: 16,
     title: 'Interactive Space Model',
     description: 'An interactive 3D model of our solar system where you can explore planets, moons, and celestial bodies.',
     imageUrl: 'https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=500&h=400&fit=crop',
@@ -185,7 +189,10 @@ const GAMES_DATA: GameItem[] = [
   },
 ];
 
+const PLAY_SESSION_REWARD = 35;
+
 export default function GamesPage() {
+  const router = useRouter();
   const [selectedFilter, setSelectedFilter] = useState('All');
   const { audience } = useTheme();
   const audienceGames = useAudienceFilter(GAMES_DATA);
@@ -208,7 +215,9 @@ export default function GamesPage() {
   }, []);
 
   const handlePlayGame = (gameId: number) => {
-    alert(`Starting game ${gameId}...`);
+    addSandDollars(PLAY_SESSION_REWARD);
+    window.dispatchEvent(new Event('sand-dollars-updated'));
+    router.push(`${getGameLink(gameId)}?play=true`);
   };
 
   return (
@@ -231,6 +240,10 @@ export default function GamesPage() {
         {/* Hero Section - Arcade Machine */}
         <section className="relative overflow-hidden bg-gradient-to-b from-[color-mix(in_srgb,var(--primary)_50%,transparent)] to-[var(--bg)] px-[5%] py-20">
           <div className="max-w-6xl mx-auto">
+            <div id="avatar-builder" className="mb-8 flex justify-end scroll-mt-32">
+              <AvatarBuilder />
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-12">
               {/* Left: Pac-Man Game Scene */}
               <div className="flex justify-center order-2 lg:order-1">

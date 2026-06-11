@@ -138,7 +138,7 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Literary Labs',
     features: ['Real Books', 'Hilarious Titles', 'Educational', 'Endless Laughs'],
   },
-  10: {
+  13: {
     id: 10,
     title: 'Space Explorer 3D',
     description: 'Navigate through stunning 3D space, collecting stars while avoiding asteroids in this immersive space adventure.',
@@ -177,8 +177,8 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Bubble Dynamics',
     features: ['3D Bubbles', 'Combo System', 'Particle Effects', 'Mouse Controls', 'Progressive Levels'],
   },
-  17: {
-    id: 17,
+  10: {
+    id: 10,
     title: 'Pac-Man',
     description: 'A classic maze game where you navigate Pac-Man through a two-line pathway maze while avoiding colorful ghosts.',
     fullDescription: 'Navigate the classic Pac-Man through a perfectly designed maze filled with pellets. Collect all pellets to win while avoiding four intelligent ghosts with unique AI behaviors. Arrow keys or WASD to move. A nostalgic return to arcade gaming.',
@@ -287,6 +287,8 @@ export default function GameDetailPage({ params }: { params: Promise<{ id: strin
         return <SuperstarRacing onClose={() => setIsPlaying(false)} />;
       case 15:
         return <Blobmixer onClose={() => setIsPlaying(false)} />;
+      case 16:
+        return <SpaceExplorerGame onClose={() => setIsPlaying(false)} />;
       default:
         return null;
     }

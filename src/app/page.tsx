@@ -36,6 +36,7 @@ import {
 
   Layers,
 
+  Landmark,
 } from 'lucide-react';
 
 import GameCard from '@/components/GameCard';
@@ -1040,6 +1041,15 @@ export default function Home() {
 
     };
 
+    const wondersCategory: CategoryItem = {
+      title: 'The 7 Wonders of the World',
+      desc: 'Explore legendary places, ancient marvels, and the stories behind them.',
+      icon: Landmark,
+      href: '/wonders',
+      cta: 'Explore wonders',
+      num: '05',
+    };
+
     const modeCategories: Record<typeof siteMode, CategoryItem[]> = {
 
       classic: [
@@ -1138,8 +1148,7 @@ export default function Home() {
 
     };
 
-    return modeCategories[siteMode] || modeCategories.classic;
-
+    return [...(modeCategories[siteMode] || modeCategories.classic), wondersCategory];
   };
 
 
@@ -1438,10 +1447,13 @@ export default function Home() {
 
           </div>
 
-
-
-          <div className={`grid gap-4 ${categories.length === 3 ? 'sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3' : 'sm:grid-cols-2 lg:grid-cols-4'}`}>
-
+          <div className={`grid gap-4 ${
+            categories.length === 3
+              ? 'sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3'
+              : categories.length >= 5
+                ? 'sm:grid-cols-2 lg:grid-cols-5'
+                : 'sm:grid-cols-2 lg:grid-cols-4'
+          }`}>
             {categories.map((cat) => {
 
               const Icon = cat.icon;

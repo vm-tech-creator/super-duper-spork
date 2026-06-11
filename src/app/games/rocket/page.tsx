@@ -63,7 +63,7 @@ export default function RocketBuilderPage() {
   const raycasterRef = useRef<THREE.Raycaster>(new THREE.Raycaster());
   const mouseRef = useRef<THREE.Vector2>(new THREE.Vector2());
   const animationRef = useRef<number>(0);
-  const clockRef = useRef<THREE.Clock>(new THREE.Clock());
+  const lastFrameTimeRef = useRef<number>(performance.now());
   const groundPlaneRef = useRef<THREE.Plane>(new THREE.Plane(new THREE.Vector3(0, 1, 0), 0));
 
   useEffect(() => {
@@ -501,7 +501,7 @@ export default function RocketBuilderPage() {
     // Animation
     const animate = () => {
       animationRef.current = requestAnimationFrame(animate);
-      const time = clockRef.current.getElapsedTime();
+      lastFrameTimeRef.current = performance.now();
 
       controls.update();
 

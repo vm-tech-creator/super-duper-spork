@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { getGameLink } from '@/utils/gameLinks';
 
 interface GameCardProps {
   id: number;
@@ -29,7 +30,7 @@ export default function GameCard({
   const router = useRouter();
   const [isHovered, setIsHovered] = useState(false);
 
-  const gameLink = id === 10 ? '/games/space' : id === 11 ? '/games/rocket' : `/games/${id}`;
+  const gameLink = getGameLink(id);
 
   const handleCardClick = () => {
     router.push(gameLink);
@@ -84,6 +85,14 @@ export default function GameCard({
         {/* Play Button */}
         <button
           className="mt-2 w-full cursor-pointer rounded border-none bg-gradient-to-r from-[var(--gold)] to-[var(--gold-dim)] px-4 py-3 font-['Barlow_Condensed'] text-sm font-bold uppercase tracking-[.08em] text-[var(--bg)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_6px_24px_color-mix(in_srgb,var(--gold)_40%,transparent)] active:translate-y-0"
+          onClick={(e) => {
+            e.stopPropagation();
+            if (onPlay) {
+              onPlay();
+              return;
+            }
+            handleCardClick();
+          }}
         >
           Play Now
         </button>

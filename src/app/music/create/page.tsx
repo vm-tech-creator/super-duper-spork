@@ -1,8 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function CreateMusic() {
+  const router = useRouter();
+
   return (
     <main className="min-h-screen text-[var(--text)]">
       <div className="max-w-7xl mx-auto px-4">

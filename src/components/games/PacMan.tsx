@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import { addSandDollars, calculatePacManCoins } from '@/utils/sandDollars';
 
 interface Position {
   x: number;
