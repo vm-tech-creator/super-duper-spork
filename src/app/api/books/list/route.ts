@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getBooks } from '@/lib/books';
 
+export const dynamic = 'force-static';
+
 export async function GET() {
   try {
     const books = await getBooks();
@@ -9,7 +11,7 @@ export async function GET() {
     console.error('Error reading books:', error);
     return NextResponse.json(
       { error: 'Failed to read books' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -3,6 +3,13 @@ import { getBooks } from '@/lib/books';
 import fs from 'fs';
 import path from 'path';
 
+export const dynamic = 'force-static';
+
+export async function generateStaticParams() {
+  const books = await getBooks();
+  return books.map((book) => ({ id: String(book.id) }));
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }

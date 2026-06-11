@@ -299,7 +299,7 @@ function ThreeGlobe({
     let earthTexture: THREE.Texture | null = null;
     const textureLoader = new THREE.TextureLoader();
     textureLoader.load(
-      '/api/earth-texture',
+      '/images/earth-blue-marble.png',
       (texture) => {
         texture.colorSpace = THREE.SRGBColorSpace;
         texture.anisotropy = renderer.capabilities.getMaxAnisotropy();

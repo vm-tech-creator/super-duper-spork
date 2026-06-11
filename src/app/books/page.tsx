@@ -25,7 +25,7 @@ export default function BooksPage() {
     // Fetch books data
     const fetchBooks = async () => {
       try {
-        const response = await fetch('/api/books');
+        const response = await fetch('/api/books/list');
         if (!response.ok) {
           throw new Error(`API error: ${response.status}`);
         }
