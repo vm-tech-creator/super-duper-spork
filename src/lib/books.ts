@@ -65,3 +65,25 @@ export async function getBooksByCategory(category: 'preteen' | 'teen' | 'adult')
   const allBooks = await getBooks();
   return allBooks.filter(book => book.category === category);
 }
+
+export async function getBookContent(book: BookData): Promise<string> {
+  const categoryFolders: Record<string, string> = {
+    preteen: 'preteens',
+    teen: 'teens',
+    adult: 'adults',
+  };
+
+  const categoryFolder = categoryFolders[book.category];
+  const filePath = path.join(process.cwd(), 'books', categoryFolder, book.fileName);
+
+  if (!fs.existsSync(filePath)) {
+    return 'Content not available for this book.';
+  }
+
+  try {
+    return fs.readFileSync(filePath, 'utf-8');
+  } catch (error) {
+    console.error(`Error reading book file ${filePath}:`, error);
+    return 'Error loading book content.';
+  }
+}

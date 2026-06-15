@@ -101,10 +101,10 @@ const splitContentIntoPages = (content: string, wordsPerPage: number): string[] 
   return splitPages.length > 0 ? splitPages : [content.trim()];
 };
 
-export default function BookDetailClient({ bookId }: { bookId: string }) {
+export default function BookDetailClient({ bookId, initialContent = '' }: { bookId: string; initialContent?: string }) {
   const [book, setBook] = useState<BookData | null>(null);
-  const [content, setContent] = useState<string>('');
-  const [loading, setLoading] = useState(true);
+  const [content, setContent] = useState<string>(initialContent);
+  const [loading, setLoading] = useState(!initialContent);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState<string[]>([]);
@@ -132,18 +132,10 @@ export default function BookDetailClient({ bookId }: { bookId: string }) {
         }
 
         setBook(selectedBook);
-
-        try {
-          const contentResponse = await fetch(`/api/books/${selectedBook.id}`);
-          if (contentResponse.ok) {
-            const data = await contentResponse.json();
-            setContent(data.content || 'No content available for this book.');
-          } else {
-            setContent('Content not available for this book.');
-          }
-        } catch (err) {
-          setContent('Error loading book content.');
-          console.error('Error fetching content:', err);
+        
+        // Use initial content if available, otherwise content was already set from props
+        if (initialContent && !content) {
+          setContent(initialContent);
         }
 
         setError(null);
