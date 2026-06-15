@@ -101,10 +101,10 @@ const splitContentIntoPages = (content: string, wordsPerPage: number): string[] 
   return splitPages.length > 0 ? splitPages : [content.trim()];
 };
 
-export default function BookDetailClient({ bookId, initialContent = '' }: { bookId: string; initialContent?: string }) {
-  const [book, setBook] = useState<BookData | null>(null);
+export default function BookDetailClient({ bookId, initialContent = '', initialBook = null, initialBooks = [] }: { bookId: string; initialContent?: string; initialBook?: BookData | null; initialBooks?: BookData[] }) {
+  const [book, setBook] = useState<BookData | null>(initialBook ?? null);
   const [content, setContent] = useState<string>(initialContent);
-  const [loading, setLoading] = useState(!initialContent);
+  const [loading, setLoading] = useState(!initialContent && !initialBook);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState<string[]>([]);
@@ -119,11 +119,17 @@ export default function BookDetailClient({ bookId, initialContent = '' }: { book
     const fetchBookAndContent = async () => {
       try {
         setLoading(true);
-        const booksResponse = await fetch('/api/books/list');
-        if (!booksResponse.ok) throw new Error('Failed to fetch books');
 
-        const books: BookData[] = await booksResponse.json();
-        const selectedBook = books.find(b => b.id === parseInt(bookId));
+        // Use server-provided book list if available to avoid runtime API fetches
+        let selectedBook: BookData | undefined;
+        if (initialBooks && initialBooks.length > 0) {
+          selectedBook = initialBooks.find(b => b.id === parseInt(bookId));
+        } else {
+          const booksResponse = await fetch('/api/books/list');
+          if (!booksResponse.ok) throw new Error('Failed to fetch books');
+          const books: BookData[] = await booksResponse.json();
+          selectedBook = books.find(b => b.id === parseInt(bookId));
+        }
 
         if (!selectedBook) {
           setError(`Book not found`);
@@ -132,9 +138,9 @@ export default function BookDetailClient({ bookId, initialContent = '' }: { book
         }
 
         setBook(selectedBook);
-        
+
         // Use initial content if available, otherwise content was already set from props
-        if (initialContent && !content) {
+        if (initialContent && (!content || content.trim().length === 0)) {
           setContent(initialContent);
         }
 

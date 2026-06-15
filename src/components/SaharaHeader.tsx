@@ -16,7 +16,7 @@ const defaultLinks = [
   { label: 'Books', href: '/books' },
   { label: 'Music', href: '/music' },
   { label: 'Games', href: '/games' },
-  { label: 'About', href: '#about' },
+  { label: 'About', href: '/about' },
 ];
 
 const themes: Theme[] = [
