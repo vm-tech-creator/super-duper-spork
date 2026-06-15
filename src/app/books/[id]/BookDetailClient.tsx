@@ -127,7 +127,7 @@ export default function BookDetailClient({ bookId, initialContent = '', initialB
   const [loading, setLoading] = useState(!initialContent && !initialBook);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pages, setPages] = useState<string[]>(() => splitContentIntoPages(initialContent || ''));
+  const [pages, setPages] = useState<string[]>(() => splitContentIntoPages(initialContent || '', 500));
   const contentRef = useRef<HTMLDivElement>(null);
   const [bookmarkedPage, setBookmarkedPage] = useState<number | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
