@@ -5,13 +5,13 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "export": "next build && next export",
+    "export": "next build",
     "deploy": "cross-env NEXT_PUBLIC_BASE_PATH=/super-duper-spork npm run export && gh-pages -d out",
     "start": "next start",
     "lint": "eslint",
-    "lint:fix": "esl'int --fix",
+    "lint:fix": "eslint --fix",
     "format": "prettier --write .",
-    "type-check": "tsc -noEmit",
+    "type-check": "tsc --noEmit",
     "portless:build": "portless build",
     "portless:publish": "portless publish"
   },

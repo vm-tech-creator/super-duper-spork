@@ -317,7 +317,7 @@ export default function BookDetailClient({ bookId }: { bookId: string }) {
                   <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml,%3Csvg%20viewBox=%220%200%20100%20100%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter%20id=%22noise%22%3E%3CfeTurbulence%20type=%22fractalNoise%22%20baseFrequency=%220.9%22%20numOctaves=%224%22/%3E%3C/filter%3E%3Crect%20width=%22100%22%20height=%22100%22%20filter=%22url(%23noise)%22/%3E%3C/svg%3E')]"></div>
                   <div className="absolute top-0 left-0 w-8 h-8 bg-gradient-to-br from-gray-300 to-gray-200 transform skew-y-12 rounded-full opacity-30"></div>
 
-                  <div className="relative z-10 w-full h-full flex flex-col" style={{ transformStyle: 'preserve-3d' }}>
+                  <div className="relative z-10 w-full h-full flex flex-col text-[color:var(--book-text,#1a202c)]" style={{ transformStyle: 'preserve-3d' }}>
                     <div className="pb-6 border-b-2 border-gray-300 flex-shrink-0 flex justify-between items-start">
                       <div>
                         <h1 className="text-3xl font-bold text-gray-900 font-serif leading-tight mb-2">{book.title}</h1>
@@ -340,12 +340,12 @@ export default function BookDetailClient({ bookId }: { bookId: string }) {
                     {/* Book Content - Scrollable with DRAMATIC FLIP */}
                     <div ref={contentRef} className="flex-1 overflow-y-auto pr-4 custom-scrollbar my-2 relative">
                       <div 
-                        style={{
-                          opacity: isTransitioning ? 0 : 1,
-                          transition: 'opacity 0.35s ease-out',
-                        }}
-                        className="text-gray-800 font-serif text-base leading-relaxed space-y-4 pb-8 h-full"
-                      >
+                              style={{
+                                opacity: isTransitioning ? 0 : 1,
+                                transition: 'opacity 0.35s ease-out',
+                              }}
+                              className="text-current font-serif text-base leading-relaxed space-y-4 pb-8 h-full text-[color:var(--book-text,#1a202c)]"
+                            >
                         {pages.length > 0 ? (
                           <MarkdownRenderer content={content} currentPage={currentPage - 1} pages={pages} />
                         ) : (

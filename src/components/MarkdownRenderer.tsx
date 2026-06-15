@@ -24,19 +24,19 @@ export default function MarkdownRenderer({ content, currentPage, pages }: Markdo
       // Headers
       if (paraText.startsWith('# ')) {
         elements.push(
-          <h2 key={elements.length} className="text-2xl font-bebas-neue font-bold mt-6 mb-4 text-gray-900 font-serif">
+          <h2 key={elements.length} className="text-2xl font-bebas-neue font-bold mt-6 mb-4 text-current font-serif">
             {paraText.replace('# ', '')}
           </h2>
         );
       } else if (paraText.startsWith('## ')) {
         elements.push(
-          <h3 key={elements.length} className="text-xl font-bebas-neue font-bold mt-5 mb-3 text-gray-800 font-serif">
+          <h3 key={elements.length} className="text-xl font-bebas-neue font-bold mt-5 mb-3 text-current font-serif">
             {paraText.replace('## ', '')}
           </h3>
         );
       } else if (paraText.startsWith('### ')) {
         elements.push(
-          <h4 key={elements.length} className="text-lg font-barlow font-semibold mt-4 mb-2 text-gray-800 font-serif">
+          <h4 key={elements.length} className="text-lg font-barlow font-semibold mt-4 mb-2 text-current font-serif">
             {paraText.replace('### ', '')}
           </h4>
         );
@@ -45,7 +45,7 @@ export default function MarkdownRenderer({ content, currentPage, pages }: Markdo
         elements.push(
           <blockquote
             key={elements.length}
-            className="border-l-4 border-gray-400 pl-3 py-2 my-3 italic text-gray-700 bg-yellow-50 rounded-r"
+            className="border-l-4 border-gray-400 pl-3 py-2 my-3 italic text-current bg-yellow-50 rounded-r"
           >
             {paraText.split('\n').map((line, i) => (
               <div key={i} className="text-sm">{line.replace('> ', '')}</div>
@@ -56,7 +56,7 @@ export default function MarkdownRenderer({ content, currentPage, pages }: Markdo
         // List
         const items = paraText.split('\n').filter(line => line.trim().startsWith('- ') || line.trim().startsWith('* '));
         elements.push(
-          <ul key={elements.length} className="list-disc list-inside my-3 space-y-1 text-gray-800">
+          <ul key={elements.length} className="list-disc list-inside my-3 space-y-1 text-current">
             {items.map((item, i) => (
               <li key={i} className="ml-2 text-sm">
                 {item.replace(/^[-*]\s/, '')}
@@ -76,7 +76,7 @@ export default function MarkdownRenderer({ content, currentPage, pages }: Markdo
         elements.push(
           <p
             key={elements.length}
-            className="text-gray-800 leading-relaxed mb-3 text-sm font-serif"
+            className="text-current leading-relaxed mb-3 text-sm font-serif"
             dangerouslySetInnerHTML={{ __html: formatted }}
           />
         );

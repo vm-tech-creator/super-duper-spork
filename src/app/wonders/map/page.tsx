@@ -467,9 +467,10 @@ export default function WondersMapPage() {
       </div>
 
       <aside
-        className={`absolute right-0 top-0 z-20 flex h-full w-full max-w-[430px] flex-col border-l border-white/15 bg-[#07111f]/92 shadow-2xl backdrop-blur-xl transition-transform duration-300 sm:w-[430px] ${
+        className={`absolute right-0 z-20 flex w-full max-w-[430px] flex-col border-l border-white/15 bg-[#07111f]/92 shadow-2xl backdrop-blur-xl transition-transform duration-300 sm:w-[430px] ${
           selectedWonder ? 'translate-x-0' : 'translate-x-full'
         }`}
+        style={{ top: 'var(--header-offset)', height: 'calc(100% - var(--header-offset))' }}
       >
         {selectedWonder && (
           <>

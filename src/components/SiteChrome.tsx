@@ -10,7 +10,9 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
     <div className="sahara-app flex min-h-screen flex-col">
       <ThemeScript />
       <SaharaHeader />
-      <main className="sahara-main flex-1">{children}</main>
+      <main className="sahara-main flex-1" style={{ paddingTop: 'var(--header-offset)' }}>
+        {children}
+      </main>
     </div>
   );
 }

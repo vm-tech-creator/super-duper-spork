@@ -8,10 +8,10 @@ export default function WondersInteractiveMap() {
     <div className="flex justify-center py-12">
       <Link
         href="/wonders/map"
-        className="inline-flex items-center gap-2 rounded-xl border border-[#ffc105]/50 bg-[#ffc105]/10 px-8 py-3 font-bold text-[#ffc105] shadow-lg transition hover:border-[#ffc105] hover:bg-[#ffc105]/20 hover:shadow-xl"
+        className="inline-flex items-center gap-2 rounded-xl border border-[#ffc105]/50 bg-[#ffc105]/10 px-8 py-3 font-bold text-[#ffc105] shadow-lg transition hover:border-[#ffc105] hover:bg-[#ffc105]/20 hover:shadow-xl whitespace-nowrap"
       >
-        <MapPin className="h-5 w-5" />
-        Explore the Wonders Map
+        <MapPin className="h-5 w-5 text-[#ffc105]" aria-hidden />
+        <span className="text-[#ffc105]">Explore the Wonders Map</span>
       </Link>
     </div>
   );
