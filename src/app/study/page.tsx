@@ -719,7 +719,7 @@ export default function StudyPage() {
               <div className="text-5xl mb-4">{subject.icon}</div>
               <h3 className="text-2xl font-semibold text-white mb-2">{subject.name}</h3>
               <p className="text-green-200 text-sm mb-4">
-                {assignments[subject.id as keyof typeof assignments]?.length || 0} assignments available
+                {(assignments[gradeLevel as keyof typeof assignments] as any)?.[subject.id]?.length || 0} assignments available
               </p>
               <div className="flex items-center gap-2 text-green-400 text-sm">
                 <BookOpen className="h-4 w-4" />
