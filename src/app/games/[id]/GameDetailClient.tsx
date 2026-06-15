@@ -138,7 +138,7 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Literary Labs',
     features: ['Real Books', 'Hilarious Titles', 'Educational', 'Endless Laughs'],
   },
-  13: {
+  10: {
     id: 10,
     title: 'Space Explorer 3D',
     description: 'Navigate through stunning 3D space, collecting stars while avoiding asteroids in this immersive space adventure.',
