@@ -27,6 +27,8 @@ jobs:
         run: npm ci
 
       - name: Build and publish
-        run: npm run deploy
+        run: |
+          npm run export
+          npx gh-pages -d out --repo "https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
