@@ -426,7 +426,7 @@ function ThreeGlobe({
     };
   }, [onSelectWonder]);
 
-  return <div ref={mountRef} className="absolute inset-0" aria-label="Movable 3D globe showing the Seven Wonders" />;
+  return <div ref={mountRef} className="absolute inset-0 z-0" aria-label="Movable 3D globe showing the Seven Wonders" />;
 }
 
 export default function WondersMapPage() {

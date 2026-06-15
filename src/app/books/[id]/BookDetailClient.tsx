@@ -8,11 +8,16 @@ import { getCoverDataUrl } from '@/lib/coverGenerator';
 import type { BookData } from '@/lib/books';
 
 // Recommendations Component
-function RecommendationsSection({ currentBook }: { currentBook: BookData }) {
-  const [allBooks, setAllBooks] = useState<BookData[]>([]);
-  const [loading, setLoading] = useState(true);
+function RecommendationsSection({ currentBook, initialBooks }: { currentBook: BookData; initialBooks?: BookData[] }) {
+  const [allBooks, setAllBooks] = useState<BookData[]>(initialBooks && initialBooks.length > 0 ? initialBooks : []);
+  const [loading, setLoading] = useState(!(initialBooks && initialBooks.length > 0));
 
   useEffect(() => {
+    if (initialBooks && initialBooks.length > 0) {
+      setLoading(false);
+      return;
+    }
+
     const fetchBooks = async () => {
       try {
         const response = await fetch('/api/books/list');
@@ -28,7 +33,7 @@ function RecommendationsSection({ currentBook }: { currentBook: BookData }) {
     };
 
     fetchBooks();
-  }, []);
+  }, [initialBooks]);
 
   // Get recommended books - same category, exclude current book
   const getRecommendations = () => {
@@ -101,17 +106,33 @@ const splitContentIntoPages = (content: string, wordsPerPage: number): string[] 
   return splitPages.length > 0 ? splitPages : [content.trim()];
 };
 
+// Helper to render full content by joining pages into HTML nodes
+function parseContentAsFull(content: string, pages: string[]) {
+  return (
+    <div className="space-y-6">
+      {pages.map((p, i) => (
+        <div key={i} className="prose max-w-none text-[color:var(--book-text,#1a202c)]">
+          {p.split(/\n\s*\n/).map((para, j) => (
+            <p key={j} className="leading-relaxed text-sm">{para}</p>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function BookDetailClient({ bookId, initialContent = '', initialBook = null, initialBooks = [] }: { bookId: string; initialContent?: string; initialBook?: BookData | null; initialBooks?: BookData[] }) {
   const [book, setBook] = useState<BookData | null>(initialBook ?? null);
   const [content, setContent] = useState<string>(initialContent);
   const [loading, setLoading] = useState(!initialContent && !initialBook);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pages, setPages] = useState<string[]>([]);
+  const [pages, setPages] = useState<string[]>(() => splitContentIntoPages(initialContent || ''));
   const contentRef = useRef<HTMLDivElement>(null);
   const [bookmarkedPage, setBookmarkedPage] = useState<number | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [flipDirection, setFlipDirection] = useState<'next' | 'prev' | null>(null);
+  const [showFull, setShowFull] = useState(false);
 
   useEffect(() => {
     if (!bookId) return;
@@ -315,7 +336,7 @@ export default function BookDetailClient({ bookId, initialContent = '', initialB
                   <div className="absolute inset-0 opacity-5 bg-[url('data:image/svg+xml,%3Csvg%20viewBox=%220%200%20100%20100%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter%20id=%22noise%22%3E%3CfeTurbulence%20type=%22fractalNoise%22%20baseFrequency=%220.9%22%20numOctaves=%224%22/%3E%3C/filter%3E%3Crect%20width=%22100%22%20height=%22100%22%20filter=%22url(%23noise)%22/%3E%3C/svg%3E')]"></div>
                   <div className="absolute top-0 left-0 w-8 h-8 bg-gradient-to-br from-gray-300 to-gray-200 transform skew-y-12 rounded-full opacity-30"></div>
 
-                  <div className="relative z-10 w-full h-full flex flex-col text-[color:var(--book-text,#1a202c)]" style={{ transformStyle: 'preserve-3d' }}>
+                    <div className="relative z-10 w-full h-full flex flex-col text-[color:var(--book-text,#1a202c)]" style={{ transformStyle: 'preserve-3d' }}>
                     <div className="pb-6 border-b-2 border-gray-300 flex-shrink-0 flex justify-between items-start">
                       <div>
                         <h1 className="text-3xl font-bold text-gray-900 font-serif leading-tight mb-2">{book.title}</h1>
@@ -336,16 +357,33 @@ export default function BookDetailClient({ bookId, initialContent = '', initialB
                     </div>
 
                     {/* Book Content - Scrollable with DRAMATIC FLIP */}
+                    <div className="flex items-center justify-between gap-3 mb-3">
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() => setShowFull((s) => !s)}
+                          className="rounded-md px-3 py-1 text-sm font-semibold bg-white/10 text-[var(--text)] hover:bg-white/20"
+                        >
+                          {showFull ? 'Show Paginated' : 'Show Full'}
+                        </button>
+                        <p className="text-xs text-[var(--muted)]">Reading mode</p>
+                      </div>
+                    </div>
+
                     <div ref={contentRef} className="flex-1 overflow-y-auto pr-4 custom-scrollbar my-2 relative">
-                      <div 
-                              style={{
-                                opacity: isTransitioning ? 0 : 1,
-                                transition: 'opacity 0.35s ease-out',
-                              }}
-                              className="text-current font-serif text-base leading-relaxed space-y-4 pb-8 h-full text-[color:var(--book-text,#1a202c)]"
-                            >
+                      <div
+                        style={{
+                          opacity: isTransitioning ? 0 : 1,
+                          transition: 'opacity 0.35s ease-out',
+                        }}
+                        className="text-current font-serif text-base leading-relaxed space-y-4 pb-8 h-full text-[color:var(--book-text,#1a202c)]"
+                      >
                         {pages.length > 0 ? (
-                          <MarkdownRenderer content={content} currentPage={currentPage - 1} pages={pages} />
+                          showFull ? (
+                            // Render full content as a single long page
+                            <div>{parseContentAsFull(content, pages)}</div>
+                          ) : (
+                            <MarkdownRenderer content={content} currentPage={currentPage - 1} pages={pages} />
+                          )
                         ) : (
                           <p className="text-gray-500 italic">No content available for this book.</p>
                         )}
@@ -390,7 +428,7 @@ export default function BookDetailClient({ bookId, initialContent = '', initialB
           </div>
 
           {/* Recommendations Section */}
-          <RecommendationsSection currentBook={book} />
+          <RecommendationsSection currentBook={book} initialBooks={initialBooks} />
         </div>
       </div>
 

@@ -4,7 +4,7 @@ import WondersInteractiveMap from '@/components/WondersInteractiveMap';
 
 export default function WondersPage() {
   return (
-    <main className="relative min-h-screen bg-[#07111f] text-[#e8edf5]">
+    <main className="relative min-h-screen bg-[#07111f] text-[#e8edf5]" style={{ paddingTop: 'var(--header-offset, 72px)' }}>
       <section className="relative z-20 px-[5%] pb-20 pt-8">
         <div className="mx-auto w-full max-w-6xl">
           <Link
