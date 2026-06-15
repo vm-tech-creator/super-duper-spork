@@ -298,8 +298,10 @@ function ThreeGlobe({
 
     let earthTexture: THREE.Texture | null = null;
     const textureLoader = new THREE.TextureLoader();
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+    const textureUrl = `${basePath}/images/earth-blue-marble.png`;
     textureLoader.load(
-      '/images/earth-blue-marble.png',
+      textureUrl,
       (texture) => {
         texture.colorSpace = THREE.SRGBColorSpace;
         texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
