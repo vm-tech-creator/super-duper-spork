@@ -74,7 +74,7 @@ export async function getBookContent(book: BookData): Promise<string> {
   };
 
   const categoryFolder = categoryFolders[book.category];
-  const filePath = path.join(process.cwd(), 'books', categoryFolder, book.fileName);
+  const filePath = path.join(process.cwd(), 'public', 'books', categoryFolder, book.fileName);
 
   if (!fs.existsSync(filePath)) {
     return 'Content not available for this book.';
