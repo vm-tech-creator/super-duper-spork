@@ -177,8 +177,8 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Bubble Dynamics',
     features: ['3D Bubbles', 'Combo System', 'Particle Effects', 'Mouse Controls', 'Progressive Levels'],
   },
-  10: {
-    id: 10,
+  13: {
+    id: 13,
     title: 'Pac-Man',
     description: 'A classic maze game where you navigate Pac-Man through a two-line pathway maze while avoiding colorful ghosts.',
     fullDescription: 'Navigate the classic Pac-Man through a perfectly designed maze filled with pellets. Collect all pellets to win while avoiding four intelligent ghosts with unique AI behaviors. Arrow keys or WASD to move. A nostalgic return to arcade gaming.',
@@ -190,8 +190,8 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Arcade Legends',
     features: ['Maze Navigation', 'AI Ghosts', 'Pellet Collection', 'Arcade Classic'],
   },
-  13: {
-    id: 13,
+  14: {
+    id: 14,
     title: 'Neon Flames',
     description: 'A paint-your-own-nebula experience where your cursor leaves glowing, cosmic trails in a drifting starfield.',
     fullDescription: 'Step into a cosmic studio and paint a neon nebula with a trail of glowing particles. Your cursor leaves shimmering space dust and bright auroras while a slowly moving starfield shimmers behind the scene. The result is a meditative interactive art piece with vivid color and cosmic motion.',
@@ -203,8 +203,8 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Cosmic Canvas',
     features: ['Neon Trail Painting', 'Cosmic Space Background', 'Glowing Particle Effects', 'Interactive Nebula Art'],
   },
-  14: {
-    id: 14,
+  15: {
+    id: 15,
     title: 'Superstar Racing',
     description: 'A hill climb-style racing adventure with hills, coins, fuel, and physics-driven controls.',
     fullDescription: 'Rev up your engine and conquer twisting hills in Superstar Racing. Use acceleration, braking, and tilt control to keep the car balanced, collect coins, and stay fueled while climbing to new distance records.',
@@ -216,8 +216,8 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Superstar Studios',
     features: ['Hill Climb Physics', 'Fuel Management', 'Coin Collection', 'Tilt Control'],
   },
-  15: {
-    id: 15,
+  16: {
+    id: 16,
     title: 'Blobmixer',
     description: 'A dreamy 3D blob playground where you can tap, squish, and shape floating liquid forms in mid-air.',
     fullDescription: 'Step into Blobmixer, a calm 3D playground where translucent blobs float in space and respond to your pointer. Click and drag to squish, stretch, and bounce each blob while soft lighting and slow motion create a relaxing sensory experience.',
