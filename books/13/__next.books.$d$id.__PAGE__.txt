@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
-2:I[90932,["/_next/static/chunks/0x0zmlgpmgse5.js","/_next/static/chunks/0d3shmwh5_nmn.js","/_next/static/chunks/02undzj-~9rvi.js"],"default"]
-3:I[97367,["/_next/static/chunks/0x0zmlgpmgse5.js","/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
+2:I[90932,["/super-duper-spork/_next/static/chunks/0x0zmlgpmgse5.js","/super-duper-spork/_next/static/chunks/0d3shmwh5_nmn.js","/super-duper-spork/_next/static/chunks/12gfk-spe7duq.js"],"default"]
+3:I[97367,["/super-duper-spork/_next/static/chunks/0x0zmlgpmgse5.js","/super-duper-spork/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"bookId":"13"}],[["$","script","script-0",{"src":"/_next/static/chunks/02undzj-~9rvi.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"NYwlqQIs7pbEkdJgEIVjX"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"bookId":"13","initialContent":"# Dragon Keeper\n## A Preteen Fantasy Adventure\n\n---\n\n## Chapter 1: The Egg\n\nThirteen-year-old Liam finds a dragon egg in a cave. When it hatches, he becomes responsible for raising it in secret.\n\n---\n\n## Chapter 2-20: Chapters following Liam and his dragon's growth, hiding from dragon hunters, learning dragon language, discovering the dragon's destiny, and understanding his role as keeper.\n\n---\n\n**STANDALONE**\n"}],[["$","script","script-0",{"src":"/super-duper-spork/_next/static/chunks/12gfk-spe7duq.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"6oPtFT6hokU5TB529fym8"}
 5:null

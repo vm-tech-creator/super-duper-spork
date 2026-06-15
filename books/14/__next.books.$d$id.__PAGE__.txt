@@ -1,6 +1,6 @@
 1:"$Sreact.fragment"
-2:I[90932,["/_next/static/chunks/0x0zmlgpmgse5.js","/_next/static/chunks/0d3shmwh5_nmn.js","/_next/static/chunks/02undzj-~9rvi.js"],"default"]
-3:I[97367,["/_next/static/chunks/0x0zmlgpmgse5.js","/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
+2:I[90932,["/super-duper-spork/_next/static/chunks/0x0zmlgpmgse5.js","/super-duper-spork/_next/static/chunks/0d3shmwh5_nmn.js","/super-duper-spork/_next/static/chunks/12gfk-spe7duq.js"],"default"]
+3:I[97367,["/super-duper-spork/_next/static/chunks/0x0zmlgpmgse5.js","/super-duper-spork/_next/static/chunks/0d3shmwh5_nmn.js"],"OutletBoundary"]
 4:"$Sreact.suspense"
-0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"bookId":"14"}],[["$","script","script-0",{"src":"/_next/static/chunks/02undzj-~9rvi.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"NYwlqQIs7pbEkdJgEIVjX"}
+0:{"rsc":["$","$1","c",{"children":[["$","$L2",null,{"bookId":"14","initialContent":"# Garden Mystery\n## A Preteen Magical Realism\n\n---\n\n## Chapter 1: The Return\n\nTwelve-year-old Emma returns to her grandmother's house after three years away. The garden has grown wild and strange—plants that shouldn't exist are flourishing there.\n\nHer grandmother reveals that the garden is magical and needs Emma's help.\n\n---\n\n## Chapter 2-20: Emma's journey learning to cultivate magical plants, discovering why the garden chose her, protecting it from those who would exploit it, and understanding her family's ancient heritage.\n\n---\n\n**STANDALONE**\n"}],[["$","script","script-0",{"src":"/super-duper-spork/_next/static/chunks/12gfk-spe7duq.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"6oPtFT6hokU5TB529fym8"}
 5:null
