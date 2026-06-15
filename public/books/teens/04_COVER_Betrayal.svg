@@ -1,3 +1,0 @@
-<svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
-  <rect width="400" height="600" fill="#2c3e50"/><polygon points="200,80 300,300 100,300" fill="#34495e"/><circle cx="200" cy="140" r="40" fill="#3498db"/><ellipse cx="100" cy="380" rx="50" ry="70" fill="#3498db" opacity="0.6"/><ellipse cx="300" cy="380" rx="50" ry="70" fill="#3498db" opacity="0.6"/><path d="M 150 450 Q 200 500 250 450" stroke="#3498db" stroke-width="3" fill="none"/><rect x="50" y="480" width="300" height="110" fill="#000" opacity="0.85" rx="10"/><text x="200" y="528" font-size="40" font-weight="bold" text-anchor="middle" fill="#3498db" font-family="Arial">Betrayal</text><text x="200" y="563" font-size="16" text-anchor="middle" fill="#fff" font-family="Arial">When Trust Breaks</text>
-</svg>

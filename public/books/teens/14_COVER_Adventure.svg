@@ -1,3 +1,0 @@
-<svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
-  <rect width="400" height="600" fill="#1a237e"/><polygon points="100,80 300,80 350,300 200,400 50,300" fill="#283593" opacity="0.7"/><circle cx="200" cy="120" r="35" fill="#3f51b5"/><path d="M 150 280 Q 200 340 250 280" stroke="#7986cb" stroke-width="3" fill="none"/><rect x="50" y="480" width="300" height="110" fill="#000" opacity="0.85" rx="10"/><text x="200" y="528" font-size="40" font-weight="bold" text-anchor="middle" fill="#7986cb" font-family="Arial">Adventure</text><text x="200" y="563" font-size="16" text-anchor="middle" fill="#fff" font-family="Arial">Quest for the Unknown</text>
-</svg>

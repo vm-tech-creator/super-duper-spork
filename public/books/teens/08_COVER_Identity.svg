@@ -1,3 +1,0 @@
-<svg viewBox="0 0 400 600" xmlns="http://www.w3.org/2000/svg">
-  <rect width="400" height="600" fill="#1565c0"/><polygon points="100,90 300,90 400,400 0,400" fill="#1976d2" opacity="0.7"/><circle cx="200" cy="150" r="50" fill="#42a5f5"/><path d="M 150,220 L 250,220 M 150,280 L 250,280 M 150,340 L 250,340" stroke="#90caf9" stroke-width="3"/><rect x="50" y="480" width="300" height="110" fill="#000" opacity="0.85" rx="10"/><text x="200" y="528" font-size="42" font-weight="bold" text-anchor="middle" fill="#42a5f5" font-family="Arial">Identity</text><text x="200" y="563" font-size="16" text-anchor="middle" fill="#fff" font-family="Arial">Finding Yourself</text>
-</svg>
