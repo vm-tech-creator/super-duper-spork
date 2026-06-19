@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import CatBounceGame from '@/components/CatBounceGame';
-import SpaceExplorerGame from '@/components/SpaceExplorerGame';
 import MazeRunnerGame from '@/components/MazeRunnerGame';
 import BubblePopperGame from '@/components/BubblePopperGame';
 import ThePointingPointer from '@/components/games/ThePointingPointer';
@@ -140,16 +139,16 @@ const GAMES_DATA: Record<number, any> = {
   },
   10: {
     id: 10,
-    title: 'Space Explorer 3D',
-    description: 'Navigate through stunning 3D space, collecting stars while avoiding asteroids in this immersive space adventure.',
-    fullDescription: 'Embark on an epic space journey in full 3D! Pilot your spaceship through asteroid fields, collect glowing stars, and experience the thrill of space exploration. With realistic physics, beautiful particle effects, and challenging gameplay, this is space adventure like you\'ve never seen before.',
-    imageUrl: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800&h=600&fit=crop',
-    genre: '3D Action & Adventure',
+    title: 'Pac-Man',
+    description: 'A classic maze game where you navigate Pac-Man through a two-line pathway maze while avoiding colorful ghosts.',
+    fullDescription: 'Navigate the classic Pac-Man through a perfectly designed maze filled with pellets. Collect all pellets to win while avoiding four intelligent ghosts with unique AI behaviors. Arrow keys or WASD to move. A nostalgic return to arcade gaming.',
+    imageUrl: 'https://images.unsplash.com/photo-1535371579214-d6a72b3b5c47?w=800&h=600&fit=crop',
+    genre: 'Classic Arcade Game',
     rating: 4.9,
     players: 'Solo',
     releaseDate: 'Apr 2026',
-    developer: 'Cosmic Studios',
-    features: ['3D Graphics', 'Realistic Physics', 'Particle Effects', 'Space Exploration', 'Mouse Controls'],
+    developer: 'Arcade Legends',
+    features: ['Maze Navigation', 'AI Ghosts', 'Pellet Collection', 'Arcade Classic'],
   },
   11: {
     id: 11,
@@ -179,21 +178,8 @@ const GAMES_DATA: Record<number, any> = {
   },
   13: {
     id: 13,
-    title: 'Pac-Man',
-    description: 'A classic maze game where you navigate Pac-Man through a two-line pathway maze while avoiding colorful ghosts.',
-    fullDescription: 'Navigate the classic Pac-Man through a perfectly designed maze filled with pellets. Collect all pellets to win while avoiding four intelligent ghosts with unique AI behaviors. Arrow keys or WASD to move. A nostalgic return to arcade gaming.',
-    imageUrl: 'https://images.unsplash.com/photo-1535371579214-d6a72b3b5c47?w=800&h=600&fit=crop',
-    genre: 'Classic Arcade Game',
-    rating: 4.9,
-    players: 'Solo',
-    releaseDate: 'Apr 2026',
-    developer: 'Arcade Legends',
-    features: ['Maze Navigation', 'AI Ghosts', 'Pellet Collection', 'Arcade Classic'],
-  },
-  14: {
-    id: 14,
     title: 'Neon Flames',
-    description: 'A paint-your-own-nebula experience where your cursor leaves glowing, cosmic trails in a drifting starfield.',
+    description: 'Paint your own nebula with glowing cosmic trails while a slow space background drifts behind you.',
     fullDescription: 'Step into a cosmic studio and paint a neon nebula with a trail of glowing particles. Your cursor leaves shimmering space dust and bright auroras while a slowly moving starfield shimmers behind the scene. The result is a meditative interactive art piece with vivid color and cosmic motion.',
     imageUrl: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&h=600&fit=crop',
     genre: 'Interactive & Useless Fun',
@@ -203,8 +189,8 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Cosmic Canvas',
     features: ['Neon Trail Painting', 'Cosmic Space Background', 'Glowing Particle Effects', 'Interactive Nebula Art'],
   },
-  15: {
-    id: 15,
+  14: {
+    id: 14,
     title: 'Superstar Racing',
     description: 'A hill climb-style racing adventure with hills, coins, fuel, and physics-driven controls.',
     fullDescription: 'Rev up your engine and conquer twisting hills in Superstar Racing. Use acceleration, braking, and tilt control to keep the car balanced, collect coins, and stay fueled while climbing to new distance records.',
@@ -216,8 +202,8 @@ const GAMES_DATA: Record<number, any> = {
     developer: 'Superstar Studios',
     features: ['Hill Climb Physics', 'Fuel Management', 'Coin Collection', 'Tilt Control'],
   },
-  16: {
-    id: 16,
+  15: {
+    id: 15,
     title: 'Blobmixer',
     description: 'A dreamy 3D blob playground where you can tap, squish, and shape floating liquid forms in mid-air.',
     fullDescription: 'Step into Blobmixer, a calm 3D playground where translucent blobs float in space and respond to your pointer. Click and drag to squish, stretch, and bounce each blob while soft lighting and slow motion create a relaxing sensory experience.',
@@ -238,7 +224,6 @@ export default function GameDetailClient({ id }: { id: string }) {
   const searchParams = useSearchParams();
   const gameId = parseInt(id);
   const game = GAMES_DATA[gameId];
-  const [scrolled, setScrolled] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
   // Auto-start game if play=true in query params
@@ -269,7 +254,7 @@ export default function GameDetailClient({ id }: { id: string }) {
       case 9:
         return <WeirdBooks onClose={() => setIsPlaying(false)} />;
       case 10:
-        return <SpaceExplorerGame />;
+        return <PacMan onClose={() => setIsPlaying(false)} />;
       case 11:
         return <MazeRunnerGame />;
       case 12:
@@ -280,8 +265,6 @@ export default function GameDetailClient({ id }: { id: string }) {
         return <SuperstarRacing onClose={() => setIsPlaying(false)} />;
       case 15:
         return <Blobmixer onClose={() => setIsPlaying(false)} />;
-      case 16:
-        return <SpaceExplorerGame onClose={() => setIsPlaying(false)} />;
       default:
         return null;
     }
@@ -426,15 +409,6 @@ export default function GameDetailClient({ id }: { id: string }) {
                   <CatBounceGame />
                 </div>
               </>
-            ) : game.id === 10 ? (
-              <>
-                <p className="text-lg text-[#7a93b4]">
-                  Use your mouse to pilot your spaceship through space! Collect stars while avoiding asteroids. Good luck, space explorer!
-                </p>
-                <div className="mt-8 h-[600px] rounded-lg overflow-hidden border-2 border-[#ffc105]/30">
-                  <SpaceExplorerGame />
-                </div>
-              </>
             ) : game.id === 11 ? (
               <>
                 <p className="text-lg text-[#7a93b4]">
@@ -454,7 +428,10 @@ export default function GameDetailClient({ id }: { id: string }) {
                 </div>
               </>
             ) : (
-              <button className="bg-[#ffc105] text-[#080f1c] border-none px-8 py-3 rounded font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] transition-all hover:bg-[#ffcf3a] hover:translate-y-[-2px] hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] cursor-pointer text-lg">
+              <button
+                onClick={() => setIsPlaying(true)}
+                className="bg-[#ffc105] text-[#080f1c] border-none px-8 py-3 rounded font-['Barlow_Condensed'] font-bold uppercase tracking-[.08em] transition-all hover:bg-[#ffcf3a] hover:translate-y-[-2px] hover:shadow-[0_6px_24px_rgba(255,193,5,.4)] cursor-pointer text-lg"
+              >
                 Play Now
               </button>
             )}
