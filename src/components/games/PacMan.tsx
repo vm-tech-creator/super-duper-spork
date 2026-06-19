@@ -332,21 +332,32 @@ export default function PacMan({ onClose }: { onClose: () => void }) {
 
   // Three.js setup
   useEffect(() => {
-    const w = window.innerWidth;
-    const h = window.innerHeight;
-
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
-    const camera = new THREE.OrthographicCamera(w / -2, w / 2, h / 2, h / -2, 0.1, 1000);
+    // Determine container size (fallback to reasonable defaults)
+    const container = containerRef.current;
+    const containerW = container ? Math.max(container.clientWidth, 360) : 360;
+    const containerH = container ? Math.max(container.clientHeight, 400) : 400;
+
+    // Create an orthographic camera sized to the game plane so the canvas matches the maze size
+    const planeWidth = MAZE_WIDTH * CELL_SIZE;
+    const planeHeight = MAZE_HEIGHT * CELL_SIZE;
+    const camera = new THREE.OrthographicCamera(-planeWidth / 2, planeWidth / 2, planeHeight / 2, -planeHeight / 2, 0.1, 1000);
     camera.position.z = 10;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(w, h);
+    // Size the renderer to container so it fits the UI; CSS will center the plane
+    renderer.setSize(containerW, containerH);
     renderer.setClearColor(0x000033);
     rendererRef.current = renderer;
 
     if (containerRef.current) {
+      // remove any previous canvas
+      const existing = containerRef.current.querySelector('canvas');
+      if (existing) existing.remove();
+      renderer.domElement.style.width = `${containerW}px`;
+      renderer.domElement.style.height = `${containerH}px`;
       containerRef.current.appendChild(renderer.domElement);
     }
 
@@ -383,18 +394,17 @@ export default function PacMan({ onClose }: { onClose: () => void }) {
     const uiMaterial = new THREE.MeshBasicMaterial({ map: uiTexture });
     const uiGeometry = new THREE.PlaneGeometry(300, 75);
     const uiMesh = new THREE.Mesh(uiGeometry, uiMaterial);
-    uiMesh.position.set(0, -h / 2 + 60, 1);
+    uiMesh.position.set(0, -planeHeight / 2 + 60, 1);
     scene.add(uiMesh);
 
     const handleResize = () => {
-      const newW = window.innerWidth;
-      const newH = window.innerHeight;
-      camera.left = newW / -2;
-      camera.right = newW / 2;
-      camera.top = newH / 2;
-      camera.bottom = newH / -2;
-      camera.updateProjectionMatrix();
+      const container = containerRef.current;
+      const newW = container ? Math.max(container.clientWidth, 360) : window.innerWidth;
+      const newH = container ? Math.max(container.clientHeight, 400) : window.innerHeight;
+      // keep camera fixed to game plane size (no change needed), but update renderer size
       renderer.setSize(newW, newH);
+      renderer.domElement.style.width = `${newW}px`;
+      renderer.domElement.style.height = `${newH}px`;
     };
 
     window.addEventListener('resize', handleResize);

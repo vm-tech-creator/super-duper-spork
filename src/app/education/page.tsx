@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { 
   Brain, Gamepad2, Trophy, Clock, Target, BookOpen, 
   ArrowRight, CheckCircle2, Flame, Star, Filter, BarChart3

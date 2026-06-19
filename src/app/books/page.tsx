@@ -1,49 +1,12 @@
-'use client';
+import { getBooks } from '@/lib/books';
+import BooksClient from '@/components/BooksClient';
 
-import { useState, useMemo } from 'react';
-import { useEffect } from 'react';
-import { BookOpen, Search, ChevronUp, ChevronDown, Bookmark } from 'lucide-react';
-import BookCard from '@/components/BookCard';
-import type { BookData } from '@/lib/books';
+export const dynamic = 'force-static';
 
-type CategoryFilter = 'all' | 'preteen' | 'teen' | 'adult' | 'bookmarked';
-type SortOrder = 'asc' | 'desc';
+export default async function BooksPage() {
+  const books = await getBooks();
 
-const BOOKS_PER_PAGE = 12;
-
-export default function BooksPage() {
-  const [books, setBooks] = useState<BookData[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('all');
-  const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
-  const [bookmarkedIds, setBookmarkedIds] = useState<number[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Fetch books data
-    const fetchBooks = async () => {
-      try {
-        const response = await fetch('/api/books/list');
-        if (!response.ok) {
-          throw new Error(`API error: ${response.status}`);
-        }
-        const data = await response.json();
-        console.log('Books loaded:', data.length, 'books');
-        setBooks(data);
-        setError(null);
-      } catch (err) {
-        const errorMsg = err instanceof Error ? err.message : 'Failed to fetch books';
-        console.error('Error fetching books:', err);
-        setError(errorMsg);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBooks();
-  }, []);
+  return <BooksClient initialBooks={books} />;
 
   useEffect(() => {
     const loadBookmarks = () => {

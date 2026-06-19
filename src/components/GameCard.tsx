@@ -49,6 +49,11 @@ export default function GameCard({
           src={imageUrl}
           alt={title}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+          onError={(e) => {
+            const target = e.currentTarget as HTMLImageElement;
+            // fallback: simple SVG placeholder data URL
+            target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="100%" height="100%" fill="%23e5e7eb"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23737474" font-family="Arial,Helvetica,sans-serif" font-size="20">Image unavailable</text></svg>';
+          }}
         />
         {/* Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-[color-mix(in_srgb,var(--bg)_40%,transparent)] to-transparent transition-opacity duration-300" />

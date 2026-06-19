@@ -1060,7 +1060,7 @@ export default function Home() {
 
         { title: 'Music', desc: 'Listen to music and discover new artists.', icon: Music2, href: '#categories', cta: 'Listen Music', num: '03' },
 
-        { title: 'Education', desc: 'Learn something new every day.', icon: BookOpen, href: '#categories', cta: 'Start Learning', num: '04' },
+        { title: 'Education', desc: 'Learn something new every day.', icon: BookOpen, href: '/education', cta: 'Start Learning', num: '04' },
 
       ],
 
