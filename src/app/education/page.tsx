@@ -1,35 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { 
   Brain, Gamepad2, Trophy, Clock, Target, BookOpen, 
-  ArrowRight, CheckCircle2, Flame, Star, Filter, BarChart3
+  ArrowRight, CheckCircle2, Flame, Filter, BarChart3
 } from 'lucide-react';
+import EducationQuizPlayer from '@/components/EducationQuizPlayer';
+import EducationMathGamePlayer from '@/components/EducationMathGamePlayer';
+import EducationMathPracticePlayer from '@/components/EducationMathPracticePlayer';
+import { educationQuizzes, getEducationQuizById } from '@/lib/educationQuizzes';
+import {
+  educationMathGames,
+  educationMathPractices,
+  getMathGameById,
+  getMathPracticeById,
+  type GradeLevel,
+} from '@/lib/educationMath';
+import { updateQuizScore } from '@/lib/educationProgress';
+import { useEducationTracking } from '@/hooks/useEducationTracking';
 
-interface Quiz {
-  id: string;
-  title: string;
-  description: string;
-  subject: 'math' | 'ela' | 'science' | 'history';
-  difficulty: 'Easy' | 'Medium' | 'Hard';
-  questions: number;
-  duration: number;
-  icon: string;
-}
-
-interface MathGame {
-  id: string;
-  title: string;
-  description: string;
-  difficulty: 'Easy' | 'Medium' | 'Hard';
-  category: string;
-  icon: string;
-  highScore?: number;
-}
-
-type GradeLevel = 'Elementary' | 'Middle' | 'High' | 'College';
+const QUIZ_RESULTS_KEY = 'sahara_education_quiz_results';
+const GAME_SCORES_KEY = 'sahara_education_game_scores';
+const PRACTICE_RESULTS_KEY = 'sahara_education_practice_results';
 
 interface QuizResult {
   quizId: string;
@@ -38,323 +31,61 @@ interface QuizResult {
   grade: 'A' | 'B' | 'C' | 'D' | 'F';
 }
 
+interface PracticeResult {
+  practiceId: string;
+  score: number;
+  totalProblems: number;
+  grade: 'A' | 'B' | 'C' | 'D' | 'F';
+}
+
+interface GameScores {
+  [gameId: string]: number;
+}
+
 export default function EducationPage() {
+  useEducationTracking();
   const [activeTab, setActiveTab] = useState<'quizzes' | 'games' | 'math-practice' | 'progress'>('quizzes');
   const [selectedDifficulty, setSelectedDifficulty] = useState<'All' | 'Easy' | 'Medium' | 'Hard'>('All');
   const [selectedGrade, setSelectedGrade] = useState<GradeLevel>('Middle');
-  const [quizResults, setQuizResults] = useState<QuizResult[]>([
-    { quizId: 'math-algebra', score: 95, totalQuestions: 10, grade: 'A' },
-    { quizId: 'math-geometry', score: 88, totalQuestions: 8, grade: 'B' },
-    { quizId: 'ela-grammar', score: 92, totalQuestions: 10, grade: 'A' },
-  ]);
-  const [userStats] = useState({
-    quizzesCompleted: 8,
-    gamesPlayed: 15,
-    totalPoints: 3250,
-    currentStreak: 7,
-  });
+  const [activeQuizId, setActiveQuizId] = useState<string | null>(null);
+  const [activeGameId, setActiveGameId] = useState<string | null>(null);
+  const [activePracticeId, setActivePracticeId] = useState<string | null>(null);
+  const [quizResults, setQuizResults] = useState<QuizResult[]>([]);
+  const [practiceResults, setPracticeResults] = useState<PracticeResult[]>([]);
+  const [gameScores, setGameScores] = useState<GameScores>({});
+  const [gamesPlayed, setGamesPlayed] = useState(0);
+
+  useEffect(() => {
+    try {
+      const storedQuizzes = localStorage.getItem(QUIZ_RESULTS_KEY);
+      if (storedQuizzes) {
+        setQuizResults(JSON.parse(storedQuizzes));
+      }
+
+      const storedPractice = localStorage.getItem(PRACTICE_RESULTS_KEY);
+      if (storedPractice) {
+        setPracticeResults(JSON.parse(storedPractice));
+      }
+
+      const storedGames = localStorage.getItem(GAME_SCORES_KEY);
+      if (storedGames) {
+        const parsed = JSON.parse(storedGames) as { scores: GameScores; played: number };
+        setGameScores(parsed.scores ?? {});
+        setGamesPlayed(parsed.played ?? 0);
+      }
+    } catch (error) {
+      console.error('Failed to load education progress:', error);
+    }
+  }, []);
 
   const grades: GradeLevel[] = ['Elementary', 'Middle', 'High', 'College'];
 
-  const quizzes: Quiz[] = [
-    {
-      id: 'math-algebra',
-      title: 'Algebra Fundamentals',
-      description: 'Master basic algebraic equations and expressions',
-      subject: 'math',
-      difficulty: 'Medium',
-      questions: 10,
-      duration: 15,
-      icon: '🧮',
-    },
-    {
-      id: 'math-geometry',
-      title: 'Geometry Basics',
-      description: 'Test your knowledge of shapes, angles, and areas',
-      subject: 'math',
-      difficulty: 'Easy',
-      questions: 8,
-      duration: 12,
-      icon: '📐',
-    },
-    {
-      id: 'math-fractions',
-      title: 'Fractions & Decimals',
-      description: 'Practice working with fractions and decimal operations',
-      subject: 'math',
-      difficulty: 'Medium',
-      questions: 12,
-      duration: 18,
-      icon: '➗',
-    },
-    {
-      id: 'math-advanced',
-      title: 'Advanced Calculus',
-      description: 'Challenge yourself with advanced mathematical concepts',
-      subject: 'math',
-      difficulty: 'Hard',
-      questions: 15,
-      duration: 25,
-      icon: '∫',
-    },
-    {
-      id: 'ela-grammar',
-      title: 'Grammar Mastery',
-      description: 'Improve your grammar skills with comprehensive questions',
-      subject: 'ela',
-      difficulty: 'Easy',
-      questions: 10,
-      duration: 14,
-      icon: '✏️',
-    },
-    {
-      id: 'ela-vocab',
-      title: 'Vocabulary Builder',
-      description: 'Expand your vocabulary with challenging word problems',
-      subject: 'ela',
-      difficulty: 'Medium',
-      questions: 15,
-      duration: 20,
-      icon: '📖',
-    },
-    {
-      id: 'science-biology',
-      title: 'Biology Essentials',
-      description: 'Learn about living organisms and life processes',
-      subject: 'science',
-      difficulty: 'Medium',
-      questions: 12,
-      duration: 16,
-      icon: '🧬',
-    },
-    {
-      id: 'history-world',
-      title: 'World History',
-      description: 'Test your knowledge of major historical events',
-      subject: 'history',
-      difficulty: 'Hard',
-      questions: 20,
-      duration: 30,
-      icon: '🌍',
-    },
-  ];
-
-  const mathGames: MathGame[] = [
-    {
-      id: 'math-blaster',
-      title: 'Math Blaster',
-      description: 'Blast through math problems in an arcade-style game',
-      difficulty: 'Easy',
-      category: 'Arithmetic',
-      icon: '🚀',
-      highScore: 2500,
-    },
-    {
-      id: 'number-ninja',
-      title: 'Number Ninja',
-      description: 'Quick-fire math challenges to test your speed',
-      difficulty: 'Medium',
-      category: 'Speed Challenge',
-      icon: '🥋',
-      highScore: 1850,
-    },
-    {
-      id: 'fraction-quest',
-      title: 'Fraction Quest',
-      description: 'Master fractions through adventure gameplay',
-      difficulty: 'Medium',
-      category: 'Fractions',
-      icon: '⚔️',
-      highScore: 3200,
-    },
-    {
-      id: 'geometry-builder',
-      title: 'Geometry Builder',
-      description: 'Create and explore geometric shapes and patterns',
-      difficulty: 'Easy',
-      category: 'Geometry',
-      icon: '📐',
-      highScore: 2100,
-    },
-    {
-      id: 'algebra-quest',
-      title: 'Algebra Quest',
-      description: 'Solve algebraic equations to progress through levels',
-      difficulty: 'Hard',
-      category: 'Algebra',
-      icon: '🧮',
-    },
-    {
-      id: 'calculus-challenge',
-      title: 'Calculus Challenge',
-      description: 'Advanced math puzzle for the most dedicated learners',
-      difficulty: 'Hard',
-      category: 'Advanced Math',
-      icon: '∑',
-    },
-  ];
-
-  interface MathPractice {
-    id: string;
-    title: string;
-    description: string;
-    topic: string;
-    gradeLevel: GradeLevel;
-    difficulty: 'Easy' | 'Medium' | 'Hard';
-    problemCount: number;
-    icon: string;
-    estimatedTime: number;
-  }
-
-  const mathPractices: MathPractice[] = [
-    // Elementary
-    {
-      id: 'elem-addition',
-      title: 'Addition Basics',
-      description: 'Practice addition with single and double-digit numbers',
-      topic: 'Arithmetic',
-      gradeLevel: 'Elementary',
-      difficulty: 'Easy',
-      problemCount: 20,
-      icon: '➕',
-      estimatedTime: 10,
-    },
-    {
-      id: 'elem-subtraction',
-      title: 'Subtraction Practice',
-      description: 'Master subtraction with regrouping',
-      topic: 'Arithmetic',
-      gradeLevel: 'Elementary',
-      difficulty: 'Easy',
-      problemCount: 20,
-      icon: '➖',
-      estimatedTime: 10,
-    },
-    {
-      id: 'elem-multiplication',
-      title: 'Multiplication Times Tables',
-      description: 'Build fluency with multiplication facts',
-      topic: 'Multiplication',
-      gradeLevel: 'Elementary',
-      difficulty: 'Medium',
-      problemCount: 30,
-      icon: '✖️',
-      estimatedTime: 15,
-    },
-    {
-      id: 'elem-division',
-      title: 'Division Practice',
-      description: 'Learn division as inverse of multiplication',
-      topic: 'Division',
-      gradeLevel: 'Elementary',
-      difficulty: 'Medium',
-      problemCount: 25,
-      icon: '➗',
-      estimatedTime: 12,
-    },
-    // Middle School
-    {
-      id: 'middle-fractions',
-      title: 'Fractions & Decimals',
-      description: 'Work with fractions, decimals, and percentages',
-      topic: 'Fractions',
-      gradeLevel: 'Middle',
-      difficulty: 'Medium',
-      problemCount: 25,
-      icon: '⅝',
-      estimatedTime: 15,
-    },
-    {
-      id: 'middle-prealgebra',
-      title: 'Pre-Algebra Fundamentals',
-      description: 'Introduction to variables and simple equations',
-      topic: 'Algebra',
-      gradeLevel: 'Middle',
-      difficulty: 'Medium',
-      problemCount: 20,
-      icon: '🔤',
-      estimatedTime: 12,
-    },
-    {
-      id: 'middle-ratios',
-      title: 'Ratios & Proportions',
-      description: 'Understand relationships between quantities',
-      topic: 'Ratios',
-      gradeLevel: 'Middle',
-      difficulty: 'Medium',
-      problemCount: 18,
-      icon: '⚖️',
-      estimatedTime: 14,
-    },
-    {
-      id: 'middle-geometry',
-      title: 'Geometry Basics',
-      description: 'Learn about shapes, angles, and area',
-      topic: 'Geometry',
-      gradeLevel: 'Middle',
-      difficulty: 'Medium',
-      problemCount: 22,
-      icon: '📐',
-      estimatedTime: 13,
-    },
-    // High School
-    {
-      id: 'high-algebra1',
-      title: 'Algebra I',
-      description: 'Equations, inequalities, and functions',
-      topic: 'Algebra',
-      gradeLevel: 'High',
-      difficulty: 'Hard',
-      problemCount: 30,
-      icon: '🧮',
-      estimatedTime: 20,
-    },
-    {
-      id: 'high-geometry',
-      title: 'Geometry Proofs',
-      description: 'Master geometric theorems and proofs',
-      topic: 'Geometry',
-      gradeLevel: 'High',
-      difficulty: 'Hard',
-      problemCount: 25,
-      icon: '△',
-      estimatedTime: 18,
-    },
-    {
-      id: 'high-trigonometry',
-      title: 'Trigonometry',
-      description: 'Sine, cosine, tangent, and applications',
-      topic: 'Trigonometry',
-      gradeLevel: 'High',
-      difficulty: 'Hard',
-      problemCount: 28,
-      icon: '〰️',
-      estimatedTime: 22,
-    },
-    // College
-    {
-      id: 'college-calculus',
-      title: 'Calculus I',
-      description: 'Limits, derivatives, and integrals',
-      topic: 'Calculus',
-      gradeLevel: 'College',
-      difficulty: 'Hard',
-      problemCount: 35,
-      icon: '∫',
-      estimatedTime: 25,
-    },
-    {
-      id: 'college-linearalgebra',
-      title: 'Linear Algebra',
-      description: 'Matrices, vectors, and linear transformations',
-      topic: 'Linear Algebra',
-      gradeLevel: 'College',
-      difficulty: 'Hard',
-      problemCount: 32,
-      icon: '⬚',
-      estimatedTime: 24,
-    },
-  ];
+  const quizzes = educationQuizzes;
+  const mathGames = educationMathGames.map((game) => ({
+    ...game,
+    highScore: gameScores[game.id],
+  }));
+  const mathPractices = educationMathPractices;
 
   const filteredQuizzes = selectedDifficulty === 'All' 
     ? quizzes 
@@ -368,14 +99,92 @@ export default function EducationPage() {
 
   const difficulties: Array<'All' | 'Easy' | 'Medium' | 'Hard'> = ['All', 'Easy', 'Medium', 'Hard'];
 
-  const calculateGrade = (score: number, total: number): 'A' | 'B' | 'C' | 'D' | 'F' => {
-    const percentage = (score / total) * 100;
-    if (percentage >= 90) return 'A';
-    if (percentage >= 80) return 'B';
-    if (percentage >= 70) return 'C';
-    if (percentage >= 60) return 'D';
-    return 'F';
+  const userStats = {
+    quizzesCompleted: quizResults.length,
+    gamesPlayed,
+    totalPoints:
+      quizResults.reduce((sum, r) => sum + Math.round((r.score / r.totalQuestions) * 100), 0) +
+      Object.values(gameScores).reduce((sum, score) => sum + score, 0),
+    currentStreak: quizResults.length + practiceResults.length + gamesPlayed > 0 ? 1 : 0,
   };
+
+  const handleQuizComplete = (result: QuizResult) => {
+    const percentage = Math.round((result.score / result.totalQuestions) * 100);
+    updateQuizScore(percentage);
+
+    setQuizResults((prev) => {
+      const updated = [result, ...prev.filter((r) => r.quizId !== result.quizId)];
+      localStorage.setItem(QUIZ_RESULTS_KEY, JSON.stringify(updated));
+      return updated;
+    });
+    setActiveQuizId(null);
+    setActiveTab('progress');
+  };
+
+  const handleGameComplete = (result: { gameId: string; score: number }) => {
+    const updatedScores = {
+      ...gameScores,
+      [result.gameId]: Math.max(gameScores[result.gameId] ?? 0, result.score),
+    };
+    const updatedPlayed = gamesPlayed + 1;
+
+    setGameScores(updatedScores);
+    setGamesPlayed(updatedPlayed);
+    localStorage.setItem(
+      GAME_SCORES_KEY,
+      JSON.stringify({ scores: updatedScores, played: updatedPlayed }),
+    );
+    setActiveGameId(null);
+    setActiveTab('games');
+  };
+
+  const handlePracticeComplete = (result: PracticeResult) => {
+    const percentage = Math.round((result.score / result.totalProblems) * 100);
+    updateQuizScore(percentage);
+
+    setPracticeResults((prev) => {
+      const updated = [result, ...prev.filter((r) => r.practiceId !== result.practiceId)];
+      localStorage.setItem(PRACTICE_RESULTS_KEY, JSON.stringify(updated));
+      return updated;
+    });
+    setActivePracticeId(null);
+    setActiveTab('progress');
+  };
+
+  const activeQuiz = activeQuizId ? getEducationQuizById(activeQuizId) : null;
+  const activeGame = activeGameId ? getMathGameById(activeGameId) : null;
+  const activePractice = activePracticeId ? getMathPracticeById(activePracticeId) : null;
+
+  if (activeQuiz) {
+    return (
+      <EducationQuizPlayer
+        quiz={activeQuiz}
+        onComplete={handleQuizComplete}
+        onExit={() => setActiveQuizId(null)}
+      />
+    );
+  }
+
+  if (activeGame) {
+    return (
+      <EducationMathGamePlayer
+        game={activeGame}
+        highScore={gameScores[activeGame.id]}
+        onComplete={handleGameComplete}
+        onExit={() => setActiveGameId(null)}
+      />
+    );
+  }
+
+  if (activePractice) {
+    return (
+      <EducationMathPracticePlayer
+        practice={activePractice}
+        onComplete={handlePracticeComplete}
+        onExit={() => setActivePracticeId(null)}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#080f1c] via-[#0f1929] to-[#080f1c]">
@@ -508,7 +317,7 @@ export default function EducationPage() {
               {filteredQuizzes.map((quiz) => (
                 <div
                   key={quiz.id}
-                  className="group relative bg-gradient-to-r from-[rgba(255,193,5,.08)] to-[rgba(73,122,182,.08)] border border-[rgba(255,193,5,.15)] rounded-xl p-6 hover:border-[rgba(255,193,5,.3)] transition-all cursor-pointer overflow-hidden"
+                  className="group relative bg-gradient-to-r from-[rgba(255,193,5,.08)] to-[rgba(73,122,182,.08)] border border-[rgba(255,193,5,.15)] rounded-xl p-6 hover:border-[rgba(255,193,5,.3)] transition-all overflow-hidden"
                 >
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-r from-[rgba(255,193,5,.05)] to-transparent" />
                   
@@ -529,7 +338,7 @@ export default function EducationPage() {
                             {quiz.difficulty}
                           </span>
                           <span className="flex items-center gap-1 text-[#7a93b4]">
-                            <BookOpen className="h-4 w-4" /> {quiz.questions} Questions
+                            <BookOpen className="h-4 w-4" /> {quiz.questions.length} Questions
                           </span>
                           <span className="flex items-center gap-1 text-[#7a93b4]">
                             <Clock className="h-4 w-4" /> {quiz.duration} min
@@ -537,7 +346,10 @@ export default function EducationPage() {
                         </div>
                       </div>
                     </div>
-                    <button className="flex-shrink-0 bg-[#ffc105] hover:bg-[#ffcf3a] text-[#080f1c] rounded-lg px-6 py-3 font-bold uppercase tracking-[.05em] transition-all hover:-translate-y-1 flex items-center gap-2 group/btn">
+                    <button
+                      onClick={() => setActiveQuizId(quiz.id)}
+                      className="flex-shrink-0 bg-[#ffc105] hover:bg-[#ffcf3a] text-[#080f1c] rounded-lg px-6 py-3 font-bold uppercase tracking-[.05em] transition-all hover:-translate-y-1 flex items-center gap-2 group/btn"
+                    >
                       Start
                       <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
                     </button>
@@ -579,16 +391,19 @@ export default function EducationPage() {
                     </span>
                   </div>
 
-                  {game.highScore && (
+                  {game.highScore ? (
                     <div className="flex items-center gap-2 pt-3 border-t border-[rgba(255,193,5,.1)]">
                       <Trophy className="h-4 w-4 text-[#ffc105]" />
                       <span className="text-sm text-[#ffc105] font-semibold">
                         High Score: {game.highScore}
                       </span>
                     </div>
-                  )}
+                  ) : null}
 
-                  <button className="w-full mt-4 bg-[#ffc105] hover:bg-[#ffcf3a] text-[#080f1c] rounded-lg px-4 py-2 font-bold uppercase tracking-[.05em] transition-all hover:shadow-[0_0_20px_rgba(255,193,5,.4)]">
+                  <button
+                    onClick={() => setActiveGameId(game.id)}
+                    className="w-full mt-4 bg-[#ffc105] hover:bg-[#ffcf3a] text-[#080f1c] rounded-lg px-4 py-2 font-bold uppercase tracking-[.05em] transition-all hover:shadow-[0_0_20px_rgba(255,193,5,.4)]"
+                  >
                     Play Game
                   </button>
                 </div>
@@ -636,7 +451,10 @@ export default function EducationPage() {
                         </div>
                       </div>
                     </div>
-                    <button className="flex-shrink-0 bg-[#ffc105] hover:bg-[#ffcf3a] text-[#080f1c] rounded-lg px-6 py-3 font-bold uppercase tracking-[.05em] transition-all hover:-translate-y-1 flex items-center gap-2 group/btn">
+                    <button
+                      onClick={() => setActivePracticeId(practice.id)}
+                      className="flex-shrink-0 bg-[#ffc105] hover:bg-[#ffcf3a] text-[#080f1c] rounded-lg px-6 py-3 font-bold uppercase tracking-[.05em] transition-all hover:-translate-y-1 flex items-center gap-2 group/btn"
+                    >
                       Start
                       <ArrowRight className="h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
                     </button>
@@ -678,40 +496,77 @@ export default function EducationPage() {
               ))}
             </div>
 
-            {/* Quiz Results with Grades */}
+            {/* Quiz & Practice Results */}
             <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-white">Quiz Results & Grades</h2>
+              <h2 className="text-2xl font-bold text-white">Quiz & Practice Results</h2>
               
               <div className="space-y-3">
-                {quizResults.map((result, idx) => {
-                  const quizData = quizzes.find(q => q.id === result.quizId);
-                  const gradeColor = 
-                    result.grade === 'A' ? 'text-green-400' :
-                    result.grade === 'B' ? 'text-blue-400' :
-                    result.grade === 'C' ? 'text-yellow-400' :
-                    result.grade === 'D' ? 'text-orange-400' :
-                    'text-red-400';
-                  
-                  return (
-                    <div
-                      key={idx}
-                      className="flex items-center justify-between p-4 bg-[rgba(255,193,5,.08)] border border-[rgba(255,193,5,.15)] rounded-lg hover:border-[rgba(255,193,5,.3)] transition-all"
-                    >
-                      <div>
-                        <p className="text-white font-semibold">{quizData?.title || 'Quiz'}</p>
-                        <p className="text-[#7a93b4] text-sm">Score: {result.score}/{result.totalQuestions}</p>
-                      </div>
-                      <div className="text-center">
-                        <div className={`text-3xl font-black ${gradeColor}`}>
-                          {result.grade}
+                {quizResults.length === 0 && practiceResults.length === 0 ? (
+                  <p className="text-[#7a93b4] text-center py-8">
+                    No results yet. Complete a quiz or practice session to see your grades here!
+                  </p>
+                ) : (
+                  <>
+                    {quizResults.map((result, idx) => {
+                      const quizData = quizzes.find(q => q.id === result.quizId);
+                      const gradeColor = 
+                        result.grade === 'A' ? 'text-green-400' :
+                        result.grade === 'B' ? 'text-blue-400' :
+                        result.grade === 'C' ? 'text-yellow-400' :
+                        result.grade === 'D' ? 'text-orange-400' :
+                        'text-red-400';
+                      
+                      return (
+                        <div
+                          key={`quiz-${idx}`}
+                          className="flex items-center justify-between p-4 bg-[rgba(255,193,5,.08)] border border-[rgba(255,193,5,.15)] rounded-lg hover:border-[rgba(255,193,5,.3)] transition-all"
+                        >
+                          <div>
+                            <p className="text-white font-semibold">{quizData?.title || 'Quiz'}</p>
+                            <p className="text-[#7a93b4] text-sm">Quiz · {result.score}/{result.totalQuestions}</p>
+                          </div>
+                          <div className="text-center">
+                            <div className={`text-3xl font-black ${gradeColor}`}>
+                              {result.grade}
+                            </div>
+                            <div className="text-[#7a93b4] text-xs font-semibold mt-1">
+                              {Math.round((result.score / result.totalQuestions) * 100)}%
+                            </div>
+                          </div>
                         </div>
-                        <div className="text-[#7a93b4] text-xs font-semibold mt-1">
-                          {Math.round((result.score / result.totalQuestions) * 100)}%
+                      );
+                    })}
+                    {practiceResults.map((result, idx) => {
+                      const practiceData = mathPractices.find(p => p.id === result.practiceId);
+                      const gradeColor = 
+                        result.grade === 'A' ? 'text-green-400' :
+                        result.grade === 'B' ? 'text-blue-400' :
+                        result.grade === 'C' ? 'text-yellow-400' :
+                        result.grade === 'D' ? 'text-orange-400' :
+                        'text-red-400';
+                      
+                      return (
+                        <div
+                          key={`practice-${idx}`}
+                          className="flex items-center justify-between p-4 bg-[rgba(255,193,5,.08)] border border-[rgba(255,193,5,.15)] rounded-lg hover:border-[rgba(255,193,5,.3)] transition-all"
+                        >
+                          <div>
+                            <p className="text-white font-semibold">{practiceData?.title || 'Practice'}</p>
+                            <p className="text-[#7a93b4] text-sm">Practice · {result.score}/{result.totalProblems}</p>
+                          </div>
+                          <div className="text-center">
+                            <div className={`text-3xl font-black ${gradeColor}`}>
+                              {result.grade}
+                            </div>
+                            <div className="text-[#7a93b4] text-xs font-semibold mt-1">
+                              {Math.round((result.score / result.totalProblems) * 100)}%
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  );
-                })}
+                      );
+                    })}
+                  </>
+                )}
               </div>
             </div>
           </div>
