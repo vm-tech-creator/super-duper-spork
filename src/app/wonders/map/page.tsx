@@ -186,6 +186,20 @@ const WONDERS: Wonder[] = [
   },
 ];
 
+function getEarthTextureUrl(): string {
+  const envBasePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  if (envBasePath) {
+    return `${envBasePath}/images/earth-blue-marble.png`;
+  }
+
+  if (typeof window === 'undefined') {
+    return '/images/earth-blue-marble.png';
+  }
+
+  const deployPrefix = window.location.pathname.split('/wonders')[0] || '';
+  return `${deployPrefix}/images/earth-blue-marble.png`;
+}
+
 function latLngToVector3(lat: number, lng: number, radius: number) {
   const phi = THREE.MathUtils.degToRad(90 - lat);
   const theta = THREE.MathUtils.degToRad(lng + 180);
@@ -298,8 +312,7 @@ function ThreeGlobe({
 
     let earthTexture: THREE.Texture | null = null;
     const textureLoader = new THREE.TextureLoader();
-    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
-    const textureUrl = `${basePath}/images/earth-blue-marble.png`;
+    const textureUrl = getEarthTextureUrl();
     textureLoader.load(
       textureUrl,
       (texture) => {
